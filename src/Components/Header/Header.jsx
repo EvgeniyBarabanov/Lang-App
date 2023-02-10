@@ -1,4 +1,5 @@
 import React from "react";
+import "./Header.sass";
 
 import Nav from "../Nav/Nav.jsx"
 

@@ -5,14 +5,29 @@ module.exports = {
     entry: './src/index.js',
     module:{
         rules: [
-            { test: /\.svg$/, use: 'svg-inline-loader'},
-            { test: /\.css$/, use: ['style-loader', 'css-loader']},
-            { test: /\.jsx?$/,
-              exclude: /(node_modules)/,
-              loader: 'babel-loader',
-              options: {
-                presets:['@babel/preset-react']
-              }
+            {   
+                test: /\.svg$/, 
+                use: 'svg-inline-loader'
+            },
+            { 
+                test: /\.css$/, 
+                use: ['style-loader', 'css-loader']
+            },
+            { 
+                test: /\.jsx?$/,
+                exclude: /(node_modules)/,
+                loader: 'babel-loader',
+                options: {
+                    presets:['@babel/preset-react']
+                }
+            },
+            {
+                test: /\.s[as]ss$/i, 
+                use: ['style-loader', 'css-loader', 'sass-loader']
+            },
+            {
+                test: /\.png/,
+                type: 'asset/resource'
             }
         ]
     },
@@ -32,5 +47,6 @@ module.exports = {
         },
         port: 8000,
         hot: true,
+        historyApiFallback: true
     }
 }
