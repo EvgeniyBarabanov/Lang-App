@@ -7,7 +7,7 @@ module.exports = {
         rules: [
             {   
                 test: /\.svg$/, 
-                use: 'svg-inline-loader'
+                use: ['@svgr/webpack']
             },
             { 
                 test: /\.css$/, 

@@ -7,11 +7,10 @@ function HomeInfo(props){
                 <span>{props.name}</span>
                 <h2>{props.title}</h2>
                 <p>{props.description}</p>
-                <button>{props.reference}</button>
+                {props.variables}
             </div>
-            <div className="home-page__info">
-                <img src={props.logo} alt="" />
-            </div>
+                <props.logo className="home-page__logo"/>
+
         </div>
     )
 }
