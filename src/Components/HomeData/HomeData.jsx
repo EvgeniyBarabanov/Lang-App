@@ -2,11 +2,11 @@ import React from "react";
 
 function HomeData(props){
     return(
-        <div className="home-page__data">
-            <img src={props.icon} alt="" />
+        <div>
+            <props.icon />
             <span>{props.amount}</span>
-            <img src={props.icon} alt="" />
-            <p>{props.postcript}</p>
+            <props.iconPlus />
+            <p>{props.postscript}</p>
         </div>
     )
 }

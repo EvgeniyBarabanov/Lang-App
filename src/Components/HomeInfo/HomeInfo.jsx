@@ -7,10 +7,14 @@ function HomeInfo(props){
                 <span>{props.name}</span>
                 <h2>{props.title}</h2>
                 <p>{props.description}</p>
-                {props.variables}
+                <div className="home-page__link">
+                    {props.link}
+                </div>
+                <div  className="home-page__data">
+                    {props.wordsGames}
+                </div>
             </div>
                 <props.logo className="home-page__logo"/>
-
         </div>
     )
 }
