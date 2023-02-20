@@ -4,6 +4,9 @@ import HomeInfo from "../HomeInfo/HomeInfo";
 import HomeData from "../HomeData/HomeData";
 import HomeLink from "../HomeLink/HomeLink";
 import StudentLogo from "../../../public/image/studentLogo.svg";
+import StudentWithTablet from "../../../public/image/StudentwithTablet.svg";
+import SneakersLogo from "../../../public/image/sneakersLogo.svg";
+import HornLogo from "../../../public/image/hornLogo.svg";
 import LightningIcon from "../../../public/image/lightningIcon.svg";
 import PlusIcon from "../../../public/image/plusIcon.svg";
 import JoyStickIcon from "../../../public/image/joystickIcon.svg";
@@ -22,15 +25,14 @@ function Home(){
     }
 
     const arrLink = function(elements){
-        let buttonLink = [];
-        elements.map(
-            (item, index)=>{
-                buttonLink.push(<HomeLink key={index} reference={item.reference} />)
-            }
-        )
-        return buttonLink;
+        return    elements.map(
+                (item, index)=>{
+                    return <HomeLink key={index} reference={item.text} logo={item.logo}/>
+                }
+            )
     }
 
+    
     let homeData = [
         {
             'icon': LightningIcon,
@@ -47,19 +49,39 @@ function Home(){
     ]
 
     let homeLink = [
-        {
-            'reference': "About platform"
-        }
+        [
+            {
+                'text':"About platform",
+            }
+        ],
+        [
+            {
+                'text':"Sprint", 
+                'logo': SneakersLogo
+            },
+            {
+                'text':"Audio-call", 
+                'logo': HornLogo
+            }
+        ]
     ]
+
+    console.log(arrLink(homeLink[1]));
 
     let homeInfo = [
         {
             'name': "E-COURSE PLATFORM",
             'title': "Learning and teaching online,made easy.",
             'description': "Practice your English and learn new things with the platform.",
-            'link': arrLink(homeLink),
+            'link': arrLink(homeLink[0]),
             'wordsGames': arrInfo(homeData),
             'logo': StudentLogo,
+        },
+        {
+            'title': "Learn a language in a playful way",
+            'description': "Make learning words more fun with mini-games",
+            'link': arrLink(homeLink[1]),
+            'logo': StudentWithTablet,
         }
     ];
 
