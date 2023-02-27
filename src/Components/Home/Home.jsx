@@ -1,10 +1,12 @@
 import React from "react";
 
-import HomeInfo from "../HomeInfo/HomeInfo";
-import HomeData from "../HomeData/HomeData";
-import HomeLink from "../HomeLink/HomeLink";
+import HomeInfo from "../Showcase/Showcase";
+import HomeData from "../Counter/Counter";
+import HomeLink from "../Link/Link";
 import StudentLogo from "../../../public/image/studentLogo.svg";
 import StudentWithTablet from "../../../public/image/StudentwithTablet.svg";
+import GirlWithBook from "../../../public/image/girlWithBook.svg";
+import StudentsWithNotebook from "../../../public/image/studentsWithNotebook.svg";
 import SneakersLogo from "../../../public/image/sneakersLogo.svg";
 import HornLogo from "../../../public/image/hornLogo.svg";
 import LightningIcon from "../../../public/image/lightningIcon.svg";
@@ -25,11 +27,11 @@ function Home(){
     }
 
     const arrLink = function(elements){
-        return    elements.map(
-                (item, index)=>{
-                    return <HomeLink key={index} reference={item.text} logo={item.logo}/>
-                }
-            )
+        return elements.map(
+            (item, index)=>{
+                return <HomeLink key={index} reference={item.text} toLink={item.toLink} logo={item.logo}/>
+            }
+        )
     }
 
     
@@ -51,22 +53,35 @@ function Home(){
     let homeLink = [
         [
             {
-                'text':"About platform",
+                'text': "About platform",
+                'toLink': "/"
             }
         ],
         [
             {
-                'text':"Sprint", 
+                'text': "Sprint",
+                'toLink' : "sprint", 
                 'logo': SneakersLogo
             },
             {
-                'text':"Audio-call", 
+                'text': "Audio-call",
+                'toLink': "audioCall", 
                 'logo': HornLogo
+            }
+        ],
+        [
+            {
+                'text': "Textbook",
+                'toLink': "textbook"  
+            }
+        ],
+        [
+            {
+                'text': "Statistics",
+                'toLink': "statistics"  
             }
         ]
     ]
-
-    console.log(arrLink(homeLink[1]));
 
     let homeInfo = [
         {
@@ -75,13 +90,25 @@ function Home(){
             'description': "Practice your English and learn new things with the platform.",
             'link': arrLink(homeLink[0]),
             'wordsGames': arrInfo(homeData),
-            'logo': StudentLogo,
+            'logo': StudentLogo
         },
         {
             'title': "Learn a language in a playful way",
             'description': "Make learning words more fun with mini-games",
             'link': arrLink(homeLink[1]),
-            'logo': StudentWithTablet,
+            'logo': StudentWithTablet
+        },
+        {
+            'title': "Increase your vocabulary",
+            'description': "Traditional and new effective approaches to word study",
+            'link': arrLink(homeLink[2]),
+            'logo': GirlWithBook
+        },
+        {
+            'title': "Watch your progress every day",
+            'description': "Save statistics on your achievements, words learned, and mistakes",
+            'link': arrLink(homeLink[3]),
+            'logo': StudentsWithNotebook
         }
     ];
 

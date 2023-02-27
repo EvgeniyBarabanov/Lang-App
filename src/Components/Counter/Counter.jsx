@@ -2,7 +2,7 @@ import React from "react";
 
 function HomeData(props){
     return(
-        <div>
+        <div className="counter">
             <props.icon />
             <span>{props.amount}</span>
             <props.iconPlus />

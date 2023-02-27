@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 function HomeLink(props){
     return(
-        <div className="test">
-            {<Link to="/">{props.reference}</Link>}
+        <div className="link">
+            {<Link to={props.toLink}>{props.reference}</Link>}
             {props.logo &&
                 <props.logo/>
             }
