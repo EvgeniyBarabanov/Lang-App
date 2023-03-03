@@ -5,9 +5,8 @@ import "./Nav.sass";
 
 function Nav(){
     return(
-        <nav>
-            <ul>
-                <li>GlobalTalk</li>
+        <nav className="navigation">
+            <ul className="navigation__list list">
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/textbook">Textbook</Link></li>
                 <li><Link to="/statistics">Statistics</Link></li>
@@ -17,7 +16,8 @@ function Nav(){
                         <li><Link to="/audioCall">Audio-call</Link></li>
                     </ul>
                 </li>
-                <li><Link to="/login">Log In &#8594;</Link></li>
+                {/* <li><Link to="/login">Log In &#8594;</Link></li>
+                <li><Link to="/signOut">Sign Out</Link></li> */}
             </ul>
         </nav>
     )

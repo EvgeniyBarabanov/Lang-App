@@ -7,7 +7,7 @@ function HomeInfo(props){
                 {props.name &&
                     <span>{props.name}</span>
                 }
-                <h2>{props.title}</h2>
+                <h2 className="heading heading_1">{props.title}</h2>
                 <p>{props.description}</p>
                 <div className="showcase__link-group">
                     {props.link}
