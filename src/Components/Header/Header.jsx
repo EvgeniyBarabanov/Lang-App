@@ -1,13 +1,15 @@
 import React from "react";
-import Logo from "../Logo/Logo.jsx";
 import "./Header.sass";
-import Nav from "../Nav/Nav.jsx"
+import Logo from "../Logo/Logo.jsx";
+import Nav from "../Nav/Nav.jsx";
+import Login from "../Login/Login.jsx";
 
 function Header(){
     return(
         <div className="header">
             <Logo />
             <Nav />
+            <Login />
         </div>
     )
 }

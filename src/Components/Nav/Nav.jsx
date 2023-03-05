@@ -16,8 +16,6 @@ function Nav(){
                         <li><Link to="/audioCall">Audio-call</Link></li>
                     </ul>
                 </li>
-                {/* <li><Link to="/login">Log In &#8594;</Link></li>
-                <li><Link to="/signOut">Sign Out</Link></li> */}
             </ul>
         </nav>
     )
