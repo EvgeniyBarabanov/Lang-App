@@ -1,4 +1,40 @@
+.navigation
+    flex-grow: 1
+
 .list
     display: flex
-    justify-content: space-around
     list-style-type: none
+    gap: 30px
+    padding-left: 30px
+
+    &__item
+        position: relative
+
+        &:hover>.list_nested
+            display: flex
+
+            
+
+    &__link
+        color: #757575
+        text-decoration: none
+        text-transform: capitalize
+
+        &_nested
+            display: block
+            min-width: 175px
+
+    &_nested
+        position: absolute
+        display: none
+        flex-direction: column
+        padding: 20px
+        gap: 20px
+        z-index: 999
+        background: #FFFFFF
+        box-shadow: 0px 343.472px 343.472px rgba(52, 41, 39, 0.08), 0px 183.185px 183.185px rgba(52, 41, 39, 0.12), 0px 91.5925px 91.5925px rgba(52, 41, 39, 0.04), 0px 68.6944px 68.6944px rgba(52, 41, 39, 0.04), 0px 11.4491px 68.6944px rgba(52, 41, 39, 0.04), 0px 11.4491px 11.4491px rgba(52, 41, 39, 0.04)
+        border-radius: 14px
+        
+        
+
+          
