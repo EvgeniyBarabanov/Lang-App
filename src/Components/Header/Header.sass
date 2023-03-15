@@ -2,3 +2,15 @@
     display: flex
     align-items: center
     padding: 35px 0
+    position: relative
+    background-color: #F6F5F4
+    
+    &::after
+        content: ""
+        position: absolute
+        width: 100vw
+        display: block
+        background-color: black
+        bottom: 0
+        height: 1px
+        left: min(-10vw, calc( (100vw - 1440px) / 2 * -1))

@@ -7,8 +7,10 @@ function HomeInfo(props){
                 {props.name &&
                     <span>{props.name}</span>
                 }
-                {props.title &&
-                    <h1 className="heading heading_1">{props.title1}</h1>
+                {props.heading &&
+                    (props.big 
+                    ? <h1 className="heading heading_1">{props.heading}</h1>
+                    : <h2 className="heading heading_2">{props.heading}</h2>)
                 }
                 
                 <p>{props.description}</p>

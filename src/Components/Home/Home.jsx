@@ -86,7 +86,7 @@ function Home(){
     let homeInfo = [
         {
             'name': "E-COURSE PLATFORM",
-            'title': "Learning and teaching online, made easy.",
+            'heading': "Learning and teaching online, made easy.",
             'description': "Practice your English and learn new things with the platform.",
             'link': arrLink(homeLink[0]),
             'wordsGames': arrInfo(homeData),
@@ -94,19 +94,19 @@ function Home(){
             'big': true
         },
         {
-            'title': "Learn a language in a playful way",
+            'heading': "Learn a language in a playful way",
             'description': "Make learning words more fun with mini-games",
             'link': arrLink(homeLink[1]),
             'logo': StudentWithTablet
         },
         {
-            'title': "Increase your vocabulary",
+            'heading': "Increase your vocabulary",
             'description': "Traditional and new effective approaches to word study",
             'link': arrLink(homeLink[2]),
             'logo': GirlWithBook
         },
         {
-            'title': "Watch your progress every day",
+            'heading': "Watch your progress every day",
             'description': "Save statistics on your achievements, words learned, and mistakes",
             'link': arrLink(homeLink[3]),
             'logo': StudentsWithNotebook
@@ -118,7 +118,7 @@ function Home(){
             {
                 homeInfo.map(
                     (item, index)=>{
-                        return <HomeInfo key={index} name={item.name} big={item.big} title={item.title} description={item.description} link={item.link} wordsGames={item.wordsGames} logo={item.logo} />
+                        return <HomeInfo key={index} name={item.name} big={item.big} heading={item.heading} description={item.description} link={item.link} wordsGames={item.wordsGames} logo={item.logo} />
                     }
                 )
             }
