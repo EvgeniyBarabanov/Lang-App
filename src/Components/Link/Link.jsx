@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './Links.sass'
 
 function HomeLink(props){
     return(

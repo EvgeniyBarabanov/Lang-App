@@ -9,14 +9,14 @@
 
     &__item
         position: relative
+        display: flex
+        align-items: center
 
         &:hover>.list_nested
             display: flex
-
             
 
     &__link
-        color: #757575
         text-decoration: none
         text-transform: capitalize
 
@@ -26,6 +26,7 @@
 
     &_nested
         position: absolute
+        top: 20px
         display: none
         flex-direction: column
         padding: 20px
@@ -34,6 +35,7 @@
         background: #FFFFFF
         box-shadow: 0px 343.472px 343.472px rgba(52, 41, 39, 0.08), 0px 183.185px 183.185px rgba(52, 41, 39, 0.12), 0px 91.5925px 91.5925px rgba(52, 41, 39, 0.04), 0px 68.6944px 68.6944px rgba(52, 41, 39, 0.04), 0px 11.4491px 68.6944px rgba(52, 41, 39, 0.04), 0px 11.4491px 11.4491px rgba(52, 41, 39, 0.04)
         border-radius: 14px
+        line-height: 16px
         
         
 

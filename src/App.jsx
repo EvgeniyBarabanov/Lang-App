@@ -7,8 +7,6 @@ import Textbook from "./Components/Textbook/Textbook.jsx";
 import Statistics from "./Components/Statistics/Statistics.jsx";
 import Sprint from "./Components/Sprint/Sprint.jsx";
 import AudioCall from "./Components/AudioCall/AudioCall.jsx";
-import SignIn from "./Components/SignIn/SignIn.jsx";
-import SignOut from "./Components/SignOut/SignOut.jsx";
 
 const router = createBrowserRouter([
     {
@@ -30,14 +28,6 @@ const router = createBrowserRouter([
             {
                 path: "audioCall",
                 element: <AudioCall />
-            },
-            {
-                path: "signIn",
-                element: <SignIn />
-            },
-            {
-                path: "signOut",
-                element: <SignOut />
             }
         ]
     }
@@ -46,9 +36,7 @@ const router = createBrowserRouter([
 function App(){
     return(
         <div className="app"> 
-            <div className="container">
-                <RouterProvider router ={router}/>
-            </div>
+            <RouterProvider router ={router}/>
         </div>
     )
 }
