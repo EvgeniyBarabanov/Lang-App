@@ -5,11 +5,11 @@
         weight: 700
         size: 18px
     letter-spacing: -0.04em
-    color: red
-    background: transparent
-    border: 0
     line-height: 25px
     cursor: pointer
+    color: #000000
+    background: transparent
+    border: 0
 
     &:hover
         color: #2B788B
@@ -19,3 +19,41 @@
         font-size: 16px
         line-height: 22px
 
+.hollow
+    color: #ffffff
+    background: #2B788B
+    border-radius: 100px
+    border: 3px solid #2B788B
+    padding: 11px 19px
+    
+    &:hover
+        background: #ffffff
+        color: #2B788B
+        text-decoration: none
+
+.filled
+    color: #2B788B
+    background: #C3DCE3
+    border-radius: 100px
+    padding: 11px 19px
+    
+    &_picture
+        display: flex
+        flex-direction: column-reverse
+        align-items: center
+        border-radius: 14px
+        position: relative
+        padding: 82px 34px 14px 34px
+
+        svg
+            position: absolute
+            top: -30px
+
+    &_color_pinkDark
+        background-color: #F2D4DC
+
+
+    &:hover
+        background: #2B788B
+        color: #FFFFFF
+        text-decoration: none

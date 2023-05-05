@@ -1,22 +1,27 @@
 import React from "react";
+import "./Showcase.sass"
 
-function HomeInfo(props){
+function Showcase(props){
     return(
-        <div className="showcase">
-            <div className="container">
+        <div className={props.reverse
+            ? "showcase showcase_background_white"
+            : "showcase"}>
+            <div className={props.reverse
+                ? "container container_reverse"
+                : "container"}>
                 <div className="showcase__info">
                     {props.name &&
-                        <span>{props.name}</span>
+                        <span className="text text_spacing text_small text_color">{props.name}</span>
                     }
                     {props.heading &&
                         (props.big 
-                        ? <h1 className="heading heading_1">{props.heading}</h1>
+                        ? <h1 className="heading">{props.heading}</h1>
                         : <h2 className="heading heading_2">{props.heading}</h2>)
                     }
                     
-                    <p>{props.description}</p>
-                    <div className="showcase__link-group">
-                        {props.link}
+                    <p className="text">{props.description}</p>
+                    <div className="showcase__button-group">
+                        {props.button}
                     </div>
                     {props.wordsGames &&
                         <div  className="showcase__counter-group">
@@ -24,10 +29,10 @@ function HomeInfo(props){
                         </div>
                     }
                 </div>
-                    <props.logo className="showcase__image"/>
+                    <props.logo viewBox="0 0 100% 100%" width="auto" height="100%" className="showcase__image"/>
             </div>
         </div>
     )
 }
 
-export default HomeInfo;
+export default Showcase;

@@ -1,12 +1,14 @@
 import React from "react";
+import './Form.sass'
+import Button from "../Buttons/Buttons.jsx"
 
-function Login(){
+function Form(){
     return(
         <div className="form">
-            <button className="button button_small">Log In &#8594;</button>
-            <button className="button button_small">Sign up</button>
+            <Button variant = "button_small">Log in →</Button>
+            <Button variant = "button_small hollow">Sign up</Button>
         </div>
     )
 }
 
-export default Login;
+export default Form;

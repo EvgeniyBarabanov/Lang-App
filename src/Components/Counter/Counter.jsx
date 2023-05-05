@@ -1,14 +1,15 @@
 import React from "react";
+import "./Counter.sass"
 
-function HomeData(props){
+function Counter(props){
     return(
         <div className="counter">
             <props.icon />
-            <span>{props.amount}</span>
+            <span className="counter__amount">{props.amount}</span>
             <props.iconPlus />
-            <p>{props.postscript}</p>
+            <p className="text text_small">{props.postscript}</p>
         </div>
     )
 }
 
-export default HomeData;
+export default Counter;

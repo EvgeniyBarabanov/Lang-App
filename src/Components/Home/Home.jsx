@@ -1,8 +1,9 @@
 import React from "react";
+import './Home.sass'
 
-import HomeInfo from "../Showcase/Showcase";
-import HomeData from "../Counter/Counter";
-import HomeLink from "../Link/Link";
+import Showcase from "../Showcase/Showcase";
+import Counter from "../Counter/Counter";
+import Button from "../Buttons/Buttons";
 import StudentLogo from "../../../public/image/studentLogo.svg";
 import StudentWithTablet from "../../../public/image/StudentwithTablet.svg";
 import GirlWithBook from "../../../public/image/girlWithBook.svg";
@@ -20,21 +21,20 @@ function Home(){
         let wordsGamesInfo = [];
         elements.map(
             (item, index)=>{
-                wordsGamesInfo.push(<HomeData key={index} icon={item.icon} amount={item.amount} iconPlus={item.iconPlus} postscript={item.postscript}/>)
+                wordsGamesInfo.push(<Counter key={index} icon={item.icon} amount={item.amount} iconPlus={item.iconPlus} postscript={item.postscript}/>)
             }
         )
         return wordsGamesInfo;
     }
 
-    const arrLink = function(elements){
+    const createButtons = function(elements){
         return elements.map(
             (item, index)=>{
-                return <HomeLink key={index} reference={item.text} toLink={item.toLink} logo={item.logo}/>
+                return <Button variant={item.variant} key={index} route={item.route} logo={item.logo}>{item.text}</Button>
             }
         )
     }
 
-    
     let homeData = [
         {
             'icon': LightningIcon,
@@ -50,75 +50,75 @@ function Home(){
         }
     ]
 
-    let homeLink = [
-        [
-            {
-                'text': "About platform",
-                'toLink': "/"
-            }
-        ],
-        [
-            {
-                'text': "Sprint",
-                'toLink' : "sprint", 
-                'logo': SneakersLogo
-            },
-            {
-                'text': "Audio-call",
-                'toLink': "audioCall", 
-                'logo': HornLogo
-            }
-        ],
-        [
-            {
-                'text': "Textbook",
-                'toLink': "textbook"  
-            }
-        ],
-        [
-            {
-                'text': "Statistics",
-                'toLink': "statistics"  
-            }
-        ]
-    ]
-
     let homeInfo = [
         {
             'name': "E-COURSE PLATFORM",
             'heading': "Learning and teaching online, made easy.",
+            'headingBig': true,
             'description': "Practice your English and learn new things with the platform.",
-            'link': arrLink(homeLink[0]),
+            'button': createButtons([
+                {
+                    'text': "About platform",
+                    'route': "aboutPlatform",
+                    'variant': "button_small filled"
+                }
+            ]),
             'wordsGames': arrInfo(homeData),
-            'logo': StudentLogo,
-            'big': true
+            'logo': StudentLogo
         },
         {
             'heading': "Learn a language in a playful way",
             'description': "Make learning words more fun with mini-games",
-            'link': arrLink(homeLink[1]),
-            'logo': StudentWithTablet
+            'button': createButtons([
+                {
+                    'text': "Sprint →",
+                    'route' : "sprint", 
+                    'logo': SneakersLogo,
+                    'variant': "button_small filled filled_picture filled_color_pinkDark"
+                },
+                {
+                    'text': "Audio-call →",
+                    'route': "audioCall", 
+                    'logo': HornLogo,
+                    'variant': "button_small filled filled_picture"
+                }
+        ]),
+            'logo': StudentWithTablet,
+            'reverse': true
         },
         {
             'heading': "Increase your vocabulary",
             'description': "Traditional and new effective approaches to word study",
-            'link': arrLink(homeLink[2]),
+            'button': createButtons([
+                {
+                    'text': "Textbook →",
+                    'route': "textbook",
+                    'variant': "button_small filled"
+                }
+            ]),
             'logo': GirlWithBook
         },
         {
             'heading': "Watch your progress every day",
             'description': "Save statistics on your achievements, words learned, and mistakes",
-            'link': arrLink(homeLink[3]),
-            'logo': StudentsWithNotebook
+            'button': createButtons([
+                {
+                    'text': "Statistics →",
+                    'route': "statistics",
+                    'variant': "button_small filled"
+                }
+            ]),
+            'logo': StudentsWithNotebook,
+            'reverse': true
         }
     ];
 
     return(
-        <div className="Home">
+        <div className="home">
             {
                 homeInfo.map(
                     (item, index)=>{
-                        return <HomeInfo key={index} name={item.name} big={item.big} heading={item.heading} description={item.description} link={item.link} wordsGames={item.wordsGames} logo={item.logo} />
+                        return <Showcase key={index} reverse={item.reverse} name={item.name} headingBig={item.headingBig} heading={item.heading} description={item.description} button={item.button} wordsGames={item.wordsGames} logo={item.logo} />
                     }
                 )
             }
