@@ -11,7 +11,7 @@ function Showcase(props){
                 : "container"}>
                 <div className="showcase__info">
                     {props.name &&
-                        <span className="text text_spacing text_small text_color">{props.name}</span>
+                        <span className="text text_spacing text_size16 text_color">{props.name}</span>
                     }
                     {props.heading &&
                         (props.big 
@@ -29,7 +29,7 @@ function Showcase(props){
                         </div>
                     }
                 </div>
-                    <props.logo viewBox="0 0 100% 100%" width="auto" height="100%" className="showcase__image"/>
+                    <img src={props.logo} />
             </div>
         </div>
     )

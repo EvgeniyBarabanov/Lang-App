@@ -1,8 +1,11 @@
 .counter
     display: flex
+    flex-direction: column
     align-items: center
+    padding-right: 49px
+    border-right: 2px solid #E0E0E0
 
-    .counter__amount
+    &__amount
         font: 
             family: 'Dela Gothic One', cursive
             size: 40px
@@ -10,5 +13,9 @@
             style: normal
         letter-spacing: -0.02em
         line-height: 40px
-        color: #000000 
-    
+        color: #000000   
+
+.counter:last-child
+    padding-left: 48px
+    border-right: none
+    padding-right: 0px

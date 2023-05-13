@@ -4,10 +4,10 @@ import './Home.sass'
 import Showcase from "../Showcase/Showcase";
 import Counter from "../Counter/Counter";
 import Button from "../Buttons/Buttons";
-import StudentLogo from "../../../public/image/studentLogo.svg";
-import StudentWithTablet from "../../../public/image/StudentwithTablet.svg";
-import GirlWithBook from "../../../public/image/girlWithBook.svg";
-import StudentsWithNotebook from "../../../public/image/studentsWithNotebook.svg";
+import StudentLogo from "../../../public/image/StudentLogo.png";
+import StudentWithTablet from "../../../public/image/StudentWithTablet.png";
+import GirlWithBook from "../../../public/image/girlWithBook.png";
+import StudentsWithNotebook from "../../../public/image/studentsWithNotebook.png";
 import SneakersLogo from "../../../public/image/sneakersLogo.svg";
 import HornLogo from "../../../public/image/hornLogo.svg";
 import LightningIcon from "../../../public/image/lightningIcon.svg";
@@ -64,7 +64,7 @@ function Home(){
                 }
             ]),
             'wordsGames': arrInfo(homeData),
-            'logo': StudentLogo
+            'logo' : StudentLogo
         },
         {
             'heading': "Learn a language in a playful way",

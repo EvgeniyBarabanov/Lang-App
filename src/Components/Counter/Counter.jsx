@@ -4,10 +4,12 @@ import "./Counter.sass"
 function Counter(props){
     return(
         <div className="counter">
-            <props.icon />
-            <span className="counter__amount">{props.amount}</span>
-            <props.iconPlus />
-            <p className="text text_small">{props.postscript}</p>
+            <div className="counter__wrapper">
+                <props.icon />
+                <span className="counter__amount">{props.amount}</span>
+                <props.iconPlus />
+            </div>
+            <span className="text text_size16">{props.postscript}</span>
         </div>
     )
 }
