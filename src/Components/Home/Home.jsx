@@ -1,5 +1,6 @@
 import React from "react";
-import './Home.sass'
+import './Home.sass';
+
 
 import Showcase from "../Showcase/Showcase";
 import Counter from "../Counter/Counter";

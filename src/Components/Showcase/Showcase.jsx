@@ -14,7 +14,7 @@ function Showcase(props){
                         <span className="text text_spacing text_size16 text_color">{props.name}</span>
                     }
                     {props.heading &&
-                        (props.big 
+                        (props.headingBig 
                         ? <h1 className="heading">{props.heading}</h1>
                         : <h2 className="heading heading_2">{props.heading}</h2>)
                     }
