@@ -4,7 +4,7 @@ import './Buttons.sass'
 
 
 export const Button = function(props){
-    const classes = [/button_small/, /hollow/, /hollow_round/, /filled/, /filled_picture/, /filled_color_pinkDark/];
+    const classes = [/button_small/, /hollow/, /hollow_round/, /filled/, /filled_picture/, /filled_color_pinkDark/, /hollow_round_color_green/ , /hollow_round_color_yellow/, /hollow_round_color_orange/, /hollow_round_color_red/, /hollow_round_color_pink/, /hollow_round_color_cyan/];
 
     const navigate = useNavigate();
 

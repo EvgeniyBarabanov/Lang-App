@@ -4,10 +4,10 @@ import {words} from 'popular-english-words';
 import SprintLogo from "../../../public/image/sprintLogo.png";
 import Showcase from "../Showcase/Showcase";
 import { createButtons } from "../Buttons/Buttons";
-
+/* change round button styles */
 function Sprint(){
-    /* let popularWords = words.getMostPopular(10000)
-    console.log(popularWords); */
+    let popularWords = words.getMostPopular(10000)
+    console.log(popularWords);
 
     let sprintInfo = {
         'heading': "Sprint",
@@ -18,32 +18,32 @@ function Sprint(){
             {
                 'text': "А1",
                 'route': "#",
-                'variant': "hollow hollow_round"
+                'variant': "hollow hollow_round hollow_round_color_green"
             },
             {
                 'text': "А2",
                 'route': "#",
-                'variant': "hollow hollow_round"
+                'variant': "hollow hollow_round hollow_round_color_yellow"
             },
             {
                 'text': "B1",
                 'route': "#",
-                'variant': "hollow hollow_round"
+                'variant': "hollow hollow_round hollow_round_color_orange"
             },
             {
                 'text': "B2",
                 'route': "#",
-                'variant': "hollow hollow_round"
+                'variant': "hollow hollow_round hollow_round_color_red"
             },
             {
                 'text': "C1",
                 'route': "#",
-                'variant': "hollow hollow_round"
+                'variant': "hollow hollow_round hollow_round_color_pink"
             },
             {
                 'text': "C2",
                 'route': "#",
-                'variant': "hollow hollow_round"
+                'variant': "hollow hollow_round hollow_round_color_cyan"
             }
         ]),
         'button': createButtons([
