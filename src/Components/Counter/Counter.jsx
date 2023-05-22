@@ -1,7 +1,7 @@
 import React from "react";
 import "./Counter.sass"
 
-function Counter(props){
+export const Counter = function(props){
     return(
         <div className="counter">
             <div className="counter__wrapper">
@@ -14,4 +14,12 @@ function Counter(props){
     )
 }
 
-export default Counter;
+export const counterInfo = function(elements){
+        let wordsGamesInfo = [];
+        elements.map(
+            (item, index)=>{
+                wordsGamesInfo.push(<Counter key={index} icon={item.icon} amount={item.amount} iconPlus={item.iconPlus} postscript={item.postscript}/>)
+            }
+        )
+        return wordsGamesInfo;
+    }

@@ -1,6 +1,6 @@
 import React from "react";
 import './Form.sass'
-import Button from "../Buttons/Buttons.jsx"
+import {Button} from "../Buttons/Buttons.jsx"
 
 function Form(){
     return(

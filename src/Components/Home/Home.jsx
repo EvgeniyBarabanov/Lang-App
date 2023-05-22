@@ -3,8 +3,8 @@ import './Home.sass';
 
 
 import Showcase from "../Showcase/Showcase";
-import Counter from "../Counter/Counter";
-import Button from "../Buttons/Buttons";
+import {counterInfo} from "../Counter/Counter";
+import {createButtons} from "../Buttons/Buttons";
 import StudentLogo from "../../../public/image/StudentLogo.png";
 import StudentWithTablet from "../../../public/image/StudentWithTablet.png";
 import GirlWithBook from "../../../public/image/girlWithBook.png";
@@ -17,24 +17,6 @@ import JoyStickIcon from "../../../public/image/joystickIcon.svg";
 
 
 function Home(){
-
-    const arrInfo = function(elements){
-        let wordsGamesInfo = [];
-        elements.map(
-            (item, index)=>{
-                wordsGamesInfo.push(<Counter key={index} icon={item.icon} amount={item.amount} iconPlus={item.iconPlus} postscript={item.postscript}/>)
-            }
-        )
-        return wordsGamesInfo;
-    }
-
-    const createButtons = function(elements){
-        return elements.map(
-            (item, index)=>{
-                return <Button variant={item.variant} key={index} route={item.route} logo={item.logo}>{item.text}</Button>
-            }
-        )
-    }
 
     let homeData = [
         {
@@ -64,7 +46,7 @@ function Home(){
                     'variant': "button_small filled"
                 }
             ]),
-            'wordsGames': arrInfo(homeData),
+            'wordsGames': counterInfo(homeData),
             'logo' : StudentLogo
         },
         {

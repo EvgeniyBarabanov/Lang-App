@@ -2,8 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import './Buttons.sass'
 
-function Button(props){
-    const classes = [/button_small/, /hollow/, /filled/, /filled_picture/, /filled_color_pinkDark/];
+
+export const Button = function(props){
+    const classes = [/button_small/, /hollow/, /hollow_round/, /filled/, /filled_picture/, /filled_color_pinkDark/];
 
     const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ function Button(props){
         let buttonClasses = arrClasses.join(' '); 
         return buttonClasses;
     }
-    
+
     return(
            <button onClick={handleSubmit} className={`button ${selectClass(classes)} `}>
                 {props.children}
@@ -34,4 +35,10 @@ function Button(props){
     )
 }
 
-export default Button;
+export const createButtons = function(elements){
+        return elements.map(
+            (item, index)=>{
+                return <Button variant={item.variant} key={index} route={item.route} logo={item.logo}>{item.text}</Button>
+            }
+        )
+    }

@@ -18,8 +18,19 @@ function Showcase(props){
                         ? <h1 className="heading">{props.heading}</h1>
                         : <h2 className="heading heading_2">{props.heading}</h2>)
                     }
-                    
-                    <p className="text">{props.description}</p>
+                    {props.label &&
+                        <span className="label">props.label</span>
+                    }
+                    {props.description &&
+                        (props.descriptionSize16
+                        ? <p className="text text_size16">{props.description}</p>
+                        : <p className="text">{props.description}</p>)
+                    }
+                    {props.buttonLevel &&
+                        <div className="showcase__buttonLevel-group">
+                            {props.buttonLevel}
+                        </div>
+                    }
                     <div className="showcase__button-group">
                         {props.button}
                     </div>
