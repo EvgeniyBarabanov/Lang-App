@@ -6,8 +6,8 @@ import Showcase from "../Showcase/Showcase";
 import { createButtons } from "../Buttons/Buttons";
 /* change round button styles */
 function Sprint(){
-    let popularWords = words.getMostPopular(10000)
-    console.log(popularWords);
+    /* let popularWords = words.getMostPopular(10000)
+    console.log(popularWords); */
 
     let sprintInfo = {
         'heading': "Sprint",

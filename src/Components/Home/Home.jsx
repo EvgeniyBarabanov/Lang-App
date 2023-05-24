@@ -1,6 +1,6 @@
 import React from "react";
 import './Home.sass';
-
+import { useNavigate } from "react-router-dom";
 
 import Showcase from "../Showcase/Showcase";
 import {counterInfo} from "../Counter/Counter";
@@ -17,6 +17,16 @@ import JoyStickIcon from "../../../public/image/joystickIcon.svg";
 
 
 function Home(){
+
+    const navigate = useNavigate();
+
+    const selectLevelDifficult = function(){
+        console.log('test');
+    }
+
+    const handleSubmit = function(route){
+        navigate(route);
+    }
 
     let homeData = [
         {
@@ -42,7 +52,7 @@ function Home(){
             'button': createButtons([
                 {
                     'text': "About platform",
-                    'route': "aboutPlatform",
+                    'onClick': handleSubmit("aboutPlatform"),
                     'variant': "button_small filled"
                 }
             ]),
