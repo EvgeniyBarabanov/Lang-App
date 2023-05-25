@@ -20,7 +20,7 @@ export const Button = function(props){
     }
 
     return(
-           <button onClick={()=>props.onClick} className={`button ${selectClass(classes)} `}>
+           <button onClick={props.onClick} className={`button ${selectClass(classes)} `}>
                 {props.children}
                 {props.logo &&
                     <props.logo/>}
@@ -33,7 +33,7 @@ export const Button = function(props){
 export const createButtons = function(elements){
         return elements.map(
             (item, index)=>{
-                return <Button  variant={item.variant} key={index} route={item.route} logo={item.logo}>{item.text}</Button>
+                return <Button  variant={item.variant} onClick={item.onClick} key={index} logo={item.logo}>{item.text}</Button>
             }
         )
 }

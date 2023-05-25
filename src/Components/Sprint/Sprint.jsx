@@ -4,10 +4,16 @@ import {words} from 'popular-english-words';
 import SprintLogo from "../../../public/image/sprintLogo.png";
 import Showcase from "../Showcase/Showcase";
 import { createButtons } from "../Buttons/Buttons";
+
 /* change round button styles */
+
 function Sprint(){
-    /* let popularWords = words.getMostPopular(10000)
-    console.log(popularWords); */
+
+    const selectLevelDifficult = function(num1, num2){
+        let popularWords = words.getMostPopular(10000)
+        popularWords.map()
+        
+    }
 
     let sprintInfo = {
         'heading': "Sprint",
@@ -17,32 +23,32 @@ function Sprint(){
         'buttonLevel': createButtons([
             {
                 'text': "А1",
-                'route': "#",
+                'onClick': ()=>selectLevelDifficult(1, 1666),
                 'variant': "hollow hollow_round hollow_round_color_green"
             },
             {
                 'text': "А2",
-                'route': "#",
+                'onClick': ()=>selectLevelDifficult(1667, 3332),
                 'variant': "hollow hollow_round hollow_round_color_yellow"
             },
             {
                 'text': "B1",
-                'route': "#",
+                'onClick': ()=>selectLevelDifficult(3333, 4998),
                 'variant': "hollow hollow_round hollow_round_color_orange"
             },
             {
                 'text': "B2",
-                'route': "#",
+                'onClick': ()=>selectLevelDifficult(4999, 6664),
                 'variant': "hollow hollow_round hollow_round_color_red"
             },
             {
                 'text': "C1",
-                'route': "#",
+                'onClick': ()=>selectLevelDifficult(6665, 8330),
                 'variant': "hollow hollow_round hollow_round_color_pink"
             },
             {
                 'text': "C2",
-                'route': "#",
+                'onClick': ()=>selectLevelDifficult(8331, 9999),
                 'variant': "hollow hollow_round hollow_round_color_cyan"
             }
         ]),

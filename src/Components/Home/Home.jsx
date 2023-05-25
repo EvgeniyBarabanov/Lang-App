@@ -20,10 +20,6 @@ function Home(){
 
     const navigate = useNavigate();
 
-    const selectLevelDifficult = function(){
-        console.log('test');
-    }
-
     const handleSubmit = function(route){
         navigate(route);
     }
@@ -52,7 +48,7 @@ function Home(){
             'button': createButtons([
                 {
                     'text': "About platform",
-                    'onClick': handleSubmit("aboutPlatform"),
+                    'onClick': ()=>handleSubmit("aboutPlatform"),
                     'variant': "button_small filled"
                 }
             ]),
@@ -65,13 +61,13 @@ function Home(){
             'button': createButtons([
                 {
                     'text': "Sprint →",
-                    'route' : "sprint", 
+                    'onClick' : ()=>handleSubmit("sprint"), 
                     'logo': SneakersLogo,
                     'variant': "button_small filled filled_picture filled_color_pinkDark"
                 },
                 {
                     'text': "Audio-call →",
-                    'route': "audioCall", 
+                    'onClick': ()=>handleSubmit("audioCall"), 
                     'logo': HornLogo,
                     'variant': "button_small filled filled_picture"
                 }
@@ -85,7 +81,7 @@ function Home(){
             'button': createButtons([
                 {
                     'text': "Textbook →",
-                    'route': "textbook",
+                    'onClick': ()=>handleSubmit("textbook"), 
                     'variant': "button_small filled"
                 }
             ]),
@@ -97,7 +93,7 @@ function Home(){
             'button': createButtons([
                 {
                     'text': "Statistics →",
-                    'route': "statistics",
+                    'onClick': ()=>handleSubmit("statistics"),
                     'variant': "button_small filled"
                 }
             ]),
