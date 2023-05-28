@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import "./Sprint.sass";
-import {words} from 'popular-english-words';
+
 import SprintLogo from "../../../public/image/sprintLogo.png";
 import Showcase from "../Showcase/Showcase";
 import { createButtons } from "../Buttons/Buttons";
@@ -9,10 +10,15 @@ import { createButtons } from "../Buttons/Buttons";
 
 function Sprint(){
 
-    const selectLevelDifficult = function(num1, num2){
-        let popularWords = words.getMostPopular(10000)
-        popularWords.map()
-        
+    const [level, setLevel] = useState('')
+
+    const navigate = useNavigate();
+    const handleSubmit = function(route){
+        navigate(route);
+    }
+
+    const chooseLevel = function(lvl){
+        setLevel(lvl);
     }
 
     let sprintInfo = {
@@ -23,39 +29,39 @@ function Sprint(){
         'buttonLevel': createButtons([
             {
                 'text': "А1",
-                'onClick': ()=>selectLevelDifficult(1, 1666),
+                'onClick': ()=>chooseLevel("A1"),
                 'variant': "hollow hollow_round hollow_round_color_green"
             },
             {
                 'text': "А2",
-                'onClick': ()=>selectLevelDifficult(1667, 3332),
+                'onClick': ()=>chooseLevel("A2"),
                 'variant': "hollow hollow_round hollow_round_color_yellow"
             },
             {
                 'text': "B1",
-                'onClick': ()=>selectLevelDifficult(3333, 4998),
+                'onClick': ()=>chooseLevel("B1"),
                 'variant': "hollow hollow_round hollow_round_color_orange"
             },
             {
                 'text': "B2",
-                'onClick': ()=>selectLevelDifficult(4999, 6664),
+                'onClick': ()=>chooseLevel("B2"),
                 'variant': "hollow hollow_round hollow_round_color_red"
             },
             {
                 'text': "C1",
-                'onClick': ()=>selectLevelDifficult(6665, 8330),
+                'onClick': ()=>chooseLevel("C1"),
                 'variant': "hollow hollow_round hollow_round_color_pink"
             },
             {
                 'text': "C2",
-                'onClick': ()=>selectLevelDifficult(8331, 9999),
+                'onClick': ()=>chooseLevel("C2"),
                 'variant': "hollow hollow_round hollow_round_color_cyan"
             }
         ]),
         'button': createButtons([
             {
                 'text': "Get started",
-                'route': "#",
+                'onClick': ()=>handleSubmit(level),
                 'variant': "button_small hollow"
             }
         ]),

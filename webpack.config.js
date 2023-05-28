@@ -43,10 +43,12 @@ module.exports = {
     devtool: 'inline-source-map',
     devServer:{
         static:{
-            directory: path.join(__dirname, 'public')
+            directory: path.join(__dirname, 'public'),
+            publicPath: '/'
         },
         port: 8000,
         hot: true,
-        historyApiFallback: true
+        historyApiFallback: true,
+        open: true
     }
 }

@@ -6,7 +6,10 @@ import Main from "./Components/Main/Main.jsx"
 import Textbook from "./Components/Textbook/Textbook.jsx";
 import Statistics from "./Components/Statistics/Statistics.jsx";
 import Sprint from "./Components/Sprint/Sprint.jsx";
+import SprintGame from "./Components/Sprint/SprintGame.jsx";
 import AudioCall from "./Components/AudioCall/AudioCall.jsx";
+
+
 
 const router = createBrowserRouter([
     {
@@ -24,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: "sprint",
                 element: <Sprint />
+            },
+            {
+                path: "sprint/:level",
+                element: <SprintGame />
             },
             {
                 path: "audioCall",
