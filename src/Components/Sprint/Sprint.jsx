@@ -12,13 +12,13 @@ function Sprint(){
 
     const [level, setLevel] = useState('')
 
+    const chooseLevel = function(lvl){
+        setLevel(lvl);
+    }
+
     const navigate = useNavigate();
     const handleSubmit = function(route){
         navigate(route);
-    }
-
-    const chooseLevel = function(lvl){
-        setLevel(lvl);
     }
 
     let sprintInfo = {
