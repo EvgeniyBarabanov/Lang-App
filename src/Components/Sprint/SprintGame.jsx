@@ -3,27 +3,22 @@ import { useParams } from "react-router-dom";
 import { words } from 'popular-english-words';
 
 function SprintGame(){
-
-    const [wordEng, setWordEng] = useState('')
     
+    const [wordRu, setWordRu] = useState({})
+
     useEffect(()=>{
         getWord(params.level)
     },[])
 
     useEffect(()=>{
-        if(wordEng !== ''){
-            fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEng)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result.word, result.translate);
-            })
-        }
+        console.log(wordRu);
     })
 
     const params = useParams()
     const popularWords = words.getMostPopular(10000)
     
     const getWord = function(lvl){
+
         const groupWords = {
             'A1':[0, 1666],
             'A2':[1667, 3332],
@@ -34,14 +29,25 @@ function SprintGame(){
         }
         
         const allWords = popularWords.slice(groupWords[lvl][0], groupWords[lvl][1])
-        setWordEng(allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0])
+        const wordEng = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0])
+        
+        fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEng)
+        .then(response => response.json())
+        .then(result => {
+            setWordRu({...result})
+        })
         
     }
 
     return(
         <div className="sprintgame">
-            <h1>{wordEng}</h1>
-            <button onClick={()=>getWord(params.level)}>next word</button>
+        {wordRu &&
+            <div>
+                <h1>{wordRu.word}</h1>
+                <h1>{wordRu.translate}</h1>
+            </div>
+        }
+        <button onClick={()=>getWord(params.level)}>next word</button>
         </div>
     )
 }
