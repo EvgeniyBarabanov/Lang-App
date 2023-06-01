@@ -26,6 +26,7 @@ function Sprint(){
         'label': "speed task",
         'description': "Trains the skill of fast translation. You have to choose if the translation corresponds to the suggested word.",
         'descriptionSize16': true,
+        'reverse': true,
         'buttonLevel': createButtons([
             {
                 'text': "А1",
@@ -65,12 +66,13 @@ function Sprint(){
                 'variant': "button_small hollow"
             }
         ]),
+        'buttonLevelText': "Choose a level:",
         'logo': SprintLogo
     }
 
     return(
         <div className="sprint">
-            <Showcase reverse={sprintInfo.reverse} heading={sprintInfo.heading} label={sprintInfo.label} description={sprintInfo.description} descriptionSize16={sprintInfo.descriptionSize16} button={sprintInfo.button} buttonLevel={sprintInfo.buttonLevel} logo={sprintInfo.logo}/>
+            <Showcase reverse={sprintInfo.reverse} heading={sprintInfo.heading} label={sprintInfo.label} description={sprintInfo.description} descriptionSize16={sprintInfo.descriptionSize16} button={sprintInfo.button} buttonLevel={sprintInfo.buttonLevel} buttonLevelText={sprintInfo.buttonLevelText} logo={sprintInfo.logo}/>
         </div>
     )
 }

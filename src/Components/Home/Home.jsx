@@ -45,58 +45,67 @@ function Home(){
             'heading': "Learning and teaching online, made easy.",
             'headingBig': true,
             'description': "Practice your English and learn new things with the platform.",
-            'button': createButtons([
-                {
-                    'text': "About platform",
-                    'onClick': ()=>handleSubmit("aboutPlatform"),
-                    'variant': "button_small filled"
-                }
-            ]),
             'wordsGames': counterInfo(homeData),
+            'content': <div className="showcase__content">
+                <div className="buttonGroup"> {createButtons([
+                    {
+                        'text': "About platform",
+                        'onClick': ()=>handleSubmit("aboutPlatform"),
+                        'variant': "button_small filled"
+                    }
+                ])}</div>
+                <div className="counterGroup">{counterInfo(homeData)}</div>
+            </div>,
             'logo' : StudentLogo
         },
         {
             'heading': "Learn a language in a playful way",
             'description': "Make learning words more fun with mini-games",
-            'button': createButtons([
-                {
-                    'text': "Sprint →",
-                    'onClick' : ()=>handleSubmit("sprint"), 
-                    'logo': SneakersLogo,
-                    'variant': "button_small filled filled_picture filled_color_pinkDark"
-                },
-                {
-                    'text': "Audio-call →",
-                    'onClick': ()=>handleSubmit("audioCall"), 
-                    'logo': HornLogo,
-                    'variant': "button_small filled filled_picture"
-                }
-        ]),
+            'content': <div className="showcase__content">
+                <div className="buttonGroup"> {createButtons([
+                    {
+                        'text': "Sprint →",
+                        'onClick' : ()=>handleSubmit("sprint"), 
+                        'logo': SneakersLogo,
+                        'variant': "button_small filled filled_picture  filled_color_pinkDark"
+                    },
+                    {
+                        'text': "Audio-call →",
+                        'onClick': ()=>handleSubmit("audioCall"), 
+                        'logo': HornLogo,
+                        'variant': "button_small filled filled_picture"
+                    }
+                ])}</div>
+            </div>,
             'logo': StudentWithTablet,
             'reverse': true
         },
         {
             'heading': "Increase your vocabulary",
             'description': "Traditional and new effective approaches to word study",
-            'button': createButtons([
-                {
-                    'text': "Textbook →",
-                    'onClick': ()=>handleSubmit("textbook"), 
-                    'variant': "button_small filled"
-                }
-            ]),
+            'content': <div className="showcase__content">
+                <div className="buttonGroup"> {createButtons([
+                    {
+                        'text': "Textbook →",
+                        'onClick': ()=>handleSubmit("textbook"), 
+                        'variant': "button_small filled"
+                    }
+                ])}</div>
+            </div>,
             'logo': GirlWithBook
         },
         {
             'heading': "Watch your progress every day",
             'description': "Save statistics on your achievements, words learned, and mistakes",
-            'button': createButtons([
-                {
-                    'text': "Statistics →",
-                    'onClick': ()=>handleSubmit("statistics"),
-                    'variant': "button_small filled"
+            'content': <div className="showcase__content">
+                <div className="buttonGroup"> {createButtons([
+                    {
+                        'text': "Statistics →",
+                        'onClick': ()=>handleSubmit("statistics"),
+                        'variant': "button_small filled"
                 }
-            ]),
+                ])}</div>
+            </div>,
             'logo': StudentsWithNotebook,
             'reverse': true
         }
@@ -107,7 +116,7 @@ function Home(){
             {
                 homeInfo.map(
                     (item, index)=>{
-                        return <Showcase key={index} reverse={item.reverse} name={item.name} headingBig={item.headingBig} heading={item.heading} description={item.description} button={item.button} wordsGames={item.wordsGames} logo={item.logo} />
+                        return <Showcase key={index} reverse={item.reverse} name={item.name} headingBig={item.headingBig} heading={item.heading} description={item.description} content={item.content} logo={item.logo} />
                     }
                 )
             }

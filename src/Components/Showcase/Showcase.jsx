@@ -18,27 +18,8 @@ function Showcase(props){
                         ? <h1 className="heading">{props.heading}</h1>
                         : <h2 className="heading heading_2">{props.heading}</h2>)
                     }
-                    {props.label &&
-                        <span className="label">props.label</span>
-                    }
-                    {props.description &&
-                        (props.descriptionSize16
-                        ? <p className="text text_size16">{props.description}</p>
-                        : <p className="text">{props.description}</p>)
-                    }
-                    {props.buttonLevel &&
-                        <div className="showcase__buttonLevel-group">
-                            {props.buttonLevel}
-                        </div>
-                    }
-                    <div className="showcase__button-group">
-                        {props.button}
-                    </div>
-                    {props.wordsGames &&
-                        <div  className="showcase__counter-group">
-                            {props.wordsGames}
-                        </div>
-                    }
+                    <p className="text">{props.description}</p>
+                    {props.content}
                 </div>
                     <img src={props.logo} />
             </div>
