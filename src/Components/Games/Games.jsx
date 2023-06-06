@@ -10,7 +10,7 @@ function Games(props){
                 <div className="games__info">
                     <h2 className="heading heading_2">{props.heading}</h2>
                     <span className="label">{props.label}</span>
-                    <p className="text text_size16 games__text">{props.description}</p>
+                    <p className="text text_size16 games__margin">{props.description}</p>
                     {props.content}
                 </div>
             </div>

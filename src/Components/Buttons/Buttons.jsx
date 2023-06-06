@@ -20,20 +20,28 @@ export const Button = function(props){
     }
 
     return(
-           <button onClick={props.onClick} className={`button ${selectClass(classes)} `}>
+            <button onClick={props.onClick} className={`button ${selectClass(classes)} `}>
                 {props.children}
                 {props.logo &&
                     <props.logo/>}
-           </button>    
+            </button>    
     )
 }
 
 
 
-export const createButtons = function(elements){
-        return elements.map(
-            (item, index)=>{
-                return <Button  variant={item.variant} onClick={item.onClick} key={index} logo={item.logo}>{item.text}</Button>
-            }
+export const createButtons = function(elements, label){
+        return (
+            <div className="buttonGroup">
+                {label &&
+                    <div className="buttonGroup__label">{label}</div>}
+                <div className="buttonGroup__wrapper">
+                    {elements.map(
+                        (item, index)=>{
+                            return <Button variant={item.variant} onClick={item.onClick} key={index} logo={item.logo}>{item.text}</Button>
+                        }
+                    )}
+                </div>
+            </div>
         )
 }
