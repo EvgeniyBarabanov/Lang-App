@@ -8,9 +8,9 @@ function Games(props){
             <div className="container games__container">
                 <img src={props.logo} />
                 <div className="games__info">
-                    <h2 className="heading heading_2">{props.heading}</h2>
+                    <h2 className="heading heading_2 games__heading">{props.heading}</h2>
                     <span className="label">{props.label}</span>
-                    <p className="text text_size16 games__margin">{props.description}</p>
+                    <p className="text text_size16">{props.description}</p>
                     {props.content}
                 </div>
             </div>

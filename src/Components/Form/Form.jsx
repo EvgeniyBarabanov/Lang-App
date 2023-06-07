@@ -1,12 +1,25 @@
 import React from "react";
 import './Form.sass'
-import {Button} from "../Buttons/Buttons.jsx"
+import {ButtonGroup} from "../Buttons/Buttons.jsx"
 
 function Form(){
+
+    const buttonsData =[
+        {
+            'text': "Log in →",
+            'onClick': ()=>handleSubmit("login"),
+            'className': "button button_small"
+        },
+        {
+            'text': "Sign up",
+            'onClick': ()=>handleSubmit("signUp"),
+            'className': "button button_small hollow"
+        }
+    ]
+
     return(
         <div className="form">
-            <Button variant = "button_small">Log in →</Button>
-            <Button variant = "button_small hollow">Sign up</Button>
+            <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
         </div>
     )
 }

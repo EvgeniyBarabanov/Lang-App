@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import Showcase from "../Showcase/Showcase";
 import {counterInfo} from "../Counter/Counter";
-import {createButtons} from "../Buttons/Buttons";
+import {Button, ButtonGroup} from "../Buttons/Buttons";
 import StudentLogo from "../../../public/image/StudentLogo.png";
 import StudentWithTablet from "../../../public/image/StudentWithTablet.png";
 import GirlWithBook from "../../../public/image/girlWithBook.png";
@@ -15,7 +15,6 @@ import LightningIcon from "../../../public/image/lightningIcon.svg";
 import PlusIcon from "../../../public/image/plusIcon.svg";
 import JoyStickIcon from "../../../public/image/joystickIcon.svg";
 
-
 function Home(){
 
     const navigate = useNavigate();
@@ -24,7 +23,7 @@ function Home(){
         navigate(route);
     }
 
-    let homeData = [
+    const counterData = [
         {
             'icon': LightningIcon,
             'amount': "600",
@@ -39,22 +38,32 @@ function Home(){
         }
     ]
 
-    let homeInfo = [
+    const buttonsData = [
+        {
+            'text': "Sprint →",
+            'onClick' : ()=>handleSubmit("sprint"), 
+            'logo': SneakersLogo,
+            'className': "button button_small filled filled_picture filled_color_pinkDark"
+        },
+        {
+            'text': "Audio-call →",
+            'onClick': ()=>handleSubmit("audioCall"), 
+            'logo': HornLogo,
+            'className': "button button_small filled filled_picture"
+        }
+    ]
+
+    const homeInfo = [
         {
             'name': "E-COURSE PLATFORM",
             'heading': "Learning and teaching online, made easy.",
             'headingBig': true,
             'description': "Practice your English and learn new things with the platform.",
-            'wordsGames': counterInfo(homeData),
             'content': <div className="showcase__content">
-                <div className="buttonGroup"> {createButtons([
-                    {
-                        'text': "About platform",
-                        'onClick': ()=>handleSubmit("aboutPlatform"),
-                        'variant': "button_small filled"
-                    }
-                ])}</div>
-                <div className="counterGroup">{counterInfo(homeData)}</div>
+                <Button onClick={()=>handleSubmit("aboutPlatform")} className={'button button_small filled'}>
+                    AboutPlatform
+                </Button>  
+                <div className="counterGroup">{counterInfo(counterData)}</div>
             </div>,
             'logo' : StudentLogo
         },
@@ -62,20 +71,7 @@ function Home(){
             'heading': "Learn a language in a playful way",
             'description': "Make learning words more fun with mini-games",
             'content': <div className="showcase__content">
-                <div className="buttonGroup"> {createButtons([
-                    {
-                        'text': "Sprint →",
-                        'onClick' : ()=>handleSubmit("sprint"), 
-                        'logo': SneakersLogo,
-                        'variant': "button_small filled filled_picture  filled_color_pinkDark"
-                    },
-                    {
-                        'text': "Audio-call →",
-                        'onClick': ()=>handleSubmit("audioCall"), 
-                        'logo': HornLogo,
-                        'variant': "button_small filled filled_picture"
-                    }
-                ])}</div>
+                <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
             </div>,
             'logo': StudentWithTablet,
             'reverse': true
@@ -84,13 +80,9 @@ function Home(){
             'heading': "Increase your vocabulary",
             'description': "Traditional and new effective approaches to word study",
             'content': <div className="showcase__content">
-                <div className="buttonGroup"> {createButtons([
-                    {
-                        'text': "Textbook →",
-                        'onClick': ()=>handleSubmit("textbook"), 
-                        'variant': "button_small filled"
-                    }
-                ])}</div>
+                <Button onClick={()=>handleSubmit("textbook")} className={'button button_small filled'}>
+                    Textbook →
+                </Button>  
             </div>,
             'logo': GirlWithBook
         },
@@ -98,13 +90,9 @@ function Home(){
             'heading': "Watch your progress every day",
             'description': "Save statistics on your achievements, words learned, and mistakes",
             'content': <div className="showcase__content">
-                <div className="buttonGroup"> {createButtons([
-                    {
-                        'text': "Statistics →",
-                        'onClick': ()=>handleSubmit("statistics"),
-                        'variant': "button_small filled"
-                }
-                ])}</div>
+                <Button onClick={()=>handleSubmit("statistics")} className={'button button_small filled'}>
+                    Statistics →
+                </Button> 
             </div>,
             'logo': StudentsWithNotebook,
             'reverse': true

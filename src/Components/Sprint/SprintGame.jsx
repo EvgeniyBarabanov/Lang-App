@@ -10,9 +10,9 @@ function SprintGame(){
         getWord(params.level)
     },[])
 
-    useEffect(()=>{
+    /* useEffect(()=>{
         console.log(wordRu);
-    })
+    }) */
 
     const params = useParams()
     const popularWords = words.getMostPopular(10000)
@@ -29,12 +29,20 @@ function SprintGame(){
         }
         
         const allWords = popularWords.slice(groupWords[lvl][0], groupWords[lvl][1])
-        const wordEng = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0])
+        const wordEngRight = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0])
         
-        fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEng)
+        fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngRight)
         .then(response => response.json())
         .then(result => {
+            console.log(result);
             setWordRu({...result})
+        })
+
+        const wordEngWrong = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0])
+        fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
+        .then(response => response.json())
+        .then(wrong => {
+            console.log(wrong);
         })
         
     }
