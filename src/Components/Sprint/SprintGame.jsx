@@ -8,11 +8,8 @@ function SprintGame(){
 
     useEffect(()=>{
         getWord(params.level)
+        
     },[])
-
-    /* useEffect(()=>{
-        console.log(wordRu);
-    }) */
 
     const params = useParams()
     const popularWords = words.getMostPopular(10000)
@@ -27,24 +24,34 @@ function SprintGame(){
             'C1':[6665, 8330],
             'C2':[8331, 9999],
         }
-        
+
         const allWords = popularWords.slice(groupWords[lvl][0], groupWords[lvl][1])
         const wordEngRight = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0])
-        
-        fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngRight)
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
-            setWordRu({...result})
+        const wordEngWrong = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0])
+
+        Promise.all([
+            fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
+            .then(response => response.json())
+            .then(wrong => {
+                return wrong
+            }),
+            fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngRight)
+            .then(response => response.json())
+            .then(result => {
+                return result
+            })
+        ]).then(values => {
+            values[1].falseTranslate = values[0].translate
+            setWordRu({...values[1]})
+
         })
 
-        const wordEngWrong = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0])
-        fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
-        .then(response => response.json())
-        .then(wrong => {
-            console.log(wrong);
-        })
-        
+    } 
+    
+    const getRandomIntInclusive = function(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min
     }
 
     return(
@@ -52,10 +59,11 @@ function SprintGame(){
         {wordRu &&
             <div>
                 <h1>{wordRu.word}</h1>
-                <h1>{wordRu.translate}</h1>
+                <h1>{Object.values(wordRu)[getRandomIntInclusive(1,2)]}</h1>
             </div>
         }
-        <button onClick={()=>getWord(params.level)}>next word</button>
+        <button onClick={()=>getWord(params.level)}>right</button>
+        <button onClick={()=>getWord(params.level)}>wrong</button>
         </div>
     )
 }

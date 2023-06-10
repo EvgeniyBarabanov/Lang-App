@@ -26,7 +26,7 @@ function Home(){
     const counterData = [
         {
             'icon': LightningIcon,
-            'amount': "600",
+            'amount': "10000",
             'iconPlus': PlusIcon,
             'postscript': "Popular words"
         },
