@@ -8,7 +8,6 @@ function SprintGame(){
 
     useEffect(()=>{
         getWord(params.level)
-        
     },[])
 
     const params = useParams()
@@ -42,8 +41,8 @@ function SprintGame(){
             })
         ]).then(values => {
             values[1].falseTranslate = values[0].translate
+            values[1].output =  Object.values(values[1])[getRandomIntInclusive(1,2)]
             setWordRu({...values[1]})
-
         })
 
     } 
@@ -54,16 +53,29 @@ function SprintGame(){
         return Math.floor(Math.random() * (max - min + 1)) + min
     }
 
+    const test = function(value){ 
+
+        if ((wordRu.translate == wordRu.output) && value == "true"){
+            console.log('you right');
+        }else if ((wordRu.translate !== wordRu.output) && value == "false"){
+            console.log('you right');
+        }else{
+            console.log('you dont right');
+        }
+
+        getWord(params.level)
+    }
+
     return(
         <div className="sprintgame">
         {wordRu &&
             <div>
                 <h1>{wordRu.word}</h1>
-                <h1>{Object.values(wordRu)[getRandomIntInclusive(1,2)]}</h1>
+                <h1>{wordRu.output}</h1>
             </div>
         }
-        <button onClick={()=>getWord(params.level)}>right</button>
-        <button onClick={()=>getWord(params.level)}>wrong</button>
+        <button onClick={()=>test('true')}>right</button>
+        <button onClick={()=>test('false')}>wrong</button>
         </div>
     )
 }
