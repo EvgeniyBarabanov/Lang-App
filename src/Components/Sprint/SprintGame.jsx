@@ -1,19 +1,44 @@
 import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { words } from 'popular-english-words';
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import {ButtonGroup} from "../Buttons/Buttons";
 
 function SprintGame(){
     
     const [word, setWord] = useState({})
+    const [timeSec, setTimeSec] = useState({
+        'timer': 100
+    })
+    const [timer, setTimer] = useState({
+        'timerId': 0
+    })
+    const [futton, setFutton] = useState({
+        disabled: false
+    },[word])
+    const [question, setQuestion] = useState('')
+
+    const params = useParams()
+    const popularWords = words.getMostPopular(10000)
 
     useEffect(()=>{
         getWord(params.level, getRandomFlag(0,1))
     },[])
 
-    const params = useParams()
-    const popularWords = words.getMostPopular(10000)
+    useEffect(()=>{
+        if (Object.entries(word).length != 0) {
+            startTime()
+        }
+    },[word])
     
-    const getWord = function(lvl, positive){
+    useEffect(()=>{
+        if(timeSec.timer <= 0){
+            finishTime();
+        }
+    },[timeSec])
+
+    function getWord(lvl, positive){
 
         const groupWords = {
             'A1':[0, 1666],
@@ -56,25 +81,60 @@ function SprintGame(){
         }
     }
 
-    const test = function(value){
+    function test(value){
+        setFutton({'disabled':true})
         if(value === word.flag){
-            console.log('труе');
+            setQuestion('Молодец!=)')
         }else{
-            console.log('фалсе');
+            setQuestion("Не молодец =(")
         }
-        getWord(params.level, getRandomFlag(0,1))
+        finishTime();
+        getWord(params.level, getRandomFlag(0,1));
     }
+
+    let startTime = function(){
+        setTimer({'timerId': setInterval(()=> timeSet(), 100)})
+        setFutton({'disabled':false})
+    }
+
+    let timeSet = function(){
+        let timeSecTMP = timeSec
+        timeSecTMP.timer = timeSecTMP.timer - 1;
+        setTimeSec({...timeSecTMP})
+    }
+
+    let finishTime = function(){
+        setTimer({'timerId': clearInterval(timer.timerId)})
+        setTimeSec({'timer':100})
+    }
+
+    const buttonsData = [
+        {
+            'text': "Right",
+            'onClick' : ()=>test(true),
+            'className': "button button_small filled",
+            'disabled': futton.disabled
+        },
+        {
+            'text': "Wrong",
+            'onClick': ()=>test(false),
+            'className': "button button_small filled filled_color_pinkDark",
+            'disabled': futton.disabled
+        }
+    ]
 
     return(
         <div className="sprintgame">
-            {word &&
-                <div>
-                    <h1>{word.word}</h1>
-                    <h1>{word.translate}</h1>
-                </div>
-            }
-            <button onClick={()=>test(true)}>right</button>
-            <button onClick={()=>test(false)}>wrong</button>
+            <div style={{ width: 500, height: 500 }}>
+                <CircularProgressbarWithChildren text strokeWidth='1' value={timeSec.timer}>
+                    <p>{question}</p>
+                    <div>
+                        <h2 className="heading heading_2">{word.word}</h2>
+                        <h2 className="heading heading_2 heading_color_cyanDark">{word.translate}</h2>
+                    </div>
+                    <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
+                </CircularProgressbarWithChildren>;
+            </div>
         </div>
     )
 }

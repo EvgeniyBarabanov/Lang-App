@@ -43,7 +43,8 @@ function Home(){
             'text': "Sprint →",
             'onClick' : ()=>handleSubmit("sprint"), 
             'logo': SneakersLogo,
-            'className': "button button_small filled filled_picture filled_color_pinkDark"
+            'className': "button button_small filled filled_picture filled_color_pinkDark",
+            dsiabled : true
         },
         {
             'text': "Audio-call →",
