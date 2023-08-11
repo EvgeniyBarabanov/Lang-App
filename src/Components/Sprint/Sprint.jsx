@@ -6,10 +6,8 @@ import SprintLogo from "../../../public/image/sprintLogo.png";
 import Games from "../Games/Games";
 import {Button, ButtonGroup } from "../Buttons/Buttons";
 
-/* change round button styles */
-
 function Sprint(){
-
+    document.title = 'Sprint game'
     const [level, setLevel] = useState('')
 
     const chooseLevel = function(lvl){
