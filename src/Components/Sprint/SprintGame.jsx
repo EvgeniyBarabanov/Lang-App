@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { words } from 'popular-english-words';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {ButtonGroup} from "../Buttons/Buttons";
+
+
 
 function SprintGame(){
     
@@ -26,6 +29,7 @@ function SprintGame(){
     const [mistakes, SetMistakes] = useState(0);
 
     const params = useParams();
+   
     const popularWords = words.getMostPopular(10000);
 
     useEffect(()=>{
@@ -116,9 +120,14 @@ function SprintGame(){
         
     }
 
+    const navigate = useNavigate();
+    const handleSubmit = function(route){
+        navigate(route);
+    }
+
     let startTime = function(){
         if(mistakes == 3){
-            console.log('количество ошибок достигло 3');
+            handleSubmit("resultGame")
         }else{
             setTimer({'timerId': setInterval(()=> timeSet(), 100)});
 
