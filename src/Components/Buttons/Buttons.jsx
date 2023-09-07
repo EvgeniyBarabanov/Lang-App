@@ -4,7 +4,7 @@ import './Buttons.sass'
 
 export const Button = function(props){
     return(
-            <button onClick={props.onClick} className={props.className} disabled={props.disabled}>
+            <button onClick={props.onClick} className={props.className}>
                 {props.children}
                 {props.logo &&
                     <props.logo/>}
@@ -20,7 +20,7 @@ export const ButtonGroup = function(props){
             <div className="buttonGroup__wrapper">
                 {props.elements.map(
                     (item, index)=>{
-                        return <Button className={item.className} onClick={item.onClick} key={index} logo={item.logo} disabled={item.disabled}>{item.text}</Button>
+                        return <Button className={item.className} onClick={item.onClick} key={index} logo={item.logo}>{item.text}</Button>
                     }
                 )}
             </div>

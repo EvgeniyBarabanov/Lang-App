@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { words } from 'popular-english-words';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {ButtonGroup} from "../Buttons/Buttons";
+import StarMistakeIcon from "../../../public/image/starMistakeIcon.svg";
+import "./Sprint.sass";
 
 
 
@@ -13,16 +15,12 @@ function SprintGame(){
     const [word, setWord] = useState({});
 
     const [timeSec, setTimeSec] = useState({
-        'timer': 100
+        'timer': 60
     });
 
     const [timer, setTimer] = useState({
         'timerId': 0
     });
-
-    const [buttonStatus, setButtonStatus] = useState({
-        disabled: false
-    }/* ,[word] */);
 
     const [correctlyAnswers, setCorrectlyAnswers] = useState(0);
 
@@ -32,15 +30,15 @@ function SprintGame(){
    
     const popularWords = words.getMostPopular(10000);
 
+    const myRef = useRef()
+
     useEffect(()=>{
-        getWord(params.level, getRandomFlag(0,1))
+        startTime();
     },[]);
 
     useEffect(()=>{
-        if (Object.entries(word).length != 0) {
-            startTime();
-        }
-    },[word]);
+        getWord(params.level, getRandomFlag(0,1))
+    },[mistakes, correctlyAnswers]);
 
     useEffect(()=>{
         if(timeSec.timer <= 0){
@@ -53,13 +51,11 @@ function SprintGame(){
             'text': "Right",
             'onClick' : ()=>test(true),
             'className': "button button_small filled",
-            'disabled': buttonStatus.disabled
         },
         {
             'text': "Wrong",
             'onClick': ()=>test(false),
             'className': "button button_small filled filled_color_pinkDark",
-            'disabled': buttonStatus.disabled
         }
     ];
 
@@ -107,16 +103,16 @@ function SprintGame(){
     };
 
     function test(value){
-        setButtonStatus({'disabled':true});
 
         if(value === word.flag){
             setCorrectlyAnswers(correctlyAnswers +1)
         }else{
             SetMistakes(mistakes +1)
         };
-
-        finishTime();
-        getWord(params.level, getRandomFlag(0,1));
+ 
+        const stars = Array.from(myRef.current.children)
+        
+        if()
         
     }
 
@@ -126,35 +122,35 @@ function SprintGame(){
     }
 
     let startTime = function(){
-        if(mistakes == 3){
-            handleSubmit("resultGame")
-        }else{
             setTimer({'timerId': setInterval(()=> timeSet(), 100)});
-
-            setButtonStatus({'disabled':false});
-        }
+            console.log('timer is run');
     }
 
     let timeSet = function(){
         let timeSecTMP = timeSec;
-        timeSecTMP.timer = timeSecTMP.timer - 1;
+        timeSecTMP.timer = (timeSecTMP.timer - 0.1).toFixed(1);
         setTimeSec({...timeSecTMP});
-        /* console.log(timer.timerId); */
     }
 
     let finishTime = function(){
-        /* console.log(timer.timerId); */
         setTimer({'timerId': clearInterval(timer.timerId)}); 
-
-        setTimeSec({'timer':100});
+        console.log('timer is stopped');
+        handleSubmit("resultGame")
     }
 
     return(
         <div className="sprintgame">
             <div style={{ width: 500, height: 500 }}>
-                <CircularProgressbarWithChildren text strokeWidth='2' value={timeSec.timer}>
+                <CircularProgressbarWithChildren text strokeWidth='2' maxValue={60} value={timeSec.timer}>
                     <p>Правильных ответов:{correctlyAnswers}</p>
                     <p>Ошибок:{mistakes}</p>
+                    <p>{timeSec.timer}</p>
+                    <div ref={myRef} className="stars">
+                        <StarMistakeIcon  />
+                        <StarMistakeIcon  />
+                        <StarMistakeIcon  />
+                        
+                    </div>
                     <div>
                         <h2 className="heading heading_2">{word.word}</h2>
                         <h2 className="heading heading_2 heading_color_cyanDark">{word.translate}</h2>
