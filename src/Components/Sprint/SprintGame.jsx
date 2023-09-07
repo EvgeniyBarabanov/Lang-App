@@ -14,6 +14,8 @@ function SprintGame(){
     
     const [word, setWord] = useState({});
 
+    const [passedWords, setPassedWords] = useState([]);
+
     const [timeSec, setTimeSec] = useState({
         'timer': 60
     });
@@ -30,7 +32,7 @@ function SprintGame(){
    
     const popularWords = words.getMostPopular(10000);
 
-    const myRef = useRef()
+    const myRef = useRef();
 
     useEffect(()=>{
         startTime();
@@ -60,6 +62,8 @@ function SprintGame(){
     ];
 
     function getWord(lvl, positive){
+        
+        /* console.log(word); */
 
         const groupWords = {
             'A1':[0, 1666],
@@ -103,16 +107,17 @@ function SprintGame(){
     };
 
     function test(value){
-
+        
+        let passedWordsTMP = passedWords;
+        passedWordsTMP.push(word)
+        setPassedWords([...passedWordsTMP])
+        
+        
         if(value === word.flag){
             setCorrectlyAnswers(correctlyAnswers +1)
         }else{
             SetMistakes(mistakes +1)
         };
- 
-        const stars = Array.from(myRef.current.children)
-        
-        if()
         
     }
 
