@@ -14,19 +14,23 @@ function SprintGame(){
     
     const [word, setWord] = useState({});
 
+    const [buttonStatus, setButtonStatus] = useState(false)
+
     const [passedWords, setPassedWords] = useState([]);
 
     const [timeSec, setTimeSec] = useState({
-        'timer': 60
+        'timer': 10
     });
 
     const [timer, setTimer] = useState({
         'timerId': 0
     });
 
-    const [correctlyAnswers, setCorrectlyAnswers] = useState(0);
+    const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
 
-    const [mistakes, SetMistakes] = useState(0);
+    const [mistakes, setMistakes] = useState([]);
+
+    const [counterRightAnswers, setCounterRightAnswers] = useState(0);
 
     const params = useParams();
    
@@ -34,13 +38,15 @@ function SprintGame(){
 
     const myRef = useRef();
 
+    const multipleBonus = useRef();
+
     useEffect(()=>{
         startTime();
     },[]);
 
     useEffect(()=>{
         getWord(params.level, getRandomFlag(0,1))
-    },[mistakes, correctlyAnswers]);
+    },[correctlyAnswers, mistakes]);
 
     useEffect(()=>{
         if(timeSec.timer <= 0){
@@ -48,22 +54,28 @@ function SprintGame(){
         }
     },[timeSec]);
 
+    useEffect(()=>{
+        setButtonStatus(false)
+    },[word])
+
     const buttonsData = [
         {
             'text': "Right",
             'onClick' : ()=>test(true),
             'className': "button button_small filled",
+            'disabled' : buttonStatus
         },
         {
             'text': "Wrong",
             'onClick': ()=>test(false),
             'className': "button button_small filled filled_color_pinkDark",
+            'disabled' : buttonStatus
         }
     ];
 
     function getWord(lvl, positive){
-        
-        /* console.log(word); */
+
+        /* setButtonStatus(false); */
 
         const groupWords = {
             'A1':[0, 1666],
@@ -78,12 +90,14 @@ function SprintGame(){
         const wordEngRight = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0]);
         const wordEngWrong = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0]);
 
+
         if (positive){
             fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngRight)
             .then(response => response.json())
             .then(result => {
                 result.flag = true;
                 setWord({...result});
+                console.log('выдаю новое слово');
             })
         }else{
             fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
@@ -92,7 +106,20 @@ function SprintGame(){
                 result.flag = false;
                 result.word = wordEngRight;
                 setWord({...result});
+                console.log('выдаю новое слово');
             })
+        }
+
+        if(counterRightAnswers > 2 && counterRightAnswers < 6){
+            myRef.current.children[1].setAttribute('class', 'starFill');
+            multipleBonus.current.innerHTML = 'x2';
+        }else if(counterRightAnswers >= 6){
+            myRef.current.children[2].setAttribute('class', 'starFill');
+            multipleBonus.current.innerHTML = 'x3';
+        }else{
+            myRef.current.children[1].removeAttribute('class');
+            myRef.current.children[2].removeAttribute('class');
+            multipleBonus.current.innerHTML = 'x1';
         }
     }; 
     
@@ -107,28 +134,34 @@ function SprintGame(){
     };
 
     function test(value){
-        
+
+        setButtonStatus(true);
+
         let passedWordsTMP = passedWords;
-        passedWordsTMP.push(word)
+        passedWordsTMP.push(word);
         setPassedWords([...passedWordsTMP])
         
-        
         if(value === word.flag){
-            setCorrectlyAnswers(correctlyAnswers +1)
+            let correctlyAnswersTMP = correctlyAnswers;
+            correctlyAnswersTMP.push(word.word);
+            setCorrectlyAnswers([...correctlyAnswersTMP]);
+            setCounterRightAnswers( counterRightAnswers + 1);
         }else{
-            SetMistakes(mistakes +1)
+            let mistakesTMP = mistakes;
+            mistakesTMP.push(word.word);
+            setMistakes([...mistakesTMP]);
+            setCounterRightAnswers(0);
         };
-        
     }
 
     const navigate = useNavigate();
     const handleSubmit = function(route){
-        navigate(route);
+        navigate(route, {replace: true, state: {correctlyAnswers, mistakes}});
     }
 
     let startTime = function(){
             setTimer({'timerId': setInterval(()=> timeSet(), 100)});
-            console.log('timer is run');
+            /* console.log('timer is run'); */
     }
 
     let timeSet = function(){
@@ -139,19 +172,19 @@ function SprintGame(){
 
     let finishTime = function(){
         setTimer({'timerId': clearInterval(timer.timerId)}); 
-        console.log('timer is stopped');
+        /* console.log('timer was stopped'); */
         handleSubmit("resultGame")
     }
 
     return(
         <div className="sprintgame">
             <div style={{ width: 500, height: 500 }}>
-                <CircularProgressbarWithChildren text strokeWidth='2' maxValue={60} value={timeSec.timer}>
-                    <p>Правильных ответов:{correctlyAnswers}</p>
-                    <p>Ошибок:{mistakes}</p>
+                <CircularProgressbarWithChildren strokeWidth='2' maxValue={60} value={timeSec.timer}>
+                    <p className="heading heading_2" ref={multipleBonus}>х1</p>
+                    <p className="text text_size16">multipler</p>
                     <p>{timeSec.timer}</p>
                     <div ref={myRef} className="stars">
-                        <StarMistakeIcon  />
+                        <StarMistakeIcon className="starFill" />
                         <StarMistakeIcon  />
                         <StarMistakeIcon  />
                         
