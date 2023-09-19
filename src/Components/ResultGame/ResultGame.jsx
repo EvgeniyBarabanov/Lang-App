@@ -1,39 +1,38 @@
-import React from "react";
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import React from 'react';
 
 function ResultGame(props){
     return(
         <div className="result">
             <div className="container">
-                <div className="result__info">
+                <div className="result__progress">
                     <img src={props.logo}/>
+                    {console.log(props.logo)}
                     <div className="result__score">
                         <h3>{props.nameGame}</h3>
                         <p>{props.description}</p>
-                        <div className="result__">
+                        <div className="result__progressBar">
+                        {/* {props.elements.map(
+                            (item, index) =>{
+                            return <CircularProgressbarWithChildren ></CircularProgressbarWithChildren>
+                        })} */}
                         </div>
+                        {props.content}
                     </div>
                 </div>
                 <div className="result__word">
+                <p>I know</p>
                 <ul>
-                    <li>
-                        <p>I know</p>
-                        <ul>
-                            {history.state.usr.correctlyAnswers.map(
-                                (item, index)=>{
-                                    return(
-                                        fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + item)
-                                        .then(response => response.json())
-                                        .then(result =>{
-                                            <li>{result.word} {result.translate}</li> /* attension on this line code */
-                                        })
-                                    )
-                                    
-                                }
-                            )}
-                        </ul>
-                    </li>
+                    {props.learned}
                 </ul>
+                <p>I don't know</p>
+                {/* <ul>
+                    {props.unlearned.map(
+                        (item, index)=>{
+                            return <li></li>
+                        }
+                    )}
+                </ul> */}
                 </div>
             </div>
         </div>

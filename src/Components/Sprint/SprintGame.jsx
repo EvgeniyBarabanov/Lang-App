@@ -5,7 +5,7 @@ import { words } from 'popular-english-words';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {ButtonGroup} from "../Buttons/Buttons";
-import StarMistakeIcon from "../../../public/image/starMistakeIcon.svg";
+import StarBonusIcon from "../../../public/image/StarBonusIcon.svg";
 import "./Sprint.sass";
 
 
@@ -75,8 +75,6 @@ function SprintGame(){
 
     function getWord(lvl, positive){
 
-        /* setButtonStatus(false); */
-
         const groupWords = {
             'A1':[0, 1666],
             'A2':[1667, 3332],
@@ -97,7 +95,6 @@ function SprintGame(){
             .then(result => {
                 result.flag = true;
                 setWord({...result});
-                console.log('выдаю новое слово');
             })
         }else{
             fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
@@ -106,11 +103,10 @@ function SprintGame(){
                 result.flag = false;
                 result.word = wordEngRight;
                 setWord({...result});
-                console.log('выдаю новое слово');
             })
         }
 
-        if(counterRightAnswers > 2 && counterRightAnswers < 6){
+        if(counterRightAnswers > 2){
             myRef.current.children[1].setAttribute('class', 'starFill');
             multipleBonus.current.innerHTML = 'x2';
         }else if(counterRightAnswers >= 6){
@@ -161,7 +157,6 @@ function SprintGame(){
 
     let startTime = function(){
             setTimer({'timerId': setInterval(()=> timeSet(), 100)});
-            /* console.log('timer is run'); */
     }
 
     let timeSet = function(){
@@ -172,8 +167,7 @@ function SprintGame(){
 
     let finishTime = function(){
         setTimer({'timerId': clearInterval(timer.timerId)}); 
-        /* console.log('timer was stopped'); */
-        handleSubmit("resultGame")
+        handleSubmit("sprintResult")
     }
 
     return(
@@ -184,9 +178,9 @@ function SprintGame(){
                     <p className="text text_size16">multipler</p>
                     <p>{timeSec.timer}</p>
                     <div ref={myRef} className="stars">
-                        <StarMistakeIcon className="starFill" />
-                        <StarMistakeIcon  />
-                        <StarMistakeIcon  />
+                        <StarBonusIcon className="starFill" />
+                        <StarBonusIcon  />
+                        <StarBonusIcon  />
                         
                     </div>
                     <div>
