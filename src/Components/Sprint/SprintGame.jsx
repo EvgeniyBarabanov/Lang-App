@@ -14,6 +14,8 @@ function SprintGame(){
     
     const [word, setWord] = useState({});
 
+    const [points, setPoints] = useState(0);
+
     const [buttonStatus, setButtonStatus] = useState(false)
 
     const [passedWords, setPassedWords] = useState([]);
