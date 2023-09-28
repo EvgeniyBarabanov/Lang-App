@@ -7,9 +7,8 @@ import Textbook from "./Components/Textbook/Textbook.jsx";
 import Statistics from "./Components/Statistics/Statistics.jsx";
 import Sprint from "./Components/Sprint/Sprint.jsx";
 import SprintGame from "./Components/Sprint/SprintGame.jsx";
-import ResultGame from "./Components/ResultGame/ResultGame.jsx";
 import AudioCall from "./Components/AudioCall/AudioCall.jsx";
-import SprintResult from "./Components/SprintResult/SprintResult";
+import SprintResult from "./Components/Sprint/SprintResult";
 
 
 

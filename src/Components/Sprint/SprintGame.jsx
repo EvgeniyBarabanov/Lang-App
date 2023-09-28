@@ -19,7 +19,7 @@ function SprintGame(){
     const [passedWords, setPassedWords] = useState([]);
 
     const [timeSec, setTimeSec] = useState({
-        'timer': 10
+        'timer': 5
     });
 
     const [timer, setTimer] = useState({
