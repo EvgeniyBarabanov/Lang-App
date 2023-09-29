@@ -5,7 +5,7 @@ import { words } from 'popular-english-words';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {ButtonGroup} from "../Buttons/Buttons";
-import StarBonusIcon from "../../../public/image/StarBonusIcon.svg";
+import StarBonusIcon from "../../../public/image/starBonusIcon.svg";
 import "./Sprint.sass";
 
 
@@ -21,7 +21,7 @@ function SprintGame(){
     const [passedWords, setPassedWords] = useState([]);
 
     const [timeSec, setTimeSec] = useState({
-        'timer': 5
+        'timer': 60
     });
 
     const [timer, setTimer] = useState({
@@ -92,14 +92,14 @@ function SprintGame(){
 
 
         if (positive){
-            fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngRight)
+            fetch('https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngRight)
             .then(response => response.json())
             .then(result => {
                 result.flag = true;
                 setWord({...result});
             })
         }else{
-            fetch('http://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
+            fetch('https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
             .then(response => response.json())
             .then(result => {
                 result.flag = false;
