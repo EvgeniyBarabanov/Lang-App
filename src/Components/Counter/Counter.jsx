@@ -5,9 +5,13 @@ export const Counter = function(props){
     return(
         <div className="counter">
             <div className="counter__wrapper">
-                <props.icon />
+                {props.icon &&
+                    <props.icon />
+                }
                 <span className="counter__amount">{props.amount}</span>
-                <props.iconPlus />
+                {props.iconPlus &&
+                    <props.iconPlus />
+                }   
             </div>
             <span className="text text_size16">{props.postscript}</span>
         </div>

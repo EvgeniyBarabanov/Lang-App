@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { words } from 'popular-english-words';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { counterInfo } from "../Counter/Counter";
 import {ButtonGroup} from "../Buttons/Buttons";
 import StarBonusIcon from "../../../public/image/starBonusIcon.svg";
 import "./Sprint.sass";
@@ -21,11 +22,11 @@ function SprintGame(){
     const [passedWords, setPassedWords] = useState([]);
 
     const [timeSec, setTimeSec] = useState({
-        'timer': 60
+        'timer': 60,
     });
 
     const [timer, setTimer] = useState({
-        'timerId': 0
+        'timerId': 0,
     });
 
     const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
@@ -40,40 +41,53 @@ function SprintGame(){
 
     const myRef = useRef();
 
-    const multipleBonus = useRef();
+    const [multipleBonus, setMultipleBonus] = useState('x1')
 
     useEffect(()=>{
         startTime();
     },[]);
 
     useEffect(()=>{
-        getWord(params.level, getRandomFlag(0,1))
+        countPoints();
+        bonusScore();
+        getWord(params.level, getRandomFlag(0,1));
     },[correctlyAnswers, mistakes]);
 
     useEffect(()=>{
-        if(timeSec.timer <= 0){
+        if(timeSec.timer <= 0 || passedWords.length == 40){
             finishTime();
         }
     },[timeSec]);
 
     useEffect(()=>{
         setButtonStatus(false)
-    },[word])
+    },[word]);
 
     const buttonsData = [
         {
             'text': "Right",
             'onClick' : ()=>test(true),
             'className': "button button_small filled",
-            'disabled' : buttonStatus
+            'disabled' : buttonStatus,
         },
         {
             'text': "Wrong",
             'onClick': ()=>test(false),
             'className': "button button_small filled filled_color_pinkDark",
-            'disabled' : buttonStatus
+            'disabled' : buttonStatus,
         }
     ];
+
+    const counterData = [
+        {
+            'amount': multipleBonus,
+            'postscript': "multiplier",
+        },
+        {
+            'amount': points,
+            'postscript': "points",
+        }
+    ]
 
     function getWord(lvl, positive){
 
@@ -107,27 +121,16 @@ function SprintGame(){
                 setWord({...result});
             })
         }
-
-        if(counterRightAnswers > 2){
-            myRef.current.children[1].setAttribute('class', 'starFill');
-            multipleBonus.current.innerHTML = 'x2';
-        }else if(counterRightAnswers >= 6){
-            myRef.current.children[2].setAttribute('class', 'starFill');
-            multipleBonus.current.innerHTML = 'x3';
-        }else{
-            myRef.current.children[1].removeAttribute('class');
-            myRef.current.children[2].removeAttribute('class');
-            multipleBonus.current.innerHTML = 'x1';
-        }
+        
     }; 
     
     const getRandomFlag = function(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         if (Math.floor(Math.random() * (max - min + 1)) + min == 0){
-            return true
+            return true;
         }else{
-            return false
+            return false;
         }
     };
 
@@ -150,6 +153,31 @@ function SprintGame(){
             setMistakes([...mistakesTMP]);
             setCounterRightAnswers(0);
         };
+
+    }
+
+    function bonusScore(){
+        if(counterRightAnswers > 2 && counterRightAnswers <= 6){
+            myRef.current.children[1].setAttribute('class', 'starFill');
+            setMultipleBonus('x2');
+        }else if(counterRightAnswers >= 6){
+            myRef.current.children[2].setAttribute('class', 'starFill'); 
+            setMultipleBonus('x3');
+        }else{
+            myRef.current.children[1].removeAttribute('class');
+            myRef.current.children[2].removeAttribute('class');
+            setMultipleBonus('x1');
+        }
+    }
+
+    function countPoints(){
+        if(counterRightAnswers > 0 && counterRightAnswers <= 3){
+            setPoints(points + 10);
+        }else if(counterRightAnswers > 3 && counterRightAnswers <= 7){
+            setPoints(points + 20);
+        }else if(counterRightAnswers > 7){
+            setPoints(points + 30);
+        }
     }
 
     const navigate = useNavigate();
@@ -169,29 +197,25 @@ function SprintGame(){
 
     let finishTime = function(){
         setTimer({'timerId': clearInterval(timer.timerId)}); 
-        handleSubmit("sprintResult")
+        handleSubmit("sprintResult");
     }
 
     return(
-        <div className="sprintgame">
-            <div style={{ width: 500, height: 500 }}>
-                <CircularProgressbarWithChildren strokeWidth='2' maxValue={60} value={timeSec.timer}>
-                    <p className="heading heading_2" ref={multipleBonus}>х1</p>
-                    <p className="text text_size16">multipler</p>
-                    <p>{timeSec.timer}</p>
-                    <div ref={myRef} className="stars">
-                        <StarBonusIcon className="starFill" />
-                        <StarBonusIcon  />
-                        <StarBonusIcon  />
-                        
-                    </div>
-                    <div>
-                        <h2 className="heading heading_2">{word.word}</h2>
-                        <h2 className="heading heading_2 heading_color_cyanDark">{word.translate}</h2>
-                    </div>
-                    <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
-                </CircularProgressbarWithChildren>;
-            </div>
+        <div className="sprintGame">
+            <CircularProgressbarWithChildren className="sprintGame__progressBar" strokeWidth='2' maxValue={60} value={timeSec.timer}>
+                
+                <div className="counterGroup">{counterInfo(counterData)}</div>
+                <div ref={myRef} className="sprintGame__stars">
+                    <StarBonusIcon className="starFill" />
+                    <StarBonusIcon  />
+                    <StarBonusIcon  />
+                </div>
+                <div className="sprintGame__words">
+                    <h2 className="heading heading_2">{word.word}</h2>
+                    <h2 className="heading heading_2 heading_color_cyanDark">{word.translate}</h2>
+                </div>
+                <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
+            </CircularProgressbarWithChildren>
         </div>
     )
 }
