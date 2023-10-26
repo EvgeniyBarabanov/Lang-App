@@ -1,12 +1,18 @@
 .counterGroup
     display: flex
+    font-size: 0
+    width: 100%
+
+    &_padding-bottom
+        padding-bottom: 40px
 
 .counter
     display: flex
     flex-direction: column
-    align-items: center
+    align-items: flex-end
     padding-right: 49px
     border-right: 2px solid #E0E0E0
+    width: calc( 50% + 3px )
 
     &__amount
         font: 
@@ -18,7 +24,19 @@
         line-height: 40px
         color: #000000   
 
+    &__wrapper
+        display: flex
+        flex-direction: column
+        align-items: center
+    
+    &__wrapper_directionRow
+        flex-direction: row
+
 .counter:last-child
-    padding-left: 47px
+    padding-left: 49px
     border-right: none
     padding-right: 0px
+    align-items: flex-start
+    width: 50%
+    
+    

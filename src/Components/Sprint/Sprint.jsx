@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import "./Sprint.sass";
 
 import SprintLogo from "../../../public/image/sprintLogo.png";
 import Games from "../Games/Games";

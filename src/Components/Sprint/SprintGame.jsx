@@ -7,7 +7,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { counterInfo } from "../Counter/Counter";
 import {ButtonGroup} from "../Buttons/Buttons";
 import StarBonusIcon from "../../../public/image/starBonusIcon.svg";
-import "./Sprint.sass";
+import "./SprintGame.sass";
 
 
 
@@ -17,7 +17,7 @@ function SprintGame(){
 
     const [points, setPoints] = useState(0);
 
-    const [buttonStatus, setButtonStatus] = useState(false)
+    const [buttonStatus, setButtonStatus] = useState(false);
 
     const [passedWords, setPassedWords] = useState([]);
 
@@ -41,10 +41,13 @@ function SprintGame(){
 
     const myRef = useRef();
 
-    const [multipleBonus, setMultipleBonus] = useState('x1')
+    const focus = useRef();
+
+    const [multipleBonus, setMultipleBonus] = useState('x1');
 
     useEffect(()=>{
         startTime();
+        focus.current.focus({preventScroll : true});
     },[]);
 
     useEffect(()=>{
@@ -60,7 +63,7 @@ function SprintGame(){
     },[timeSec]);
 
     useEffect(()=>{
-        setButtonStatus(false)
+        setButtonStatus(false);
     },[word]);
 
     const buttonsData = [
@@ -88,6 +91,11 @@ function SprintGame(){
             'postscript': "points",
         }
     ]
+
+    const navigate = useNavigate();
+    const handleSubmit = function(route){
+        navigate(route, {replace: true, state: {correctlyAnswers, mistakes}});
+    }
 
     function getWord(lvl, positive){
 
@@ -156,6 +164,14 @@ function SprintGame(){
 
     }
 
+    let keyTest = function(event){
+        if(event.code == "ArrowLeft"){
+            test(true);
+        }else if(event.code == "ArrowRight"){
+            test(false);
+        }
+    }
+
     function bonusScore(){
         if(counterRightAnswers > 2 && counterRightAnswers <= 6){
             myRef.current.children[1].setAttribute('class', 'starFill');
@@ -180,11 +196,6 @@ function SprintGame(){
         }
     }
 
-    const navigate = useNavigate();
-    const handleSubmit = function(route){
-        navigate(route, {replace: true, state: {correctlyAnswers, mistakes}});
-    }
-
     let startTime = function(){
             setTimer({'timerId': setInterval(()=> timeSet(), 100)});
     }
@@ -201,10 +212,10 @@ function SprintGame(){
     }
 
     return(
-        <div className="sprintGame">
+        <div ref={focus} onKeyDown={keyTest} tabIndex={-1} className="sprintGame">
             <CircularProgressbarWithChildren className="sprintGame__progressBar" strokeWidth='2' maxValue={60} value={timeSec.timer}>
                 
-                <div className="counterGroup">{counterInfo(counterData)}</div>
+                <div className="counterGroup counterGroup_padding-bottom">{counterInfo(counterData)}</div>
                 <div ref={myRef} className="sprintGame__stars">
                     <StarBonusIcon className="starFill" />
                     <StarBonusIcon  />
@@ -216,6 +227,7 @@ function SprintGame(){
                 </div>
                 <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
             </CircularProgressbarWithChildren>
+            <p className="text text_size12">*You can also use the ← → keys on the keyboard</p>
         </div>
     )
 }

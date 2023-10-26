@@ -2,6 +2,7 @@ import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import React from 'react';
 import StackOfBooks from "../../../public/image/stackOfBooks.svg"
 import { ClockLoader } from 'react-spinners';
+import "./ResultGame.sass";
 
 
 function ResultGame(props){
@@ -23,22 +24,24 @@ function ResultGame(props){
                     <div className="result__score">
                         <h3>{props.nameGame}</h3>
                         <p>{props.description}</p>
-                        <div className="result__progressBar">
+                        <div className="result__progress-Bar">
                         </div>
                         {props.content}
                     </div>
                 </div>
-                <div className="result__learnedWord">
-                    <p>I know</p>
-                    <ul>
-                        {props.learned}
-                    </ul>
-                </div>
-                <div className="result__unlearnedWord">
-                    <p>I don't know</p>
-                    <ul>
-                        {props.unlearned}
-                    </ul>
+                <div className="result__word">
+                    <div>
+                        <p>I know</p>
+                        <ul>
+                            {props.learned}
+                        </ul>
+                    </div>
+                    <div>
+                        <p>I don't know</p>
+                        <ul>
+                            {props.unLearned}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
