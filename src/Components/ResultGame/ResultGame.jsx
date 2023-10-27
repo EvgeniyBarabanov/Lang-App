@@ -20,26 +20,34 @@ function ResultGame(props){
         <div className="result">
             <div className="container">
                 <div className="result__progress">
-                    <StackOfBooks/>
-                    <div className="result__score">
-                        <h3>{props.nameGame}</h3>
-                        <p>{props.description}</p>
-                        <div className="result__progress-Bar">
+                    <div className="result__points">
+                        <StackOfBooks/>
+                        <div className="result__score">
+                            <h3>{props.nameGame}</h3>
+                            <p>{props.description}</p>
+                            <div className="result__progress-bar-group">
+                                <CircularProgressbarWithChildren className='result__progress-bar' strokeWidth='2'>
+
+                                </CircularProgressbarWithChildren>
+                                <CircularProgressbarWithChildren className='result__progress-bar' strokeWidth='2'>
+ 
+                                </CircularProgressbarWithChildren>
+                            </div>
                         </div>
-                        {props.content}
+                        {/* buttonGroup */}
                     </div>
-                </div>
-                <div className="result__word">
-                    <div>
+                </div>              
+                <div className="result__word-group">
+                    <div className='result__word-learned'>
                         <p>I know</p>
                         <ul>
                             {props.learned}
                         </ul>
                     </div>
-                    <div>
+                    <div className='result__word-unlearned'>
                         <p>I don't know</p>
                         <ul>
-                            {props.unLearned}
+                            {props.unlearned}
                         </ul>
                     </div>
                 </div>

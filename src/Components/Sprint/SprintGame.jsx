@@ -19,10 +19,10 @@ function SprintGame(){
 
     const [buttonStatus, setButtonStatus] = useState(false);
 
-    const [passedWords, setPassedWords] = useState([]);
+    const [passedWords, setPassedWords] = useState(0);
 
     const [timeSec, setTimeSec] = useState({
-        'timer': 60,
+        'timer': 10,
     });
 
     const [timer, setTimer] = useState({
@@ -46,7 +46,6 @@ function SprintGame(){
     const [multipleBonus, setMultipleBonus] = useState('x1');
 
     useEffect(()=>{
-        startTime();
         focus.current.focus({preventScroll : true});
     },[]);
 
@@ -54,10 +53,23 @@ function SprintGame(){
         countPoints();
         bonusScore();
         getWord(params.level, getRandomFlag(0,1));
+        clearInterval(timer.timerId)
     },[correctlyAnswers, mistakes]);
 
     useEffect(()=>{
-        if(timeSec.timer <= 0 || passedWords.length == 40){
+        if(passedWords == 10){
+            finishTime();
+            handleSubmit("sprintResult");
+        }
+    },[passedWords]);
+
+    useEffect(()=>{
+        if(timeSec.timer <= 0){
+            let mistakesTMP = mistakes;
+                mistakesTMP.push(word.word);
+                setMistakes([...mistakesTMP]);
+                setCounterRightAnswers(0);
+
             finishTime();
         }
     },[timeSec]);
@@ -94,7 +106,7 @@ function SprintGame(){
 
     const navigate = useNavigate();
     const handleSubmit = function(route){
-        navigate(route, {replace: true, state: {correctlyAnswers, mistakes}});
+        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, passedWords, points}});
     }
 
     function getWord(lvl, positive){
@@ -119,6 +131,7 @@ function SprintGame(){
             .then(result => {
                 result.flag = true;
                 setWord({...result});
+                startTime();
             })
         }else{
             fetch('https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
@@ -127,9 +140,9 @@ function SprintGame(){
                 result.flag = false;
                 result.word = wordEngRight;
                 setWord({...result});
+                startTime();
             })
         }
-        
     }; 
     
     const getRandomFlag = function(min, max) {
@@ -146,9 +159,7 @@ function SprintGame(){
 
         setButtonStatus(true);
 
-        let passedWordsTMP = passedWords;
-        passedWordsTMP.push(word);
-        setPassedWords([...passedWordsTMP])
+        setPassedWords(passedWords + 1)
         
         if(value === word.flag){
             let correctlyAnswersTMP = correctlyAnswers;
@@ -163,6 +174,8 @@ function SprintGame(){
         };
 
     }
+
+    /* https://felixgerschau.com/react-hooks-settimeout/ */
 
     let keyTest = function(event){
         if(event.code == "ArrowLeft"){
@@ -186,34 +199,39 @@ function SprintGame(){
         }
     }
 
-    function countPoints(){
+    function countPoints(){ /* написать через свитч */
         if(counterRightAnswers > 0 && counterRightAnswers <= 3){
             setPoints(points + 10);
-        }else if(counterRightAnswers > 3 && counterRightAnswers <= 7){
+        }else if(counterRightAnswers > 3 && counterRightAnswers <= 6){
             setPoints(points + 20);
-        }else if(counterRightAnswers > 7){
+        }else if(counterRightAnswers > 6){
             setPoints(points + 30);
         }
     }
 
     let startTime = function(){
-            setTimer({'timerId': setInterval(()=> timeSet(), 100)});
+        const timer1 = {'timerId': setInterval(()=> timeSet(), 100)};
+        setTimer(timer1);
+        let timeSecTMP = timeSec;
+        timeSecTMP.timer = 10;
+        setTimeSec({...timeSecTMP});
     }
 
     let timeSet = function(){
         let timeSecTMP = timeSec;
         timeSecTMP.timer = (timeSecTMP.timer - 0.1).toFixed(1);
         setTimeSec({...timeSecTMP});
+        console.log(timeSec, timer.timerId);
     }
 
     let finishTime = function(){
-        setTimer({'timerId': clearInterval(timer.timerId)}); 
-        handleSubmit("sprintResult");
+        clearInterval(timer.timerId); 
+        console.log('asd');
     }
 
     return(
         <div ref={focus} onKeyDown={keyTest} tabIndex={-1} className="sprintGame">
-            <CircularProgressbarWithChildren className="sprintGame__progressBar" strokeWidth='2' maxValue={60} value={timeSec.timer}>
+            <CircularProgressbarWithChildren className="sprintGame__progressBar" strokeWidth='2' maxValue={10} value={timeSec.timer}>
                 
                 <div className="counterGroup counterGroup_padding-bottom">{counterInfo(counterData)}</div>
                 <div ref={myRef} className="sprintGame__stars">

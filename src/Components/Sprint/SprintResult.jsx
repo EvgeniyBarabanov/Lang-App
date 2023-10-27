@@ -1,5 +1,6 @@
 import React,{ useState, useEffect} from "react";
 import ResultGame from "../ResultGame/ResultGame"
+import Song from "../../../public/image/song-icon.svg"
 
 
 function SprintResult() {
@@ -11,11 +12,11 @@ function SprintResult() {
         "description": "You did pretty good!",
         "learned": wordLearnedList.map(
             (item, index)=>{
-                return <li key={index}>{item.word} - {item.translate}</li>
+                return <li key={index}><Song/>{item.word}<span>-{item.translate}</span></li>
             }),
-        "unLearned": wordUnlearnedList.map(
+        "unlearned": wordUnlearnedList.map(
             (item, index)=>{
-                return <li key={index}>{item.word} - {item.translate}</li>
+                return <li key={index}><Song/>{item.word}<span>-{item.translate}</span></li>
             })
     }
 
@@ -26,12 +27,12 @@ function SprintResult() {
             .then((response) => response.json())
         });
 
-        const unLearned = history.state.usr.mistakes.map((item, index) =>{
+        const unlearned = history.state.usr.mistakes.map((item, index) =>{
             return fetch('https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + item)
             .then((response) => response.json())
         });
-
-        Promise.all([...learned, ...unLearned])
+        console.log(history.state.usr);
+        Promise.all([...learned, ...unlearned])
         .then((result)=> {
             setWordLearnedList(result.splice(0, history.state.usr.correctlyAnswers.length));
             setWordUnlearnedList(result);
@@ -39,7 +40,7 @@ function SprintResult() {
     },[])
 
     return( 
-            <ResultGame nameGame={wordList.nameGame} description={wordList.description} learned={wordList.learned} unLearned={wordList.unLearned}/>
+            <ResultGame nameGame={wordList.nameGame} description={wordList.description} learned={wordList.learned} unlearned={wordList.unlearned}/>
     )
 }
 
