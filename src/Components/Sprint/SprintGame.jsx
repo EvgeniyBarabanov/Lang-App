@@ -9,66 +9,54 @@ import {ButtonGroup} from "../Buttons/Buttons";
 import StarBonusIcon from "../../../public/image/starBonusIcon.svg";
 import "./SprintGame.sass";
 
-
-
 function SprintGame(){
     
-    const [word, setWord] = useState({});
-
-    const [points, setPoints] = useState(0);
-
-    const [buttonStatus, setButtonStatus] = useState(false);
-
-    const [passedWords, setPassedWords] = useState(0);
-
-    const [timeSec, setTimeSec] = useState({
-        'timer': 10,
-    });
-
-    const [timer, setTimer] = useState({
-        'timerId': 0,
-    });
-
-    const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
-
-    const [mistakes, setMistakes] = useState([]);
-
-    const [counterRightAnswers, setCounterRightAnswers] = useState(0);
-
     const params = useParams();
    
     const popularWords = words.getMostPopular(10000);
 
-    const myRef = useRef();
-
-    const focus = useRef();
-
+    const [word, setWord] = useState({});
+    const [points, setPoints] = useState(0);
+    const [buttonStatus, setButtonStatus] = useState(false);
+    const [passedWords, setPassedWords] = useState(0);
+    const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
+    const [mistakes, setMistakes] = useState([]);
+    const [counterRightAnswers, setCounterRightAnswers] = useState(0);
     const [multipleBonus, setMultipleBonus] = useState('x1');
+    const [timeSec, setTimeSec] = useState({
+        'timer': 10,
+    });
+
+    const myRef = useRef();
+    const focus = useRef();
+    const timerRef = useRef(null);
 
     useEffect(()=>{
         focus.current.focus({preventScroll : true});
+        return () => clearInterval(timerRef.current);
     },[]);
 
     useEffect(()=>{
-        countPoints();
-        bonusScore();
-        getWord(params.level, getRandomFlag(0,1));
-        clearInterval(timer.timerId)
-    },[correctlyAnswers, mistakes]);
-
-    useEffect(()=>{
-        if(passedWords == 10){
+        if(passedWords >= 40){
             finishTime();
             handleSubmit("sprintResult");
+        }else{
+            countPoints();
+            bonusScore();
+            getWord(params.level, getRandomFlag(0,1));
+            clearInterval(timerRef.current);
         }
     },[passedWords]);
 
     useEffect(()=>{
         if(timeSec.timer <= 0){
+            setPassedWords(passedWords + 1);
+
             let mistakesTMP = mistakes;
-                mistakesTMP.push(word.word);
-                setMistakes([...mistakesTMP]);
-                setCounterRightAnswers(0);
+            mistakesTMP.push(word.word);
+            setMistakes([...mistakesTMP]);
+
+            setCounterRightAnswers(0);
 
             finishTime();
         }
@@ -158,8 +146,7 @@ function SprintGame(){
     function test(value){
 
         setButtonStatus(true);
-
-        setPassedWords(passedWords + 1)
+        setPassedWords(passedWords + 1);
         
         if(value === word.flag){
             let correctlyAnswersTMP = correctlyAnswers;
@@ -210,8 +197,7 @@ function SprintGame(){
     }
 
     let startTime = function(){
-        const timer1 = {'timerId': setInterval(()=> timeSet(), 100)};
-        setTimer(timer1);
+        timerRef.current =  setInterval(()=> timeSet(), 100);
         let timeSecTMP = timeSec;
         timeSecTMP.timer = 10;
         setTimeSec({...timeSecTMP});
@@ -221,11 +207,11 @@ function SprintGame(){
         let timeSecTMP = timeSec;
         timeSecTMP.timer = (timeSecTMP.timer - 0.1).toFixed(1);
         setTimeSec({...timeSecTMP});
-        console.log(timeSec, timer.timerId);
+        console.log(timeSec, timerRef.current);
     }
 
     let finishTime = function(){
-        clearInterval(timer.timerId); 
+        clearInterval(timerRef.current); 
         console.log('asd');
     }
 
