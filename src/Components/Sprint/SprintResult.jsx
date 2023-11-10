@@ -10,6 +10,8 @@ function SprintResult() {
     const wordList = {
         "nameGame": "your Sprint",
         "description": "You did pretty good!",
+        "rightAsnwers": history.state.usr.correctlyAnswers.length,
+        "points" : history.state.usr.points,
         "learned": wordLearnedList.map(
             (item, index)=>{
                 return <li key={index}><Song/>{item.word}<span>-{item.translate}</span></li>
@@ -40,7 +42,7 @@ function SprintResult() {
     },[])
 
     return( 
-            <ResultGame nameGame={wordList.nameGame} description={wordList.description} learned={wordList.learned} unlearned={wordList.unlearned}/>
+            <ResultGame nameGame={wordList.nameGame} description={wordList.description} points={wordList.points} rightAnswers={wordList.rightAsnwers} learned={wordList.learned} unlearned={wordList.unlearned}/>
     )
 }
 

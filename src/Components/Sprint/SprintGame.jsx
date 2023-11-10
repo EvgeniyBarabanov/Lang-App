@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { words } from 'popular-english-words';
-import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { counterInfo } from "../Counter/Counter";
 import {ButtonGroup} from "../Buttons/Buttons";
@@ -35,17 +35,12 @@ function SprintGame(){
         focus.current.focus({preventScroll : true});
         return () => clearInterval(timerRef.current);
     },[]);
-
+    /* ПЕРЕСМОТРЕТЬ ФУНКЦИЮ ПОДСЧЕТА ОЧКОВ В ЮСЭФЕКТЕ, и функцию остановки таймера, написал в 2 вариантах в 3 разных местах */
     useEffect(()=>{
-        if(passedWords >= 40){
-            finishTime();
-            handleSubmit("sprintResult");
-        }else{
-            countPoints();
-            bonusScore();
-            getWord(params.level, getRandomFlag(0,1));
-            clearInterval(timerRef.current);
-        }
+        countPoints();
+        bonusScore();
+        getWord(params.level, getRandomFlag(0,1));
+        clearInterval(timerRef.current);
     },[passedWords]);
 
     useEffect(()=>{
@@ -63,6 +58,10 @@ function SprintGame(){
     },[timeSec]);
 
     useEffect(()=>{
+        if(passedWords >= 5){
+            finishTime();
+            handleSubmit("sprintResult");
+        }
         setButtonStatus(false);
     },[word]);
 
@@ -94,7 +93,7 @@ function SprintGame(){
 
     const navigate = useNavigate();
     const handleSubmit = function(route){
-        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, passedWords, points}});
+        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, points}});
     }
 
     function getWord(lvl, positive){
@@ -159,10 +158,7 @@ function SprintGame(){
             setMistakes([...mistakesTMP]);
             setCounterRightAnswers(0);
         };
-
     }
-
-    /* https://felixgerschau.com/react-hooks-settimeout/ */
 
     let keyTest = function(event){
         if(event.code == "ArrowLeft"){
@@ -186,15 +182,24 @@ function SprintGame(){
         }
     }
 
-    function countPoints(){ /* написать через свитч */
-        if(counterRightAnswers > 0 && counterRightAnswers <= 3){
-            setPoints(points + 10);
-        }else if(counterRightAnswers > 3 && counterRightAnswers <= 6){
-            setPoints(points + 20);
-        }else if(counterRightAnswers > 6){
-            setPoints(points + 30);
-        }
-    }
+    function countPoints(){
+        switch(counterRightAnswers){
+            case 0:
+                break;
+            case 1:
+            case 2:
+            case 3:
+                setPoints(points + 10);
+                break;
+            case 4:
+            case 5:
+            case 6:
+                setPoints(points + 20);
+                break;
+            default:
+                setPoints(points + 30);
+        };
+    };
 
     let startTime = function(){
         timerRef.current =  setInterval(()=> timeSet(), 100);
@@ -207,17 +212,16 @@ function SprintGame(){
         let timeSecTMP = timeSec;
         timeSecTMP.timer = (timeSecTMP.timer - 0.1).toFixed(1);
         setTimeSec({...timeSecTMP});
-        console.log(timeSec, timerRef.current);
+        console.log(timeSec.timer);
     }
 
     let finishTime = function(){
         clearInterval(timerRef.current); 
-        console.log('asd');
     }
 
     return(
         <div ref={focus} onKeyDown={keyTest} tabIndex={-1} className="sprintGame">
-            <CircularProgressbarWithChildren className="sprintGame__progressBar" strokeWidth='2' maxValue={10} value={timeSec.timer}>
+            <CircularProgressbarWithChildren className="sprintGame__progressBar" styles={buildStyles({pathColor: '#2B788B', trailColor: '#C3DCE3', rotation: 0.25})} strokeWidth='2' maxValue={10} value={timeSec.timer}>
                 
                 <div className="counterGroup counterGroup_padding-bottom">{counterInfo(counterData)}</div>
                 <div ref={myRef} className="sprintGame__stars">
