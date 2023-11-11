@@ -7,14 +7,23 @@
 
     &__container
         gap: 10px
+        align-items: stretch
 
     &__progress
         display: flex
+        flex-direction: column
+        align-items: center
+        gap: 30px
         background-color: #ffffff
         padding: 40px
 
     &__points
         display: flex
+
+    &__score
+        display: flex
+        flex-direction: column
+        gap: 20px
 
     &__progress-bar-group
         display: flex
@@ -23,13 +32,28 @@
         width: 120px
         height: 120px
 
-    /* &__word
-        display: flex */
-
     &__word-group
         display: flex
         background-color: #ffffff
         padding: 40px
         gap: 40px
+    
+    &__word-learned,
+    &__word-unlearned
+        display: flex
+        flex-direction: column
+        position: relative
+        gap: 30px
+
+    &__label
+        white-space: nowrap
+
+.list-word
+    list-style-type: none
+
+    &__item
+        display: flex
+        align-items: center
+        color: #000
     
     
