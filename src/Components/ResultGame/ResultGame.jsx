@@ -1,5 +1,5 @@
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
-import React, {useRef} from 'react';
+import React from 'react';
 import StackOfBooks from "../../../public/image/stackOfBooks.svg"
 import { ClockLoader } from 'react-spinners';
 import "./ResultGame.sass";
@@ -8,9 +8,6 @@ import Checkbox from "../Checkbox/Checkbox.jsx";
 
 
 function ResultGame(props){
-
-    const toogleRef = useRef();
-
     const override = {
         display: "block",
         margin: "0 auto",
@@ -23,16 +20,15 @@ function ResultGame(props){
     function voiceWord(word, event){
         let synth = window.speechSynthesis;
         let message = new SpeechSynthesisUtterance();
+        message.text = word;
+        synth.speak(message);
+        const e = event.currentTarget;
         message.onstart = function(){
-            /* toogleRef.current.classList.toggle('checkbox__active');
-            console.log(toogleRef.current); */
+            e.classList.toggle('checkbox__active');
         }
         message.onend = function(){
-            /* toogleRef.current.classList.toggle('checkbox__active'); */
+            e.classList.toggle('checkbox__active');
         }
-        message.text = word;
-        console.log(event.target);
-        synth.speak(message);
     }
 
     return(   
@@ -67,7 +63,7 @@ function ResultGame(props){
                         <span className='label result__label'>{props.labelLearned}</span>
                         <ul className='list-word'>
                             {props.learned.map((item, index)=>{
-                                return <li className='list-word__item text text_size16' key={index}><Checkbox onClick={(event)=>{voiceWord(item.word, event)}} image=<Song/> />{item.word}<span className='text text_size16'> - {item.translate}</span></li>
+                                return <li className='list-word__item text text_size16' key={index}><Checkbox onClick={(event)=>{voiceWord(item.word, event)}} image=<Song className='checkbox__image'/> />{item.word}<span className='text text_size16'> - {item.translate}</span></li>
                             })}
                         </ul>
                     </div>

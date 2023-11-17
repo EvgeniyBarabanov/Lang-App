@@ -58,7 +58,7 @@ function SprintGame(){
     },[timeSec]);
 
     useEffect(()=>{
-        if(passedWords >= 5){
+        if(passedWords >= 40){
             finishTime();
             handleSubmit("sprintResult");
         }
