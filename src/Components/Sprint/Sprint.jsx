@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-import SprintLogo from "../../../public/image/sprintLogo.png";
+import sprintLogo from "../../../public/image/sprintLogo.png";
 import Games from "../Games/Games";
 import {Button, ButtonGroup } from "../Buttons/Buttons";
 
@@ -51,13 +51,14 @@ function Sprint(){
         }
     ]
 
-    let sprintInfo = {
-        'logo': SprintLogo,
+    let info = {
+        'logo': sprintLogo,
         'heading': "Sprint",
         'label': "speed task",
         'description': "Trains the skill of fast translation. You have to choose if the translation corresponds to the suggested word.",
-        'content': <div className='games__content '>
-            <ButtonGroup className="buttonGroup games__button" buttonGroupLabel="Choose a level" elements={buttonsData}></ButtonGroup>
+        'content': <div className='games__content'>
+            <p className='text text_size14'>Choose a level:</p>
+            <ButtonGroup className="button-group button-group_gap24"elements={buttonsData}></ButtonGroup>
             <Button onClick={()=>handleSubmit(level)} className={'button button_small hollow'}>
                 Get started
             </Button>  
@@ -66,7 +67,7 @@ function Sprint(){
     }
 
     return(
-            <Games logo={sprintInfo.logo} heading={sprintInfo.heading} label={sprintInfo.label} description={sprintInfo.description} content={sprintInfo.content} />
+            <Games logo={info.logo} heading={info.heading} label={info.label} description={info.description} content={info.content} />
     )
 }
 

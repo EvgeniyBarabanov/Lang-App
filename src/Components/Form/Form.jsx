@@ -19,7 +19,7 @@ function Form(){
 
     return(
         <div className="form">
-            <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
+            <ButtonGroup className='button-group' elements={buttonsData} />
         </div>
     )
 }

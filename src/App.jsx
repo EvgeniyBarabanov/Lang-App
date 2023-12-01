@@ -7,8 +7,10 @@ import Textbook from "./Components/Textbook/Textbook.jsx";
 import Statistics from "./Components/Statistics/Statistics.jsx";
 import Sprint from "./Components/Sprint/Sprint.jsx";
 import SprintGame from "./Components/Sprint/SprintGame.jsx";
-import AudioCall from "./Components/AudioCall/AudioCall.jsx";
 import SprintResult from "./Components/Sprint/SprintResult";
+import AudioCall from "./Components/AudioCall/AudioCall.jsx";
+import AudioCallGame from "./Components/AudioCall/AudioCallGame.jsx";
+
 
 
 
@@ -35,11 +37,15 @@ const router = createBrowserRouter([
             },
             {
                 path:"sprint/:level/sprintResult",
-                element:<SprintResult/>
+                element:<SprintResult />
             },
             {
                 path: "audioCall",
                 element: <AudioCall />
+            },
+            {
+                path: "audioCall/:level",
+                element: <AudioCallGame />
             }
         ]
     }

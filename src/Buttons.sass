@@ -1,11 +1,15 @@
-.buttonGroup
+.button-group
     display: flex
-    flex-direction: column
-    gap: 13px
-    
-    &__wrapper
-        display: flex
-        gap: 30px
+    gap: 30px
+
+    &_gap20
+        gap: 20px
+
+    &_gap24
+        gap: 24px
+
+    &_gap10
+        gap: 10px
 
 .button
     font: 
@@ -20,13 +24,30 @@
     background: transparent
     border: 0
 
-    &:hover
-        color: #2B788B
-        text-decoration: underline
-
     &_small
         font-size: 16px
         line-height: 22px
+
+    &_picture
+        display: flex
+        align-items: center
+        gap: 8px
+
+        &:hover svg
+            animation: rot 2s linear infinite
+
+            @keyframes rot
+                0%
+                    transform: rotate(0deg)
+                100%
+                    transform: rotate(360deg)
+
+  
+
+    &:hover
+        color: #2B788B
+        text-decoration: underline
+        
 
 .hollow
     color: #ffffff
@@ -122,6 +143,21 @@
                 background-color: rgb(89, 150, 165, 0.3)
                 color: #5996A5
 
+.hollow-reverse
+    background-color: #ffffff
+    /* color: #2B788B */
+    /* text-decoration: none */
+    /* border-radius: 100% */
+
+    /* &_picture
+        width: 48px
+        height: 50px */
+
+    /* &:hover
+        color: #ffffff
+        background: #2B788B */
+
+
 .filled
     color: #2B788B
     background: #C3DCE3
@@ -136,7 +172,7 @@
         position: relative
         padding: 82px 34px 14px 34px
 
-        svg
+        img
             position: absolute
             top: -30px
 

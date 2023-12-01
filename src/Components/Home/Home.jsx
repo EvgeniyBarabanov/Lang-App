@@ -9,8 +9,8 @@ import StudentLogo from "../../../public/image/studentLogo.png";
 import StudentWithTablet from "../../../public/image/studentWithTablet.png";
 import GirlWithBook from "../../../public/image/girlWithBook.png";
 import StudentsWithNotebook from "../../../public/image/studentsWithNotebook.png";
-import SneakersLogo from "../../../public/image/sneakersLogo.svg";
-import HornLogo from "../../../public/image/hornLogo.svg";
+import SneakersIcon from "../../../public/image/sneakers-icon.png"
+import HornIcon from "../../../public/image/horn-icon.png";
 import LightningIcon from "../../../public/image/lightningIcon.svg";
 import PlusIcon from "../../../public/image/plusIcon.svg";
 import JoyStickIcon from "../../../public/image/joystickIcon.svg";
@@ -42,13 +42,13 @@ function Home(){
         {
             'text': "Sprint →",
             'onClick' : ()=>handleSubmit("sprint"), 
-            'logo': SneakersLogo,
+            'logo': SneakersIcon,
             'className': "button button_small filled filled_picture filled_color_pinkDark"
         },
         {
             'text': "Audio-call →",
             'onClick': ()=>handleSubmit("audioCall"), 
-            'logo': HornLogo,
+            'logo': HornIcon,
             'className': "button button_small filled filled_picture"
         }
     ]
@@ -71,7 +71,7 @@ function Home(){
             'heading': "Learn a language in a playful way",
             'description': "Make learning words more fun with mini-games",
             'content': <div className="showcase__content">
-                <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
+                <ButtonGroup className='button-group button-group_gap20' elements={buttonsData} />
             </div>,
             'logo': StudentWithTablet,
             'reverse': true

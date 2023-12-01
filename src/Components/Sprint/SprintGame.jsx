@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef} from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { words } from 'popular-english-words';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -58,7 +57,7 @@ function SprintGame(){
     },[timeSec]);
 
     useEffect(()=>{
-        if(passedWords >= 40){
+        if(passedWords >= 4){
             finishTime();
             handleSubmit("sprintResult");
         }
@@ -233,7 +232,7 @@ function SprintGame(){
                     <h2 className="heading heading_2">{word.word}</h2>
                     <h2 className="heading heading_2 heading_color_cyanDark">{word.translate}</h2>
                 </div>
-                <ButtonGroup className="buttonGroup" elements={buttonsData}></ButtonGroup>
+                <ButtonGroup className="button-group button-group_gap10" elements={buttonsData} />
             </CircularProgressbarWithChildren>
             <p className="text text_size12">*You can also use the ← → keys on the keyboard</p>
         </div>

@@ -1,10 +1,12 @@
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import React from 'react';
+import { ButtonGroup } from '../Buttons/Buttons.jsx';
 import StackOfBooks from "../../../public/image/stackOfBooks.svg"
 import { ClockLoader } from 'react-spinners';
 import "./ResultGame.sass";
 import Song from "../../../public/image/song-icon.svg"
 import Checkbox from "../Checkbox/Checkbox.jsx";
+import Repeat from "../../../public/image/repeat.svg";
 
 
 function ResultGame(props){
@@ -19,8 +21,11 @@ function ResultGame(props){
 
     function voiceWord(word, event){
         let synth = window.speechSynthesis;
+        let voices = synth.getVoices();
+        console.log(voices[2]);
         let message = new SpeechSynthesisUtterance();
         message.text = word;
+        
         synth.speak(message);
         const e = event.currentTarget;
         message.onstart = function(){
@@ -31,8 +36,21 @@ function ResultGame(props){
         }
     }
 
-    return(   
+    const buttonData = [
+        {
+            'text': "Play it again",
+            'onClick': ()=>handleSubmit("sprint"),
+            'logo': Repeat,
+            'className': "button button_picture button_small"
+        },
+        {
+            'text': "Go to textbook",
+            'onClick': ()=>handleSubmit("textbook"),
+            'className': "button button_small filled"
+        }
+    ];
 
+    return(   
         <div className="result">
             <div className="container result__container">
                 <div className="result__progress">
@@ -40,7 +58,7 @@ function ResultGame(props){
                         <StackOfBooks/>
                         <div className="result__score">
                             <h3 className='heading heading_3'>{props.heading}</h3>
-                            <p className='text text_size16'>{props.description}</p>
+                            <p className='text text_size16'>You did pretty good!</p>
                             <div className="result__progress-bar-group">
                                 <CircularProgressbarWithChildren className='result__progress-bar' maxValue={1110} value={props.points} styles={buildStyles({pathColor: '#2B788B', trailColor: '#C3DCE3'})} strokeWidth='3'>
                                     <p className='text text_size14 text_color_black'>retrieved</p>
@@ -55,7 +73,7 @@ function ResultGame(props){
                             </div>
                         </div>
                     </div>
-                    {props.content}
+                    <ButtonGroup className='button-group' elements={buttonData}/>
                 </div>              
                 <div className="result__word-group">
                     <div className='result__word-learned'>

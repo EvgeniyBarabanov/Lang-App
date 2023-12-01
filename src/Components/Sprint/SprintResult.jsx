@@ -1,7 +1,5 @@
 import React,{ useState, useEffect} from "react";
 import ResultGame from "../ResultGame/ResultGame"
-import { ButtonGroup } from "../Buttons/Buttons";
-import Repeat from "../../../public/image/repeat.svg";
 
 function SprintResult() {
     const [wordLearnedList, setWordLearnedList] = useState([]);
@@ -26,26 +24,10 @@ function SprintResult() {
         })
     },[])
 
-    const buttonData = [
-        {
-            'text': "Play it again",
-            'onClick': ()=>handleSubmit("sprint"),
-            'logo': Repeat,
-            'className': "button button_small"
-        },
-        {
-            'text': "Go to textbook",
-            'onClick': ()=>handleSubmit("textbook"),
-            'className': "button button_small filled"
-        }
-    ];
-
     const wordList = {
         "heading": "Your Sprint",
-        "description": "You did pretty good!",
         "rightAsnwers": history.state.usr.correctlyAnswers.length,
         "points": history.state.usr.points,
-        "content": <ButtonGroup className="buttonGroup" elements={buttonData}></ButtonGroup>,
         "learned": wordLearnedList,
         "labelLearned": history.state.usr.correctlyAnswers.length + " words",
         "unlearned": wordUnlearnedList,
@@ -53,7 +35,7 @@ function SprintResult() {
     }
 
     return( 
-            <ResultGame heading={wordList.heading} description={wordList.description} points={wordList.points} content={wordList.content} rightAnswers={wordList.rightAsnwers} learned={wordList.learned} labelLearned={wordList.labelLearned} unlearned={wordList.unlearned} labelUnlearned={wordList.labelUnlearned}/>
+            <ResultGame heading={wordList.heading} points={wordList.points} rightAnswers={wordList.rightAsnwers} learned={wordList.learned} labelLearned={wordList.labelLearned} unlearned={wordList.unlearned} labelUnlearned={wordList.labelUnlearned}/>
     )
 }
 
