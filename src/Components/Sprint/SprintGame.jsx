@@ -219,22 +219,24 @@ function SprintGame(){
     }
 
     return(
-        <div ref={focus} onKeyDown={keyTest} tabIndex={-1} className="sprintGame">
-            <CircularProgressbarWithChildren className="sprintGame__progressBar" styles={buildStyles({pathColor: '#2B788B', trailColor: '#C3DCE3', rotation: 0.25})} strokeWidth='2' maxValue={10} value={timeSec.timer}>
-                
-                <div className="counterGroup counterGroup_padding-bottom">{counterInfo(counterData)}</div>
-                <div ref={myRef} className="sprintGame__stars">
-                    <StarBonusIcon className="starFill" />
-                    <StarBonusIcon  />
-                    <StarBonusIcon  />
-                </div>
-                <div className="sprintGame__words">
-                    <h2 className="heading heading_2">{word.word}</h2>
-                    <h2 className="heading heading_2 heading_color_cyanDark">{word.translate}</h2>
-                </div>
-                <ButtonGroup className="button-group button-group_gap10" elements={buttonsData} />
-            </CircularProgressbarWithChildren>
-            <p className="text text_size12">*You can also use the ← → keys on the keyboard</p>
+        <div ref={focus} onKeyDown={keyTest} tabIndex={-1} className="sprint-game">
+            <div className="container sprint-game__container">
+                <CircularProgressbarWithChildren className="sprint-game__progressBar" styles={buildStyles({pathColor: '#2B788B', trailColor: '#C3DCE3', rotation: 0.25})} strokeWidth='2' maxValue={10} value={timeSec.timer}>
+
+                    <div className="counterGroup counterGroup_padding-bottom">{counterInfo(counterData)}</div>
+                    <div ref={myRef} className="sprint-game__stars">
+                        <StarBonusIcon className="starFill" />
+                        <StarBonusIcon  />
+                        <StarBonusIcon  />
+                    </div>
+                    <div className="sprint-game__words">
+                        <h2 className="heading heading_2">{word.word}</h2>
+                        <h2 className="heading heading_2 heading_color_cyanDark">{word.translate}</h2>
+                    </div>
+                    <ButtonGroup className="button-group button-group_gap10" elements={buttonsData} />
+                </CircularProgressbarWithChildren>
+                <p className="text text_size12">*You can also use the ← → keys on the keyboard</p>
+            </div>
         </div>
     )
 }

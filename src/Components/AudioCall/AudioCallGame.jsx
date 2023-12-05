@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './AudioCallGame.sass'
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import { useParams } from "react-router-dom";
 import { words } from "popular-english-words";
@@ -15,7 +16,6 @@ function AudioCallGame(){
     const [wordInfo, setWordInfo] = useState([])
 
     useEffect(()=>{
-        console.log(wordInfo.length);
         if(wordInfo.length < 5){
             getWord(params.level);
         }
@@ -37,16 +37,16 @@ function AudioCallGame(){
         let wordInfoTMP = wordInfo;
         wordInfoTMP.push((allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0]))
         setWordInfo([...wordInfoTMP])
-        
     }
 
-
     return(
-        <div>
-            <Button className='button hollow-reverse'><Song width={50} height={50}/></Button>
-            <ul>{wordInfo.map((item, index)=>{
-                return <li><button>{item}</button></li>
-            })}</ul>
+        <div className="audio-call-game">
+            <div className="container audio-call-game__container">
+                <Button className='button hollow-reverse'><Song width={48} height={50}/><p>Play</p></Button>
+                <ul>{wordInfo.map((item, index)=>{
+                    return <li key={index}><button>{item}</button></li>
+                })}</ul>
+            </div>
         </div>
     )
 }

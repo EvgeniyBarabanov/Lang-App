@@ -6,7 +6,7 @@ import { ClockLoader } from 'react-spinners';
 import "./ResultGame.sass";
 import Song from "../../../public/image/song-icon.svg"
 import Checkbox from "../Checkbox/Checkbox.jsx";
-import Repeat from "../../../public/image/repeat.svg";
+import Repeat from "../../../public/image/repeat.png";
 
 
 function ResultGame(props){
