@@ -11,12 +11,13 @@ import Repeat from "../../../public/image/repeat.png";
 
 function ResultGame(props){
     const override = {
-        display: "block",
-        margin: "0 auto",
+        "box-shadow": "#2B788B 0px 0px 0px 10px inset"
       };
 
     if(props.learned.length == 0 && props.unlearned.length == 0){
-        return <ClockLoader color='silver' cssOverride={override}/>
+        return <div className='result__clockloader'>
+            <ClockLoader size={400} color='#2B788B' cssOverride={override}/>
+        </div>
     }
 
     function voiceWord(word, event){

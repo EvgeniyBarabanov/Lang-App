@@ -18,8 +18,11 @@ function AudioCallGame(){
     const [wordInfo, setWordInfo] = useState([]);
     const [wordForTranslate, setWordForTranlsate] = useState({});
     const [lives, setLives] = useState(5)
+    const [buttonStatus, setButtonStatus] = useState(false);
 
+    const focus = useRef();
     const heart = useRef();
+    const positiveAnswer = useRef();
 
     useEffect(()=>{
         
@@ -52,19 +55,16 @@ function AudioCallGame(){
         if(wordList.length < 5){
             getWord(params.level);
         }else{
-            setWordForTranlsate(wordList[getRandom(0,4)].word);
-            setWordInfo([...wordList])
+            let wordListTMP = wordList;
+            wordListTMP[getRandom(0,4)].flag = true;
+            wordListTMP.map((item)=>{
+                if(item.flag){
+                    setWordForTranlsate({...item});
+                }
+            })
+            setWordInfo([...wordListTMP])
         }
     },[wordList])
-
-    const override = {
-        display: "block",
-        margin: "0 auto",
-    };
-
-    if(wordList.length < 5){
-        return <ClockLoader color='silver' cssOverride={override}/>
-    }
 
     function getWord(lvl){
 
@@ -90,22 +90,35 @@ function AudioCallGame(){
             })
     }
 
-    function test(obj){
-        if(obj.word === wordForTranslate){
-            console.log('угадал');
+    function test(obj, event){
+        console.log(obj);
+        Array.from(positiveAnswer.current.children).map((item, index)=>{
+            if (obj.flag == true && obj.translate == item.innerHTML){
+                item.classList.add('dim_cyan_dark');
+            }else if( obj.flag == undefined && obj.translate == item.innerHTML){
+                item.classList.add('dim_pink_dark')
+            }
+            item.classList.add('dim_block');
+        })
+
+        /* if(obj.word === wordForTranslate.word){
+            event.target.classList.add('dim_cyan_dark');
         }else{
+            event.target.classList.add('dim_pink_dark');
             setLives(lives - 1);
-        }
+        } */
+        setButtonStatus(true);
     }
 
     function voiceWord(event){
         let synth = window.speechSynthesis;
         let voices = synth.getVoices();
-
         let message = new SpeechSynthesisUtterance();
-        message.text = wordForTranslate;
-        
+        console.log(wordForTranslate);
+        message.text = wordForTranslate.word;
+        console.log(message.text);
         synth.speak(message);
+
         /* const e = event.currentTarget;
         message.onstart = function(){
             e.classList.toggle('checkbox__active');
@@ -115,12 +128,49 @@ function AudioCallGame(){
         } */
     }
 
+    function variantWord(){
+        const override = {
+            "box-shadow": "#2B788B 0px 0px 0px 2px inset"
+          };
+
+        if(wordList.length < 5){
+            return <ClockLoader color='#2B788B' cssOverride={override}/>
+        }else{
+            focus.current.focus({preventScrool : true})
+            return <div ref={positiveAnswer} className="list-button">{wordInfo.map((item, index)=>{
+                    return <Button key={index} disabled={buttonStatus} className="button button_small dim" onClick={(event)=>test(item, event)}>{item.translate}</Button>
+                })}</div>
+        }
+    }
+
+    let keyTest = function(event){
+        console.log(event.code);
+        switch(event.code){
+            case 'Digit1':
+                test(wordInfo[0]);
+                break;
+            case 'Digit2':
+                test(wordInfo[1]);
+                break;
+            case 'Digit3':
+                test(wordInfo[2]);
+                break;
+            case 'Digit4':
+                test(wordInfo[3]);
+                break;
+            case 'Digit5':
+                test(wordInfo[4]);
+                break;
+        }
+    }
+
     function nextTest(){
+        setButtonStatus(false);
         setWordList([]);
     }
 
     return(
-        <div className="audio-call-game">
+        <div ref={focus} onKeyDown={keyTest} tabIndex={-1} className="audio-call-game">
             <div className="container audio-call-game__container">
                 <Button onClick={()=>voiceWord()} className='button hollow-reverse'><Song width={48} height={50}/><p className="hollow-reverse_color_cyan-dark">Play</p></Button>
                 <div ref={heart} className="audio-call-game__hearts">
@@ -130,10 +180,9 @@ function AudioCallGame(){
                     <Heart className="heartFill" />
                     <Heart className="heartFill" />
                 </div>
-                <ul className="list-button">{wordInfo.map((item, index)=>{
-                    return <li className="list-button__item" key={index}><button className="button button_small hollow hollow_transparent" onClick={(e)=>test(item)}>{item.translate}</button></li>
-                })}</ul>
+                {variantWord()}
                 <button onClick={()=>nextTest()}>NEXT</button>
+                <p className="text text_size12">*You can also use the 1-5 keys on the keyboard</p>
             </div>
         </div>
     )
