@@ -11,7 +11,7 @@ import Repeat from "../../../public/image/repeat.png";
 
 function ResultGame(props){
     const override = {
-        "box-shadow": "#2B788B 0px 0px 0px 10px inset"
+        "boxShadow": "#2B788B 0px 0px 0px 10px inset"
       };
 
     if(props.learned.length == 0 && props.unlearned.length == 0){

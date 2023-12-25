@@ -14,6 +14,8 @@ function AudioCallGame(){
     
     const popularWords = words.getMostPopular(10000);
 
+    const [keyBlock, setKeyBlock] = useState(false);
+
     const [wordList, setWordList] = useState([]);
     const [wordInfo, setWordInfo] = useState([]);
     const [wordForTranslate, setWordForTranlsate] = useState({});
@@ -92,11 +94,14 @@ function AudioCallGame(){
 
     function test(obj, event){
         console.log(obj);
+        setKeyBlock(true);
         Array.from(positiveAnswer.current.children).map((item, index)=>{
-            if (obj.flag == true && obj.translate == item.innerHTML){
+            if(wordForTranslate.translate == item.innerHTML){
                 item.classList.add('dim_cyan_dark');
-            }else if( obj.flag == undefined && obj.translate == item.innerHTML){
-                item.classList.add('dim_pink_dark')
+            }
+            if( obj.flag == undefined && obj.translate == item.innerHTML){
+                item.classList.add('dim_pink_dark');
+                setLives(lives - 1);
             }
             item.classList.add('dim_block');
         })
@@ -105,7 +110,6 @@ function AudioCallGame(){
             event.target.classList.add('dim_cyan_dark');
         }else{
             event.target.classList.add('dim_pink_dark');
-            setLives(lives - 1);
         } */
         setButtonStatus(true);
     }
@@ -118,20 +122,12 @@ function AudioCallGame(){
         message.text = wordForTranslate.word;
         console.log(message.text);
         synth.speak(message);
-
-        /* const e = event.currentTarget;
-        message.onstart = function(){
-            e.classList.toggle('checkbox__active');
-        }
-        message.onend = function(){
-            e.classList.toggle('checkbox__active');
-        } */
     }
 
     function variantWord(){
         const override = {
-            "box-shadow": "#2B788B 0px 0px 0px 2px inset"
-          };
+            "boxShadow": "#2B788B 0px 0px 0px 2px inset"
+        };
 
         if(wordList.length < 5){
             return <ClockLoader color='#2B788B' cssOverride={override}/>
@@ -144,7 +140,8 @@ function AudioCallGame(){
     }
 
     let keyTest = function(event){
-        console.log(event.code);
+        if(keyBlock == true)
+            return
         switch(event.code){
             case 'Digit1':
                 test(wordInfo[0]);
@@ -167,6 +164,7 @@ function AudioCallGame(){
     function nextTest(){
         setButtonStatus(false);
         setWordList([]);
+        setKeyBlock(false);
     }
 
     return(
