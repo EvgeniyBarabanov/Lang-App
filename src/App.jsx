@@ -10,6 +10,7 @@ import SprintGame from "./Components/Sprint/SprintGame.jsx";
 import SprintResult from "./Components/Sprint/SprintResult";
 import AudioCall from "./Components/AudioCall/AudioCall.jsx";
 import AudioCallGame from "./Components/AudioCall/AudioCallGame.jsx";
+import AudioCallResult from "./Components/AudioCall/AudioCallResult";
 
 
 
@@ -46,7 +47,11 @@ const router = createBrowserRouter([
             {
                 path: "audioCall/:level",
                 element: <AudioCallGame />
-            }
+            },
+            {
+                path:"audioCall/:level/audioCallResult",
+                element:<AudioCallResult />
+            },
         ]
     }
 ])

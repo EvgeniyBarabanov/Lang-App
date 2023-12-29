@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { words } from "popular-english-words";
 import { ClockLoader } from 'react-spinners';
 import Song from "../../../public/image/song-icon.svg"
@@ -8,6 +8,9 @@ import { Button } from "../Buttons/Buttons";
 import './AudioCallGame.sass'
 
 /* сравнить функции getRandom и getRandomFlag по размещению на странице */
+/* переписать кнопки компонентом buttonGroup */
+/* проверить фокус при нажатии кнопок, срабатывает только после клика по области */
+/* переписать функци. hundleSubmit, т.к. дублируется на нескольких страницах */
 
 function AudioCallGame(){
     const params = useParams();
@@ -15,16 +18,17 @@ function AudioCallGame(){
     const popularWords = words.getMostPopular(10000);
 
     const [keyBlock, setKeyBlock] = useState(false);
-
     const [wordList, setWordList] = useState([]);
     const [wordInfo, setWordInfo] = useState([]);
     const [wordForTranslate, setWordForTranlsate] = useState({});
     const [lives, setLives] = useState(5)
     const [buttonStatus, setButtonStatus] = useState(false);
+    const [passedWords, setPassedWords] = useState(0);
+    const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
+    const [mistakes, setMistakes] = useState([]);
 
     const focus = useRef();
     const heart = useRef();
-    const positiveAnswer = useRef();
 
     useEffect(()=>{
         
@@ -47,13 +51,14 @@ function AudioCallGame(){
         }
     },[lives])
 
-    const getRandom = function(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min
-    };
+    useEffect(()=>{
+        if(lives == 0 || passedWords == 20){
+            handleSubmit("audioCallResult");
+        }
+    },[lives],[passedWords])
 
     useEffect(()=>{
+
         if(wordList.length < 5){
             getWord(params.level);
         }else{
@@ -86,35 +91,49 @@ function AudioCallGame(){
         fetch('https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEng)
             .then((response) => response.json())
             .then((result)=>{
+                result.flag = false;
+                result.className = 'button button_small dim';
                 let wordListTMP = wordList;
                 wordListTMP.push(result);
-                setWordList([...wordListTMP])
-            })
-    }
+                setWordList([...wordListTMP]);
+            });
+    };
 
-    function test(obj, event){
-        console.log(obj);
-        setKeyBlock(true);
-        Array.from(positiveAnswer.current.children).map((item, index)=>{
-            if(wordForTranslate.translate == item.innerHTML){
-                item.classList.add('dim_cyan_dark');
+    function getRandom(min, max) {
+
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min
+    };
+
+    function test(obj){
+
+        let wordInfoTMP = wordInfo;
+        wordInfoTMP.map(item =>{
+            if(item.flag == wordForTranslate.flag){
+                let correctlyAnswersTMP = correctlyAnswers;
+                correctlyAnswersTMP.push(wordForTranslate);
+                setCorrectlyAnswers([...correctlyAnswersTMP]);
+                item.className = item.className + ' dim_cyan_dark';
             }
-            if( obj.flag == undefined && obj.translate == item.innerHTML){
-                item.classList.add('dim_pink_dark');
+            if(obj.translate == item.translate && obj.flag == false){
+                let mistakesTMP = mistakes;
+                mistakesTMP.push(wordForTranslate);
+                setMistakes([...mistakesTMP]);
+                item.className = item.className + ' dim_pink_dark';
                 setLives(lives - 1);
             }
-            item.classList.add('dim_block');
-        })
+            item.className = item.className + ' dim_block';
+        });
 
-        /* if(obj.word === wordForTranslate.word){
-            event.target.classList.add('dim_cyan_dark');
-        }else{
-            event.target.classList.add('dim_pink_dark');
-        } */
+        setWordInfo([...wordInfoTMP]);
         setButtonStatus(true);
+        setPassedWords(passedWords + 1);
+        setKeyBlock(true);
     }
 
-    function voiceWord(event){
+    function voiceWord(){
+
         let synth = window.speechSynthesis;
         let voices = synth.getVoices();
         let message = new SpeechSynthesisUtterance();
@@ -124,24 +143,11 @@ function AudioCallGame(){
         synth.speak(message);
     }
 
-    function variantWord(){
-        const override = {
-            "boxShadow": "#2B788B 0px 0px 0px 2px inset"
-        };
-
-        if(wordList.length < 5){
-            return <ClockLoader color='#2B788B' cssOverride={override}/>
-        }else{
-            focus.current.focus({preventScrool : true})
-            return <div ref={positiveAnswer} className="list-button">{wordInfo.map((item, index)=>{
-                    return <Button key={index} disabled={buttonStatus} className="button button_small dim" onClick={(event)=>test(item, event)}>{item.translate}</Button>
-                })}</div>
-        }
-    }
-
     let keyTest = function(event){
+
         if(keyBlock == true)
             return
+        
         switch(event.code){
             case 'Digit1':
                 test(wordInfo[0]);
@@ -158,18 +164,40 @@ function AudioCallGame(){
             case 'Digit5':
                 test(wordInfo[4]);
                 break;
-        }
+        };
     }
 
-    function nextTest(){
+    function nextWord(){
+
         setButtonStatus(false);
         setWordList([]);
         setKeyBlock(false);
     }
 
+    function skipWord(){
+        setLives(lives - 1);
+        setButtonStatus(true);
+        setKeyBlock(true);
+
+        let wordInfoTMP = wordInfo;
+        wordInfoTMP.map(item =>{
+            if(item.flag == wordForTranslate.flag){
+                item.className = item.className + ' dim_cyan_dark';
+            }
+            item.className = item.className + ' dim_block';
+        });
+
+        setWordInfo([...wordInfoTMP]);
+    }
+
+    const navigate = useNavigate();
+    function handleSubmit(route){
+        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, passedWords}});
+    }
+
     return(
-        <div ref={focus} onKeyDown={keyTest} tabIndex={-1} className="audio-call-game">
-            <div className="container audio-call-game__container">
+        <div onKeyDown={keyTest} tabIndex={-1} className="audio-call-game">
+            <div ref={focus} className="container audio-call-game__container">
                 <Button onClick={()=>voiceWord()} className='button hollow-reverse'><Song width={48} height={50}/><p className="hollow-reverse_color_cyan-dark">Play</p></Button>
                 <div ref={heart} className="audio-call-game__hearts">
                     <Heart className="heartFill" />
@@ -178,8 +206,19 @@ function AudioCallGame(){
                     <Heart className="heartFill" />
                     <Heart className="heartFill" />
                 </div>
-                {variantWord()}
-                <button onClick={()=>nextTest()}>NEXT</button>
+                {
+                    wordList.length < 5
+                        ? <ClockLoader color='#2B788B' box-shadow="#2B788B 0px 0px 0px 2px inset"/>
+                        : <div className="list-button">{wordInfo.map((item, index)=>{
+                            return <Button key={index} disabled={buttonStatus} className={item.className} onClick={()=>test(item)} >{item.translate}</Button>
+                        })}</div>
+                }
+                {
+                    buttonStatus 
+                        ? <Button className="button button_small filled" onClick={()=>nextWord()}>Next</Button>
+                        : <Button className="button button_small filled" onClick={()=>skipWord()}>I don't now</Button>
+                }
+
                 <p className="text text_size12">*You can also use the 1-5 keys on the keyboard</p>
             </div>
         </div>

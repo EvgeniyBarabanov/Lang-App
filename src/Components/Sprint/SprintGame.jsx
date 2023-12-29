@@ -91,7 +91,7 @@ function SprintGame(){
     ]
 
     const navigate = useNavigate();
-    const handleSubmit = function(route){
+    function handleSubmit(route){
         navigate(route, {replace: true, state: {correctlyAnswers, mistakes, points}});
     }
 
