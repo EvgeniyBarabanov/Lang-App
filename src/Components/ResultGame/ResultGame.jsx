@@ -14,7 +14,7 @@ function ResultGame(props){
         "boxShadow": "#2B788B 0px 0px 0px 10px inset"
       };
 
-    if(props.learned.length == 0 && props.unlearned.length == 0){
+    if(props.content.learned.length == 0 && props.content.unlearned.length == 0){
         return <div className='result__clockloader'>
             <ClockLoader size={400} color='#2B788B' cssOverride={override}/>
         </div>
@@ -58,18 +58,14 @@ function ResultGame(props){
                     <div className="result__points">
                         <StackOfBooks/>
                         <div className="result__score">
-                            <h3 className='heading heading_3'>{props.heading}</h3>
+                            <h3 className='heading heading_3'>{props.content.heading}</h3>
                             <p className='text text_size16'>You did pretty good!</p>
                             <div className="result__progress-bar-group">
-                                <CircularProgressbarWithChildren className='result__progress-bar' maxValue={1110} value={props.points} styles={buildStyles({pathColor: '#2B788B', trailColor: '#C3DCE3'})} strokeWidth='3'>
-                                    <p className='text text_size14 text_color_black'>retrieved</p>
-                                    <h3 className='heading heading_3'>{props.points}</h3>
-                                    <p className='text text_size16'>points</p>
+                                <CircularProgressbarWithChildren className='result__progress-bar' maxValue={props.content.maxScoreValue} value={props.content.scoreValue} styles={buildStyles(props.content.scoreBarColor)} strokeWidth='4'>
+                                    {props.content.scoreBarCount}
                                 </CircularProgressbarWithChildren>
-                                <CircularProgressbarWithChildren className='result__progress-bar' maxValue={40} value={props.rightAnswers} strokeWidth='3' styles={buildStyles({pathColor: '#639B6D', trailColor: '#C3DCE3'})}>
-                                    <p className='text text_size14 text_color_black'>40 /</p>
-                                    <h3 className='heading heading_3'>{props.rightAnswers}</h3>
-                                    <p className='text text_size16'>words</p>
+                                <CircularProgressbarWithChildren className='result__progress-bar' maxValue={props.content.maxWordsValue} value={props.content.wordsValue} strokeWidth='4' styles={buildStyles(props.content.wordsBarColor)}>
+                                    {props.content.wordsBarCount}
                                 </CircularProgressbarWithChildren>
                             </div>
                         </div>
@@ -79,18 +75,18 @@ function ResultGame(props){
                 <div className="result__word-group">
                     <div className='result__word-learned'>
                         <h3 className='heading heading_3 result__heading-words'>I know</h3>
-                        <span className='label result__label'>{props.labelLearned}</span>
+                        <span className='label result__label'>{props.content.labelLearned}</span>
                         <ul className='list-word'>
-                            {props.learned.map((item, index)=>{
+                            {props.content.learned.map((item, index)=>{
                                 return <li className='list-word__item text text_size16' key={index}><Checkbox onClick={(event)=>{voiceWord(item.word, event)}} image=<Song className='checkbox__image'/> />{item.word}<span className='text text_size16'> - {item.translate}</span></li>
                             })}
                         </ul>
                     </div>
                     <div className='result__word-unlearned'>
                         <h3 className='heading heading_3 result__label'>I don't know</h3>
-                        <span className='label result__label'>{props.labelUnlearned}</span>
+                        <span className='label result__label'>{props.content.labelUnlearned}</span>
                         <ul className='list-word'>
-                            {props.unlearned.map((item, index)=>{
+                            {props.content.unlearned.map((item, index)=>{
                                 return <li className='list-word__item text text_size16' key={index}><Checkbox onClick={(event)=>{voiceWord(item.word, event)}} image=<Song/> />{item.word}<span className='text text_size16'> - {item.translate}</span></li>
                             })}
                         </ul>

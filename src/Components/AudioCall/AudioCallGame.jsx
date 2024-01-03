@@ -11,6 +11,10 @@ import './AudioCallGame.sass'
 /* переписать кнопки компонентом buttonGroup */
 /* проверить фокус при нажатии кнопок, срабатывает только после клика по области */
 /* переписать функци. hundleSubmit, т.к. дублируется на нескольких страницах */
+/* поменять цвета кругов прогрессбаров разных игр */
+/* создать sass файд дял всех прогрессбаров, обьединить что возможно */
+/* создать отдельный sass для svg heart */
+/* dshjdyznm heart на странице результатов */
 
 function AudioCallGame(){
     const params = useParams();
@@ -26,6 +30,7 @@ function AudioCallGame(){
     const [passedWords, setPassedWords] = useState(0);
     const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
     const [mistakes, setMistakes] = useState([]);
+    const maxWordsValue = 3;
 
     const focus = useRef();
     const heart = useRef();
@@ -52,10 +57,10 @@ function AudioCallGame(){
     },[lives])
 
     useEffect(()=>{
-        if(lives == 0 || passedWords == 20){
+        if(lives == 0 || passedWords == maxWordsValue){
             handleSubmit("audioCallResult");
         }
-    },[lives],[passedWords])
+    },[lives, passedWords])
 
     useEffect(()=>{
 
@@ -111,18 +116,21 @@ function AudioCallGame(){
         let wordInfoTMP = wordInfo;
         wordInfoTMP.map(item =>{
             if(item.flag == wordForTranslate.flag){
-                let correctlyAnswersTMP = correctlyAnswers;
-                correctlyAnswersTMP.push(wordForTranslate);
-                setCorrectlyAnswers([...correctlyAnswersTMP]);
                 item.className = item.className + ' dim_cyan_dark';
             }
+
             if(obj.translate == item.translate && obj.flag == false){
                 let mistakesTMP = mistakes;
                 mistakesTMP.push(wordForTranslate);
                 setMistakes([...mistakesTMP]);
                 item.className = item.className + ' dim_pink_dark';
                 setLives(lives - 1);
+            }else if(obj.translate == item.translate && obj.flag == true){
+                let correctlyAnswersTMP = correctlyAnswers;
+                correctlyAnswersTMP.push(wordForTranslate);
+                setCorrectlyAnswers([...correctlyAnswersTMP]);
             }
+
             item.className = item.className + ' dim_block';
         });
 
@@ -139,7 +147,6 @@ function AudioCallGame(){
         let message = new SpeechSynthesisUtterance();
         console.log(wordForTranslate);
         message.text = wordForTranslate.word;
-        console.log(message.text);
         synth.speak(message);
     }
 
@@ -175,8 +182,14 @@ function AudioCallGame(){
     }
 
     function skipWord(){
+
+        let mistakesTMP = mistakes;
+        mistakesTMP.push(wordForTranslate);
+        setMistakes([...mistakesTMP]);
+
         setLives(lives - 1);
         setButtonStatus(true);
+        setPassedWords(passedWords + 1);
         setKeyBlock(true);
 
         let wordInfoTMP = wordInfo;
@@ -192,7 +205,7 @@ function AudioCallGame(){
 
     const navigate = useNavigate();
     function handleSubmit(route){
-        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, passedWords}});
+        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, passedWords, lives, maxWordsValue}});
     }
 
     return(
@@ -218,7 +231,6 @@ function AudioCallGame(){
                         ? <Button className="button button_small filled" onClick={()=>nextWord()}>Next</Button>
                         : <Button className="button button_small filled" onClick={()=>skipWord()}>I don't now</Button>
                 }
-
                 <p className="text text_size12">*You can also use the 1-5 keys on the keyboard</p>
             </div>
         </div>
