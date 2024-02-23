@@ -30,6 +30,8 @@ function SprintGame(){
     const focus = useRef();
     const timerRef = useRef(null);
 
+    const maxWordsValue = 40;
+
     useEffect(()=>{
         focus.current.focus({preventScroll : true});
         return () => clearInterval(timerRef.current);
@@ -57,7 +59,7 @@ function SprintGame(){
     },[timeSec]);
 
     useEffect(()=>{
-        if(passedWords >= 40){
+        if(passedWords >= maxWordsValue){
             finishTime();
             handleSubmit("sprintResult");
         }
@@ -92,7 +94,7 @@ function SprintGame(){
 
     const navigate = useNavigate();
     function handleSubmit(route){
-        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, points}});
+        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, points, maxWordsValue}});
     }
 
     function getWord(lvl, positive){
@@ -135,8 +137,10 @@ function SprintGame(){
         min = Math.ceil(min);
         max = Math.floor(max);
         if (Math.floor(Math.random() * (max - min + 1)) + min == 0){
+            console.log('правда');
             return true;
         }else{
+            console.log('НЕправда');
             return false;
         }
     };
@@ -168,7 +172,7 @@ function SprintGame(){
     }
 
     function bonusScore(){
-        if(counterRightAnswers > 2 && counterRightAnswers <= 6){
+        if(counterRightAnswers > 2 && counterRightAnswers < 6){
             myRef.current.children[1].setAttribute('class', 'starFill');
             setMultipleBonus('x2');
         }else if(counterRightAnswers >= 6){
@@ -211,7 +215,7 @@ function SprintGame(){
         let timeSecTMP = timeSec;
         timeSecTMP.timer = (timeSecTMP.timer - 0.1).toFixed(1);
         setTimeSec({...timeSecTMP});
-        console.log(timeSec.timer);
+        /* console.log(timeSec.timer); */
     }
 
     let finishTime = function(){

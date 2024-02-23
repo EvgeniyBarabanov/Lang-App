@@ -1,10 +1,11 @@
 import React from "react";
-import ResultGame from "../ResultGame/ResultGame"
-import Heart from "../../../public/image/heart-icon.svg"
+import ResultGame from "../ResultGame/ResultGame";
+import Heart from "../../../public/image/heart-icon.svg";
 
 function AudioCallResult() {
 
-    const wordList = {
+    const gameInfo = {
+        "name":"/audioCall",
         "heading": "Your Audio-Call",
         "maxScoreValue": 5,
         "scoreValue": history.state.usr.lives,
@@ -18,7 +19,7 @@ function AudioCallResult() {
             pathColor: '#945069', 
             trailColor: '#C3DCE3',
         },
-        "scoreBarCount":   <div className="progressBar"> 
+        "scoreBarCount":<div className="progressBar"> 
                             <p className="text text_size14 text_color_black">remains</p>
                             <div className="progressBar__img-wrapper">
                                 <Heart className="heartFill heartFill_color-red"/>
@@ -30,7 +31,7 @@ function AudioCallResult() {
             pathColor: '#639B6D', 
             trailColor: '#C3DCE3',
         },             
-        "wordsBarCount":   <div className="progressBar"> 
+        "wordsBarCount":<div className="progressBar"> 
                             <p className="text text_size14 text_color_black">{history.state.usr.maxWordsValue + "/"}</p>
                             <h3 className='heading heading_3'>{history.state.usr.correctlyAnswers.length}</h3>
                             <p className='text text_size16'>words</p>
@@ -38,7 +39,7 @@ function AudioCallResult() {
     }
     
     return( 
-            <ResultGame content={wordList} />
+            <ResultGame content={gameInfo} />
     )
 
 }

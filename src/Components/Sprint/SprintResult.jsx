@@ -1,5 +1,5 @@
 import React,{ useState, useEffect} from "react";
-import ResultGame from "../ResultGame/ResultGame"
+import ResultGame from "../ResultGame/ResultGame";
 
 function SprintResult() {
     const [wordLearnedList, setWordLearnedList] = useState([]);
@@ -16,7 +16,7 @@ function SprintResult() {
             return fetch('https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + item)
             .then((response) => response.json())
         });
-        console.log(history.state.usr);
+
         Promise.all([...learned, ...unlearned])
         .then((result)=> {
             setWordLearnedList(result.splice(0, history.state.usr.correctlyAnswers.length));
@@ -24,18 +24,39 @@ function SprintResult() {
         })
     },[])
 
-    const wordList = {
+    const gameInfo = {
+        "name":"/sprint",
         "heading": "Your Sprint",
-        "rightAsnwers": history.state.usr.correctlyAnswers.length,
-        "points": history.state.usr.points,
+        "maxScoreValue": 1110,
+        "scoreValue": history.state.usr.points,
         "learned": wordLearnedList,
         "labelLearned": history.state.usr.correctlyAnswers.length + " words",
         "unlearned": wordUnlearnedList,
         "labelUnlearned": history.state.usr.mistakes.length + " words",
+        "maxWordsValue": history.state.usr.maxWordsValue,
+        "wordsValue": history.state.usr.correctlyAnswers.length,
+        "scoreBarColor": {
+            pathColor: '#2B788B', 
+            trailColor: '#C3DCE3',
+        },
+        "scoreBarCount":   <div className="progressBar"> 
+                            <p className="text text_size14 text_color_black">retrieved</p>
+                            <h3 className='heading heading_3'>{history.state.usr.points}</h3>    
+                            <p className='text text_size16'>points</p>
+                        </div>,
+        "wordsBarColor": {
+            pathColor: '#639B6D', 
+            trailColor: '#C3DCE3',
+        },             
+        "wordsBarCount":   <div className="progressBar"> 
+                            <p className="text text_size14 text_color_black">{history.state.usr.maxWordsValue + "/"}</p>
+                            <h3 className='heading heading_3'>{history.state.usr.correctlyAnswers.length}</h3>
+                            <p className='text text_size16'>words</p>
+                        </div>
     }
 
     return( 
-            <ResultGame heading={wordList.heading} points={wordList.points} rightAnswers={wordList.rightAsnwers} learned={wordList.learned} labelLearned={wordList.labelLearned} unlearned={wordList.unlearned} labelUnlearned={wordList.labelUnlearned}/>
+            <ResultGame content={gameInfo} />
     )
 }
 

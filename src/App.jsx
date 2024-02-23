@@ -11,6 +11,7 @@ import SprintResult from "./Components/Sprint/SprintResult";
 import AudioCall from "./Components/AudioCall/AudioCall.jsx";
 import AudioCallGame from "./Components/AudioCall/AudioCallGame.jsx";
 import AudioCallResult from "./Components/AudioCall/AudioCallResult";
+import Form from "./Components/Form/Form.jsx";
 
 
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
             {
                 path:"audioCall/:level/audioCallResult",
                 element:<AudioCallResult />
+            },
+            {
+                path:"form",
+                element:<Form />
             },
         ]
     }

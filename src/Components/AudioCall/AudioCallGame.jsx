@@ -11,7 +11,7 @@ import './AudioCallGame.sass'
 /* переписать кнопки компонентом buttonGroup */
 /* проверить фокус при нажатии кнопок, срабатывает только после клика по области */
 /* переписать функци. hundleSubmit, т.к. дублируется на нескольких страницах */
-/* поменять цвета кругов прогрессбаров разных игр */
+
 /* создать sass файд дял всех прогрессбаров, обьединить что возможно */
 /* создать отдельный sass для svg heart */
 /* dshjdyznm heart на странице результатов */
@@ -30,7 +30,7 @@ function AudioCallGame(){
     const [passedWords, setPassedWords] = useState(0);
     const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
     const [mistakes, setMistakes] = useState([]);
-    const maxWordsValue = 3;
+    const maxWordsValue = 2;
 
     const focus = useRef();
     const heart = useRef();
@@ -205,7 +205,7 @@ function AudioCallGame(){
 
     const navigate = useNavigate();
     function handleSubmit(route){
-        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, passedWords, lives, maxWordsValue}});
+        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, lives, maxWordsValue}});
     }
 
     return(

@@ -1,5 +1,6 @@
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ButtonGroup } from '../Buttons/Buttons.jsx';
 import StackOfBooks from "../../../public/image/stackOfBooks.svg"
 import { ClockLoader } from 'react-spinners';
@@ -18,6 +19,11 @@ function ResultGame(props){
         return <div className='result__clockloader'>
             <ClockLoader size={400} color='#2B788B' cssOverride={override}/>
         </div>
+    }
+
+    const navigate = useNavigate();
+    function handleSubmit(route){
+        navigate(route);
     }
 
     function voiceWord(word, event){
@@ -40,13 +46,13 @@ function ResultGame(props){
     const buttonData = [
         {
             'text': "Play it again",
-            'onClick': ()=>handleSubmit("sprint"),
+            'onClick': ()=>handleSubmit(props.content.name),
             'logo': Repeat,
             'className': "button button_picture button_small"
         },
         {
             'text': "Go to textbook",
-            'onClick': ()=>handleSubmit("textbook"),
+            'onClick': ()=>handleSubmit("/textbook"),
             'className': "button button_small filled"
         }
     ];
@@ -64,7 +70,7 @@ function ResultGame(props){
                                 <CircularProgressbarWithChildren className='result__progress-bar' maxValue={props.content.maxScoreValue} value={props.content.scoreValue} styles={buildStyles(props.content.scoreBarColor)} strokeWidth='4'>
                                     {props.content.scoreBarCount}
                                 </CircularProgressbarWithChildren>
-                                <CircularProgressbarWithChildren className='result__progress-bar' maxValue={props.content.maxWordsValue} value={props.content.wordsValue} strokeWidth='4' styles={buildStyles(props.content.wordsBarColor)}>
+                                <CircularProgressbarWithChildren className='result__progress-bar' maxValue={props.content.maxWordsValue} value={props.content.wordsValue} styles={buildStyles(props.content.wordsBarColor)} strokeWidth='4'>
                                     {props.content.wordsBarCount}
                                 </CircularProgressbarWithChildren>
                             </div>

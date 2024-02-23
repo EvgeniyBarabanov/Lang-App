@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.sass";
 import Logo from "../Logo/Logo.jsx";
 import Nav from "../Nav/Nav.jsx";
-import Form from "../Form/Form.jsx";
+import User from "../User/User.jsx";
 
 function Header(){
     return(
@@ -10,7 +10,7 @@ function Header(){
             <div className="container">
                 <Logo />
                 <Nav />
-                <Form />
+                <User />
             </div>
         </div>
     )
