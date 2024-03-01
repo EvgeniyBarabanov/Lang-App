@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./Games.sass";
-
+//ПЕРЕДЕЛАТЬ КОМПОНЕНТЫ Sprint, AudioCall(перенести создание одинаковых кнопок)
 function Games(props){
     return(
         <div className="games">

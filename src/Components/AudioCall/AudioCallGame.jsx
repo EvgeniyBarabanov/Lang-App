@@ -30,7 +30,7 @@ function AudioCallGame(){
     const [passedWords, setPassedWords] = useState(0);
     const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
     const [mistakes, setMistakes] = useState([]);
-    const maxWordsValue = 2;
+    const maxWordsValue = 20;
 
     const focus = useRef();
     const heart = useRef();

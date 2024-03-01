@@ -12,6 +12,9 @@
         gap: 10px
 
 .button
+    display: flex
+    align-items: center
+    justify-content: center
     font: 
         family: 'Montserrat', sans-serif
         style: normal
@@ -23,6 +26,7 @@
     color: #000000
     background: transparent
     border: 0
+
 
     &_small
         font-size: 16px
@@ -45,6 +49,9 @@
     &:hover
         color: #2B788B
         text-decoration: underline
+
+    &_row
+        flex-direction: row
         
 
 .hollow
@@ -62,8 +69,6 @@
     &_round
         border-radius: 100px
         padding: 0px
-        font-size: 16px
-        line-height: 16px
         width: 44px
         height: 44px
         background-color: #fff   
@@ -200,8 +205,7 @@
     padding: 11px 19px
     
     &_picture
-        display: flex
-        flex-direction: column-reverse
+        /* flex-direction: column-reverse */
         align-items: center
         border-radius: 14px
         position: relative
@@ -211,8 +215,12 @@
             position: absolute
             top: -30px
 
-    &_picture-small
-        position: static
+        &-small
+            padding: 0px
+            
+            img
+                position: static
+                width: 44px
 
     &_color_pinkDark
         background-color: #F2D4DC

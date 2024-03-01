@@ -22,32 +22,32 @@ function Sprint(){
         {
             'text': "А1",
             'onClick': ()=>chooseLevel("A1"),
-            'className': "button hollow hollow_round hollow_round_color_green"
+            'className': "button button_small hollow hollow_round hollow_round_color_green"
         },
         {
             'text': "А2",
             'onClick': ()=>chooseLevel("A2"),
-            'className': "button hollow hollow_round hollow_round_color_yellow"
+            'className': "button button_small hollow hollow_round hollow_round_color_yellow"
         },
         {
             'text': "B1",
             'onClick': ()=>chooseLevel("B1"),
-            'className': "button hollow hollow_round hollow_round_color_orange"
+            'className': "button button_small hollow hollow_round hollow_round_color_orange"
         },
         {
             'text': "B2",
             'onClick': ()=>chooseLevel("B2"),
-            'className': "button hollow hollow_round hollow_round_color_red"
+            'className': "button button_small hollow hollow_round hollow_round_color_red"
         },
         {
             'text': "C1",
             'onClick': ()=>chooseLevel("C1"),
-            'className': "button hollow hollow_round hollow_round_color_pink"
+            'className': "button button_small hollow hollow_round hollow_round_color_pink"
         },
         {
             'text': "C2",
             'onClick': ()=>chooseLevel("C2"),
-            'className': "button hollow hollow_round hollow_round_color_cyan"
+            'className': "button button_small hollow hollow_round hollow_round_color_cyan"
         }
     ]
 

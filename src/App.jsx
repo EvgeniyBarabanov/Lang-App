@@ -4,6 +4,7 @@ import "./App.sass";
 
 import Main from "./Components/Main/Main.jsx"
 import Textbook from "./Components/Textbook/Textbook.jsx";
+import Dictionary from "./Components/Dictionary/Dictionary.jsx";
 import Statistics from "./Components/Statistics/Statistics.jsx";
 import Sprint from "./Components/Sprint/Sprint.jsx";
 import SprintGame from "./Components/Sprint/SprintGame.jsx";
@@ -11,7 +12,8 @@ import SprintResult from "./Components/Sprint/SprintResult";
 import AudioCall from "./Components/AudioCall/AudioCall.jsx";
 import AudioCallGame from "./Components/AudioCall/AudioCallGame.jsx";
 import AudioCallResult from "./Components/AudioCall/AudioCallResult";
-import Form from "./Components/Form/Form.jsx";
+import Registration from "./Components/Registration/Registration.jsx"
+import Authorization from "./Components/Authorization/Authorization.jsx"
 
 
 
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path: "textbook",
                 element: <Textbook />
+            },
+            {
+                path: "dictionary",
+                element: <Dictionary />
             },
             {
                 path: "statistics",
@@ -54,8 +60,12 @@ const router = createBrowserRouter([
                 element:<AudioCallResult />
             },
             {
-                path:"form",
-                element:<Form />
+                path:"registration",
+                element:<Registration />
+            },
+            {
+                path:"authorization",
+                element:<Authorization />
             },
         ]
     }

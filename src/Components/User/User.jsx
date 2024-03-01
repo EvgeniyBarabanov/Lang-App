@@ -9,12 +9,12 @@ function User(){
     const buttonsData =[
         {
             'text': "Log in →",
-            'onClick': ()=>handleSubmit("form"),
+            'onClick': ()=>handleSubmit("registration"),
             'className': "button button_small"
         },
         {
             'text': "Sign up",
-            'onClick': ()=>handleSubmit("form"),
+            'onClick': ()=>handleSubmit("authorization"),
             'className': "button button_small hollow"
         }
     ]
