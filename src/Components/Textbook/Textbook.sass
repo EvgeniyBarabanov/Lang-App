@@ -9,10 +9,32 @@
     
     &__button-group
         display: flex
-    
+        gap: 10px
 
-        button:first-of-type
+    &__button
+        border-radius: 14px
+        padding: 14px 40px 14px 60px
+        position: relative
+        overflow: hidden
+        background-color: #C3DCE3
+
+        &:first-of-type
             background-color: #F2D4DC
-            
-        button:last-of-type
+
+        &_wrapper
+            position: absolute
+            height: 100%
+            left: -5px
+
+            img
+                height: 100%
+
+        &:hover
             background-color: #2B788B
+            color: #FFFFFF
+            text-decoration: none
+
+    &__modal
+        display: block
+        
+                

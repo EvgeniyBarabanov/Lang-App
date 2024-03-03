@@ -227,7 +227,7 @@ function SprintGame(){
             <div className="container sprint-game__container">
                 <CircularProgressbarWithChildren className="sprint-game__progressBar" styles={buildStyles({pathColor: '#2B788B', trailColor: '#C3DCE3', rotation: 0.25})} strokeWidth='2' maxValue={10} value={timeSec.timer}>
 
-                    <div className="counterGroup counterGroup_padding-bottom">{counterInfo(counterData)}</div>
+                    <div className="counterGroup counterGroup_center counterGroup_padding-bottom">{counterInfo(counterData)}</div>
                     <div ref={myRef} className="sprint-game__stars">
                         <StarBonusIcon className="starFill" />
                         <StarBonusIcon  />
