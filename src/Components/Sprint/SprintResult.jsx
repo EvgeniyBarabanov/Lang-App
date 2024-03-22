@@ -1,5 +1,6 @@
 import React,{ useState, useEffect} from "react";
 import ResultGame from "../ResultGame/ResultGame";
+import { ClockLoader } from 'react-spinners';
 
 function SprintResult() {
     const [wordLearnedList, setWordLearnedList] = useState([]);
@@ -24,7 +25,7 @@ function SprintResult() {
         })
     },[])
 
-    const gameInfo = {
+    let gameInfo = {
         "name":"/sprint",
         "heading": "Your Sprint",
         "maxScoreValue": 1110,
@@ -53,6 +54,15 @@ function SprintResult() {
                             <h3 className='heading heading_3'>{history.state.usr.correctlyAnswers.length}</h3>
                             <p className='text text_size16'>words</p>
                         </div>
+    }
+
+    const override = {
+        "boxShadow": "#2B788B 0px 0px 0px 10px inset"
+      };
+    if(wordLearnedList.length == 0 && wordUnlearnedList.length == 0){
+        return <div className='result__clockloader'>
+            <ClockLoader size={400} color='#2B788B' cssOverride={override}/>
+        </div>
     }
 
     return( 

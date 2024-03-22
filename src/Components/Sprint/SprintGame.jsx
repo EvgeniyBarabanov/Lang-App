@@ -30,7 +30,7 @@ function SprintGame(){
     const focus = useRef();
     const timerRef = useRef(null);
 
-    const maxWordsValue = 40;
+    const maxWordsValue = 4;
 
     useEffect(()=>{
         focus.current.focus({preventScroll : true});
@@ -137,10 +137,10 @@ function SprintGame(){
         min = Math.ceil(min);
         max = Math.floor(max);
         if (Math.floor(Math.random() * (max - min + 1)) + min == 0){
-            console.log('правда');
+/*             console.log('правда'); */
             return true;
         }else{
-            console.log('НЕправда');
+/*             console.log('НЕправда'); */
             return false;
         }
     };

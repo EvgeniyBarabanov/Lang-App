@@ -58,7 +58,7 @@ function Sprint(){
         'description': "Trains the skill of fast translation. You have to choose if the translation corresponds to the suggested word.",
         'content': <div className='games__content'>
             <p className='text text_size14'>Choose a level:</p>
-            <ButtonGroup className="button-group button-group_gap24"elements={buttonsData}></ButtonGroup>
+            <ButtonGroup className="button-group button-group_gap24" elements={buttonsData}></ButtonGroup>
             <Button onClick={()=>handleSubmit(level)} className={'button button_small hollow'}>
                 Get started
             </Button>  

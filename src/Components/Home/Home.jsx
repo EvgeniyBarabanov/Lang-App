@@ -1,6 +1,6 @@
 import React from "react";
-import './Home.sass';
 import { useNavigate } from "react-router-dom";
+import './Home.sass';
 
 import Showcase from "../Showcase/Showcase";
 import {counterInfo} from "../Counter/Counter";
@@ -16,6 +16,8 @@ import PlusIcon from "../../../public/image/plusIcon.svg";
 import JoyStickIcon from "../../../public/image/joystickIcon.svg";
 
 function Home(){
+
+    document.title = 'Home'
 
     const navigate = useNavigate();
 

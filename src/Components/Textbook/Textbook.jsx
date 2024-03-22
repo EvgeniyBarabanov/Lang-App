@@ -1,9 +1,8 @@
 import React, {useRef} from "react";
-
 import "./Textbook.sass";
 
+import Word from "../Word/Word.jsx";
 
-/* import { ButtonGroup } from "../Buttons/Buttons"; */
 import TextbookLogo from "../../../public/image/textbook-logo.svg";
 import DictionaryLogo from "../../../public/image/dictionary-logo.svg";
 import SneakersIcon from "../../../public/image/sneakers-icon.png"
@@ -17,12 +16,52 @@ import GearIcon from "../../../public/image/gear-icon.svg";
 
 function Textbook(){
 
+    document.title = 'Textbook';
+
     const showWindow = useRef();
     const activeBtn = useRef();
 
     const mode = function(){
         console.log('mode textbook');
     }
+
+    const chooseLevel = function(lvl){
+        console.log(lvl);
+
+    }
+
+    const buttonLevelGroup = [
+        {
+            "heading": "A1",
+            "level": "Easy",
+            "color": "textbook__level-group-btn_color-green"
+        },
+        {
+            "heading": "A2",
+            "level": "Easy",
+            "color": "textbook__level-group-btn_color-green"
+        },
+        {
+            "heading": "B1",
+            "level": "Medium",
+            "color": "textbook__level-group-btn_color-yellow"
+        },
+        {
+            "heading": "B2",
+            "level": "Medium",
+            "color": "textbook__level-group-btn_color-yellow"
+        },
+        {
+            "heading": "C1",
+            "level": "Hard",
+            "color": "textbook__level-group-btn_color-orange"
+        },
+        {
+            "heading": "C2",
+            "level": "Hard",
+            "color": "textbook__level-group-btn_color-orange"
+        }
+    ]
 
     const toogleBtn = function(){
         showWindow.current.classList.toggle('textbook__modal_hidden')
@@ -32,7 +71,7 @@ function Textbook(){
 
     return(
         <div className="textbook">
-            <div className="container">
+            <div className="container container_column">
                 <div className="textbook__select-mode">
                     <div className="button-group textbook__select-mode_group">
                         <button className="button textbook__btn" onClick={()=>mode()}>
@@ -74,6 +113,18 @@ function Textbook(){
                     </div>
                 </div>
 
+                <div className="textbook__btn-level-group">
+                    {buttonLevelGroup.map((item, index)=>{
+                        return <button className="textbook__btn-level" onClick={()=>chooseLevel(item.heading)} key={index}>
+                            <p className="heading heading_shadow heading_4">{item.heading}</p>
+                            <span className="label textbook__label">{item.level}</span> 
+                        </button>
+                    })}
+                </div>
+                
+                <div className="textbook__slider">
+                    <Word />
+                </div>
             </div>
         </div>
     )
