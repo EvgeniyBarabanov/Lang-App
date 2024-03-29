@@ -15,7 +15,7 @@ import AudioCallGame from "./Components/AudioCall/AudioCallGame.jsx";
 import AudioCallResult from "./Components/AudioCall/AudioCallResult";
 import Registration from "./Components/Registration/Registration.jsx";
 import Authorization from "./Components/Authorization/Authorization.jsx";
-import Slider from "./Components/Slider/Slider.jsx";
+import EmblaCarousel from "./Components/EmblaCarousel/EmblaCarousel.jsx";
 
 function App() {
     const element = useRoutes([
@@ -26,7 +26,7 @@ function App() {
                 {
                     path: "textbook",
                     element: <Textbook />,
-                    children: [{ path: ":level", element: <Slider /> }],
+                    children: [{ path: ":level", element: <EmblaCarousel /> }],
                 },
                 {
                     path: "dictionary",

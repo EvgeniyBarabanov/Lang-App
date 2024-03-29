@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import "./Textbook.sass";
 
@@ -18,6 +18,15 @@ function Textbook() {
 
     const showWindow = useRef();
     const activeBtn = useRef();
+
+    const navigate = useNavigate();
+    const handleSubmit = function (route) {
+        navigate(route);
+    };
+
+    useEffect(() => {
+        handleSubmit("A1");
+    }, []);
 
     const mode = function () {
         console.log("mode textbook");
@@ -60,11 +69,6 @@ function Textbook() {
         showWindow.current.classList.toggle("textbook__modal_hidden");
         activeBtn.current.classList.toggle("textbook__drop-btn_color_cyan");
         activeBtn.current.classList.toggle("textbook__drop-btn_active");
-    };
-
-    const navigate = useNavigate();
-    const handleSubmit = function (route) {
-        navigate(route);
     };
 
     return (
