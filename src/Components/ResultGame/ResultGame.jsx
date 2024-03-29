@@ -6,7 +6,6 @@ import {
 } from "react-circular-progressbar";
 import "./ResultGame.sass";
 
-import { voiceWord } from "../voiceWord.js";
 import { ButtonGroup } from "../Buttons/Buttons.jsx";
 import PlayVoice from "../PlayVoice/PlayVoice.jsx";
 
@@ -33,6 +32,24 @@ function ResultGame(props) {
             className: "button button_small filled",
         },
     ];
+
+    const voiceWord = function (word, event) {
+        let synth = window.speechSynthesis;
+        let voices = synth.getVoices();
+
+        let message = new SpeechSynthesisUtterance();
+        message.text = word;
+
+        synth.speak(message);
+        const e = event.currentTarget;
+
+        message.onstart = function () {
+            e.classList.toggle("play-voice_active");
+        };
+        message.onend = function () {
+            e.classList.toggle("play-voice_active");
+        };
+    };
 
     return (
         <div className="result">
@@ -95,7 +112,7 @@ function ResultGame(props) {
                                             onClick={(event) => {
                                                 voiceWord(item.word, event);
                                             }}
-                                            image=<Song className="play-voice__image" />
+                                            image=<Song />
                                         />
                                         {item.word}
                                         <span className="text text_size16">
@@ -124,7 +141,7 @@ function ResultGame(props) {
                                             onClick={(event) => {
                                                 voiceWord(item.word, event);
                                             }}
-                                            image=<Song className="play-voice__image" />
+                                            image=<Song />
                                         />
                                         {item.word}
                                         <span className="text text_size16">

@@ -4,7 +4,6 @@ import { words } from "popular-english-words";
 import { ClockLoader } from "react-spinners";
 import "./AudioCallGame.sass";
 
-import { voiceWord } from "../voiceWord.js";
 import { Button } from "../Buttons/Buttons";
 
 import Song from "../../../public/image/song-icon.svg";
@@ -204,6 +203,22 @@ function AudioCallGame() {
         });
     }
 
+    const voiceWord = function (word, event) {
+        let synth = window.speechSynthesis;
+        let voices = synth.getVoices();
+        let message = new SpeechSynthesisUtterance();
+        message.text = word;
+
+        synth.speak(message);
+        const e = event.currentTarget;
+        message.onstart = function () {
+            e.classList.toggle("audio-call-game__play-voice_active");
+        };
+        message.onend = function () {
+            e.classList.toggle("audio-call-game__play-voice_active");
+        };
+    };
+
     return (
         <div
             onKeyDown={keyTest}
@@ -212,14 +227,17 @@ function AudioCallGame() {
             <div
                 ref={focus}
                 className="container audio-call-game__container">
-                <button className="audio-call-game__play-voice " 
-                        onClick={(event) => voiceWord(wordForTranslate.word, event)}>               
+                <button
+                    className="audio-call-game__play-voice"
+                    onClick={(event) =>
+                        voiceWord(wordForTranslate.word, event)
+                    }>
                     <div className="audio-call-game__play-voice_wrapper">
-                    <Song
-                        width={48}
-                        height={48}
-                    />
-                    <p>Play</p>
+                        <Song
+                            width={48}
+                            height={48}
+                        />
+                        <p>Play</p>
                     </div>
                 </button>
                 <div

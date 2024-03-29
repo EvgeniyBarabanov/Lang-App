@@ -1,17 +1,19 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { words } from 'popular-english-words';
-import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import { words } from "popular-english-words";
+import {
+    CircularProgressbarWithChildren,
+    buildStyles,
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import { counterInfo } from "../Counter/Counter";
-import {ButtonGroup} from "../Buttons/Buttons";
+import { ButtonGroup } from "../Buttons/Buttons";
 import StarBonusIcon from "../../../public/image/starBonusIcon.svg";
 import "./SprintGame.sass";
 
-function SprintGame(){
-    
+function SprintGame() {
     const params = useParams();
-   
+
     const popularWords = words.getMostPopular(10000);
 
     const [word, setWord] = useState({});
@@ -21,9 +23,9 @@ function SprintGame(){
     const [correctlyAnswers, setCorrectlyAnswers] = useState([]);
     const [mistakes, setMistakes] = useState([]);
     const [counterRightAnswers, setCounterRightAnswers] = useState(0);
-    const [multipleBonus, setMultipleBonus] = useState('x1');
+    const [multipleBonus, setMultipleBonus] = useState("x1");
     const [timeSec, setTimeSec] = useState({
-        'timer': 10,
+        timer: 10,
     });
 
     const myRef = useRef();
@@ -32,20 +34,20 @@ function SprintGame(){
 
     const maxWordsValue = 4;
 
-    useEffect(()=>{
-        focus.current.focus({preventScroll : true});
+    useEffect(() => {
+        focus.current.focus({ preventScroll: true });
         return () => clearInterval(timerRef.current);
-    },[]);
+    }, []);
     /* ПЕРЕСМОТРЕТЬ ФУНКЦИЮ ПОДСЧЕТА ОЧКОВ В ЮСЭФЕКТЕ, и функцию остановки таймера, написал в 2 вариантах в 3 разных местах */
-    useEffect(()=>{
+    useEffect(() => {
         countPoints();
         bonusScore();
-        getWord(params.level, getRandomFlag(0,1));
+        getWord(params.level, getRandomFlag(0, 1));
         clearInterval(timerRef.current);
-    },[passedWords]);
+    }, [passedWords]);
 
-    useEffect(()=>{
-        if(timeSec.timer <= 0){
+    useEffect(() => {
+        if (timeSec.timer <= 0) {
             setPassedWords(passedWords + 1);
 
             let mistakesTMP = mistakes;
@@ -56,137 +58,152 @@ function SprintGame(){
 
             finishTime();
         }
-    },[timeSec]);
+    }, [timeSec]);
 
-    useEffect(()=>{
-        if(passedWords >= maxWordsValue){
+    useEffect(() => {
+        if (passedWords >= maxWordsValue) {
             finishTime();
             handleSubmit("sprintResult");
         }
         setButtonStatus(false);
-    },[word]);
+    }, [word]);
 
     const buttonsData = [
         {
-            'text': "Right",
-            'onClick' : ()=>test(true),
-            'className': "button button_small filled",
-            'disabled' : buttonStatus,
+            text: "Right",
+            onClick: () => test(true),
+            className: "button button_small filled",
+            disabled: buttonStatus,
         },
         {
-            'text': "Wrong",
-            'onClick': ()=>test(false),
-            'className': "button button_small filled filled_color_pinkDark",
-            'disabled' : buttonStatus,
-        }
+            text: "Wrong",
+            onClick: () => test(false),
+            className: "button button_small filled filled_color_pinkDark",
+            disabled: buttonStatus,
+        },
     ];
 
     const counterData = [
         {
-            'amount': multipleBonus,
-            'postscript': "multiplier",
+            amount: multipleBonus,
+            postscript: "multiplier",
         },
         {
-            'amount': points,
-            'postscript': "points",
-        }
-    ]
+            amount: points,
+            postscript: "points",
+        },
+    ];
 
     const navigate = useNavigate();
-    function handleSubmit(route){
-        navigate(route, {replace: true, state: {correctlyAnswers, mistakes, points, maxWordsValue}});
+    function handleSubmit(route) {
+        navigate(route, {
+            replace: true,
+            state: { correctlyAnswers, mistakes, points, maxWordsValue },
+        });
     }
 
-    function getWord(lvl, positive){
-
+    function getWord(lvl, positive) {
         const groupWords = {
-            'A1':[0, 1666],
-            'A2':[1667, 3332],
-            'B1':[3333, 4998],
-            'B2':[4999, 6664],
-            'C1':[6665, 8330],
-            'C2':[8331, 9999],
+            A1: [0, 1666],
+            A2: [1667, 3332],
+            B1: [3333, 4998],
+            B2: [4999, 6664],
+            C1: [6665, 8330],
+            C2: [8331, 9999],
         };
 
-        const allWords = popularWords.slice(groupWords[lvl][0], groupWords[lvl][1]);
-        const wordEngRight = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0]);
-        const wordEngWrong = (allWords[Math.floor(Math.random() * (allWords.length-1 - 0 + 1) ) + 0]);
+        const allWords = popularWords.slice(
+            groupWords[lvl][0],
+            groupWords[lvl][1]
+        );
+        const wordEngRight =
+            allWords[
+                Math.floor(Math.random() * (allWords.length - 1 - 0 + 1)) + 0
+            ];
+        const wordEngWrong =
+            allWords[
+                Math.floor(Math.random() * (allWords.length - 1 - 0 + 1)) + 0
+            ];
 
-
-        if (positive){
-            fetch('https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngRight)
-            .then(response => response.json())
-            .then(result => {
-                result.flag = true;
-                setWord({...result});
-                startTime();
-            })
-        }else{
-            fetch('https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=' + wordEngWrong)
-            .then(response => response.json())
-            .then(result => {
-                result.flag = false;
-                result.word = wordEngRight;
-                setWord({...result});
-                startTime();
-            })
+        if (positive) {
+            fetch(
+                "https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=" +
+                    wordEngRight
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    result.flag = true;
+                    setWord({ ...result });
+                    startTime();
+                });
+        } else {
+            fetch(
+                "https://tmp.myitschool.org/API/translate/?source=en&target=ru&word=" +
+                    wordEngWrong
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    result.flag = false;
+                    result.word = wordEngRight;
+                    setWord({ ...result });
+                    startTime();
+                });
         }
-    }; 
-    
-    const getRandomFlag = function(min, max) {
+    }
+
+    const getRandomFlag = function (min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        if (Math.floor(Math.random() * (max - min + 1)) + min == 0){
-/*             console.log('правда'); */
+        if (Math.floor(Math.random() * (max - min + 1)) + min == 0) {
+            /*             console.log('правда'); */
             return true;
-        }else{
-/*             console.log('НЕправда'); */
+        } else {
+            /*             console.log('НЕправда'); */
             return false;
         }
     };
 
-    function test(value){
-
+    function test(value) {
         setButtonStatus(true);
         setPassedWords(passedWords + 1);
-        
-        if(value === word.flag){
+
+        if (value === word.flag) {
             let correctlyAnswersTMP = correctlyAnswers;
             correctlyAnswersTMP.push(word.word);
             setCorrectlyAnswers([...correctlyAnswersTMP]);
-            setCounterRightAnswers( counterRightAnswers + 1);
-        }else{
+            setCounterRightAnswers(counterRightAnswers + 1);
+        } else {
             let mistakesTMP = mistakes;
             mistakesTMP.push(word.word);
             setMistakes([...mistakesTMP]);
             setCounterRightAnswers(0);
-        };
+        }
     }
 
-    let keyTest = function(event){
-        if(event.code == "ArrowLeft"){
+    let keyTest = function (event) {
+        if (event.code == "ArrowLeft") {
             test(true);
-        }else if(event.code == "ArrowRight"){
+        } else if (event.code == "ArrowRight") {
             test(false);
         }
-    }
+    };
 
-    function bonusScore(){
-        if(counterRightAnswers > 2 && counterRightAnswers < 6){
-            myRef.current.children[1].setAttribute('class', 'starFill');
-            setMultipleBonus('x2');
-        }else if(counterRightAnswers >= 6){
-            myRef.current.children[2].setAttribute('class', 'starFill'); 
-            setMultipleBonus('x3');
-        }else{
-            myRef.current.children[1].removeAttribute('class');
-            myRef.current.children[2].removeAttribute('class');
-            setMultipleBonus('x1');
+    function bonusScore() {
+        if (counterRightAnswers > 2 && counterRightAnswers < 6) {
+            myRef.current.children[1].setAttribute("class", "starFill");
+            setMultipleBonus("x2");
+        } else if (counterRightAnswers >= 6) {
+            myRef.current.children[2].setAttribute("class", "starFill");
+            setMultipleBonus("x3");
+        } else {
+            myRef.current.children[1].removeAttribute("class");
+            myRef.current.children[2].removeAttribute("class");
+            setMultipleBonus("x1");
         }
     }
 
-    function countPoints(){
-        switch(counterRightAnswers){
+    function countPoints() {
+        switch (counterRightAnswers) {
             case 0:
                 break;
             case 1:
@@ -201,48 +218,71 @@ function SprintGame(){
                 break;
             default:
                 setPoints(points + 30);
-        };
-    };
+        }
+    }
 
-    let startTime = function(){
-        timerRef.current =  setInterval(()=> timeSet(), 100);
+    let startTime = function () {
+        timerRef.current = setInterval(() => timeSet(), 100);
         let timeSecTMP = timeSec;
         timeSecTMP.timer = 10;
-        setTimeSec({...timeSecTMP});
-    }
+        setTimeSec({ ...timeSecTMP });
+    };
 
-    let timeSet = function(){
+    let timeSet = function () {
         let timeSecTMP = timeSec;
         timeSecTMP.timer = (timeSecTMP.timer - 0.1).toFixed(1);
-        setTimeSec({...timeSecTMP});
+        setTimeSec({ ...timeSecTMP });
         /* console.log(timeSec.timer); */
-    }
+    };
 
-    let finishTime = function(){
-        clearInterval(timerRef.current); 
-    }
+    let finishTime = function () {
+        clearInterval(timerRef.current);
+    };
 
-    return(
-        <div ref={focus} onKeyDown={keyTest} tabIndex={-1} className="sprint-game">
+    return (
+        <div
+            ref={focus}
+            onKeyDown={keyTest}
+            tabIndex={-1}
+            className="sprint-game">
             <div className="container sprint-game__container">
-                <CircularProgressbarWithChildren className="sprint-game__progressBar" styles={buildStyles({pathColor: '#2B788B', trailColor: '#C3DCE3', rotation: 0.25})} strokeWidth='2' maxValue={10} value={timeSec.timer}>
-
-                    <div className="counterGroup counterGroup_center counterGroup_padding-bottom">{counterInfo(counterData)}</div>
-                    <div ref={myRef} className="sprint-game__stars">
+                <CircularProgressbarWithChildren
+                    className="sprint-game__progressBar"
+                    styles={buildStyles({
+                        pathColor: "#2B788B",
+                        trailColor: "#C3DCE3",
+                        rotation: 0.25,
+                    })}
+                    strokeWidth="2"
+                    maxValue={10}
+                    value={timeSec.timer}>
+                    <div className="counterGroup counterGroup_center counterGroup_padding-bottom">
+                        {counterInfo(counterData)}
+                    </div>
+                    <div
+                        ref={myRef}
+                        className="sprint-game__stars">
                         <StarBonusIcon className="starFill" />
-                        <StarBonusIcon  />
-                        <StarBonusIcon  />
+                        <StarBonusIcon />
+                        <StarBonusIcon />
                     </div>
                     <div className="sprint-game__words">
                         <h2 className="heading heading_2">{word.word}</h2>
-                        <h2 className="heading heading_2 heading_color_cyanDark">{word.translate}</h2>
+                        <h2 className="heading heading_2 heading_color_cyanDark">
+                            {word.translate}
+                        </h2>
                     </div>
-                    <ButtonGroup className="button-group button-group_gap10" elements={buttonsData} />
+                    <ButtonGroup
+                        className="button-group button-group_gap10"
+                        elements={buttonsData}
+                    />
                 </CircularProgressbarWithChildren>
-                <p className="text text_size12">*You can also use the ← → keys on the keyboard</p>
+                <p className="text text_size12">
+                    *You can also use the ← → keys on the keyboard
+                </p>
             </div>
         </div>
-    )
+    );
 }
 
 export default SprintGame;
