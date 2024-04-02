@@ -32,7 +32,7 @@ function SprintGame() {
     const focus = useRef();
     const timerRef = useRef(null);
 
-    const maxWordsValue = 4;
+    const maxWordsValue = 40;
 
     useEffect(() => {
         focus.current.focus({ preventScroll: true });

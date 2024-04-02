@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
+import { words } from "popular-english-words";
 import "./Textbook.sass";
 
 import TextbookLogo from "../../../public/image/textbook-logo.svg";
@@ -15,7 +16,7 @@ import GearIcon from "../../../public/image/gear-icon.svg";
 
 function Textbook() {
     document.title = "Textbook";
-
+    console.log(words.getMostPopular(10000));
     const showWindow = useRef();
     const activeBtn = useRef();
 
