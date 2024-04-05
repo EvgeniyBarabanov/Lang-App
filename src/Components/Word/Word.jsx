@@ -46,7 +46,7 @@ function Word(props) {
             <div className="word__image"></div>
             <div className="word__info">
                 <div className="word__item">
-                    <span className="heading heading_3">word </span>
+                    <span className="heading heading_3">{props.word}</span>
                     <span className="heading heading_3">I </span>
                     <span className="heading heading_3">слово</span>
                     <PlayVoice

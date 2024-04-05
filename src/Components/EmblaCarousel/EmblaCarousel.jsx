@@ -1,15 +1,16 @@
 import React, { useCallback } from "react";
 import Word from "../Word/Word";
 import useEmblaCarousel from "embla-carousel-react";
+import { useOutletContext } from "react-router-dom";
 import Autoplay from "embla-carousel-autoplay";
 import "./EmblaCarousel.sass";
 
 function EmblaCarousel(props) {
-    const [emblaRef, emblaApi] =
-        useEmblaCarousel(/* { loop: false }, [
+    const context = useOutletContext();
+
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false }, [
         Autoplay(),
-    ] */);
-    console.log(emblaApi);
+    ]);
     const scrollPrev = useCallback(() => {
         if (emblaApi) emblaApi.scrollPrev();
     }, [emblaApi]);
@@ -24,13 +25,14 @@ function EmblaCarousel(props) {
                 className="embla__viewport"
                 ref={emblaRef}>
                 <div className="embla__container">
-                    <Word className="embla__slide" />
-                    <Word className="embla__slide" />
-                    <Word className="embla__slide" />
-                    <Word className="embla__slide" />
-                    <Word className="embla__slide" />
-                    <Word className="embla__slide" />
-                    <Word className="embla__slide" />
+                    {context[0].map((item, index) => {
+                        return (
+                            <Word
+                                word={item}
+                                key={index}
+                            />
+                        );
+                    })}
                 </div>
                 <button
                     className="embla__prev"

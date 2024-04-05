@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import { words } from "popular-english-words";
 import "./Textbook.sass";
@@ -16,14 +16,38 @@ import GearIcon from "../../../public/image/gear-icon.svg";
 
 function Textbook() {
     document.title = "Textbook";
-    console.log(words.getMostPopular(10000));
+
+    const popularWords = words.getMostPopular(10000);
+
+    /* const [lvl, setLvl] = useState(); */
+    const [groupWords, setGroupWords] = useState([]);
+
     const showWindow = useRef();
     const activeBtn = useRef();
 
+    const lvlWords = {
+        A1: [0, 1666],
+        A2: [1667, 3332],
+        B1: [3333, 4998],
+        B2: [4999, 6664],
+        C1: [6665, 8330],
+        C2: [8331, 9999],
+    };
+
     const navigate = useNavigate();
     const handleSubmit = function (route) {
+        const allWords = popularWords.slice(
+            lvlWords[route][0],
+            lvlWords[route][1]
+        );
+        setGroupWords([allWords]);
+        /* setLvl(route); */
+
         navigate(route);
     };
+
+    /* const allWords = popularWords.slice(groupWords[lvl][0], groupWords[lvl][1]); */
+    /* console.log(allWords); */
 
     useEffect(() => {
         handleSubmit("A1");
@@ -151,7 +175,7 @@ function Textbook() {
                         );
                     })}
                 </div>
-                <Outlet />
+                <Outlet context={groupWords} />
             </div>
         </div>
     );
