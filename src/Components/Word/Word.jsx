@@ -48,11 +48,11 @@ function Word(props) {
                 <div className="word__item">
                     <span className="heading heading_3">{props.word}</span>
                     <span className="heading heading_3">I </span>
-                    <span className="heading heading_3">слово</span>
+                    <span className="heading heading_3">{props.translate}</span>
                     <PlayVoice
                         className="play-voice"
                         onClick={(event) => {
-                            voiceWord("test word", event);
+                            voiceWord(props.translate, event);
                         }}
                         image=<Song />
                     />

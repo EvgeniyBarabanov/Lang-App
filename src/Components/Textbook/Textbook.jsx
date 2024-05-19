@@ -42,7 +42,6 @@ function Textbook() {
         );
         setGroupWords([allWords]);
         /* setLvl(route); */
-
         navigate(route);
     };
 
